@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Represents a storage for {@link seedu.address.model.TaskList}.
  */
-public interface AddressBookStorage {
+public interface TaskListStorage {
 
     /**
      * Returns the file path of the data file.
@@ -26,9 +26,9 @@ public interface AddressBookStorage {
 
     /**
      * Saves the given {@link ReadOnlyTaskList} to the storage.
-     * @param addressBook cannot be null.
+     * @param taskList cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveTaskList(ReadOnlyTaskList addressBook) throws IOException;
+    void saveTaskList(ReadOnlyTaskList taskList) throws IOException;
 
 }
