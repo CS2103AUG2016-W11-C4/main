@@ -6,13 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.events.ui.IncorrectCommandAttemptedEvent;
@@ -61,8 +64,8 @@ public class CommandBox extends UiPart {
     private void addToPlaceholder() {
         SplitPane.setResizableWithParent(placeHolderPane, false);
         placeHolderPane.getChildren().add(commandTextField);
-        wordList.setTranslateX(80);
         placeHolderPane.getChildren().add(wordList);
+        wordList.setTranslateX(22);
         commandTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             checkCurrentWord(newValue);
         });
@@ -81,7 +84,9 @@ public class CommandBox extends UiPart {
                 if (ke.getCode().equals(KeyCode.ENTER)) {
                     autoComplete(wordList.getSelectionModel().getSelectedItem());
                     commandTextField.requestFocus();
-                    commandTextField.selectPositionCaret(0);
+                    commandTextField.end();
+                } else if (ke.getCode().equals(KeyCode.LEFT)) {
+                    commandTextField.requestFocus();
                     commandTextField.end();
                 }
             }
@@ -91,7 +96,8 @@ public class CommandBox extends UiPart {
     }
     
     private void autoComplete(String word) {
-        String[] words = commandTextField.getText().split(" ");
+        String text = commandTextField.getText();
+        String[] words = text.split(" ");
         words[words.length-1] = word + " ";
         commandTextField.setText(StringUtils.join(words, " "));
     }
@@ -118,6 +124,10 @@ public class CommandBox extends UiPart {
     }
     
     private void checkCurrentWord(String command) {
+        Text text = new Text(command);
+        new Scene(new Group(text));
+        text.applyCss(); 
+        wordList.setTranslateX(text.getLayoutBounds().getWidth()*5/4 + 22);
         String[] words = command.split(" ");
         String lastWord = words[words.length-1];
         setWordChoices(lastWord);
