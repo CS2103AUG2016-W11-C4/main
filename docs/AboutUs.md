@@ -24,7 +24,7 @@ We are from [School of Computing, National University of Singapore](http://www.c
 [[test code](https://github.com/CS2103AUG2016-W11-C4/main/blob/master/collated/test/A0140011L.md)]
 [[docs](https://github.com/CS2103AUG2016-W11-C4/main/blob/master/collated/docs/A0140011L.md)]**<br>
 **Other major contributions:**
- * GitHub repository maintainer/maid (accepting PRs, resolving conflicts, set up Travis and Coveralls, issue tracker maintainence, generating 'collated' folder, etc)
+ * GitHub repository maintainer (accepting PRs, resolving conflicts, set up Travis and Coveralls, issue tracker maintainence, generating 'collated' folder, etc)
  * [Added new task fields to model](https://github.com/CS2103AUG2016-W11-C4/main/pull/33)
  * Added calendar UI with task display [148](https://github.com/CS2103AUG2016-W11-C4/main/pull/148), [175](https://github.com/CS2103AUG2016-W11-C4/main/pull/175), [178](https://github.com/CS2103AUG2016-W11-C4/main/pull/178)
  * [Renamed the packages from seedu.addressbook to teamfour.tasc] (https://github.com/CS2103AUG2016-W11-C4/main/commit/3f1530c316fbfa6613256fe55bd56803687d70c3)
