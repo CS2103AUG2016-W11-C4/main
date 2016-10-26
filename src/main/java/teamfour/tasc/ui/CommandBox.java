@@ -84,12 +84,9 @@ public class CommandBox extends UiPart {
                 if (ke.getCode().equals(KeyCode.ENTER)) {
                     autoComplete(wordList.getSelectionModel().getSelectedItem());
                     commandTextField.requestFocus();
-                    commandTextField.selectPositionCaret(0);
                     commandTextField.end();
-                } else if (ke.getCode().equals(KeyCode.LEFT) || ke.getCode().equals(KeyCode.RIGHT)) {
-                    System.out.println("here");
+                } else if (ke.getCode().equals(KeyCode.LEFT)) {
                     commandTextField.requestFocus();
-                    commandTextField.selectPositionCaret(0);
                     commandTextField.end();
                 }
             }
