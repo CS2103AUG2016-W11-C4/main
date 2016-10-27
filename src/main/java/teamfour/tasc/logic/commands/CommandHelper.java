@@ -18,7 +18,7 @@ public class CommandHelper {
     private static final Logger logger = LogsCenter.getLogger(CommandHelper.class);
 
     public static String MESSAGE_REPEAT_PARAMETERS_INVALID = "Invalid repeat parameters";
-    
+
     //@@author A0148096W
     /**
      * Converts a String to Date if possible, otherwise returns null.
@@ -71,7 +71,7 @@ public class CommandHelper {
         c.set(Calendar.MILLISECOND, 999);
         return c.getTime();
     }
-    
+
     //@@author A0127014W
     /**
      * Parses date(s) from an input String containing the dates
@@ -85,9 +85,6 @@ public class CommandHelper {
      * @return List of dates parsed from dateInString
      */
     public static List<Date> convertStringToMultipleDates(String dateInString){
-        if(dateInString.toLowerCase().contains("today")){
-
-        }
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
         return dates;
     }
@@ -165,7 +162,7 @@ public class CommandHelper {
         }
 
     }
-    
+
     //@@author A0140011L
     /**
      * Convert the date object into a string that the pretty time parser

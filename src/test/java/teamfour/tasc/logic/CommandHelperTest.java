@@ -13,7 +13,7 @@ import teamfour.tasc.model.task.Recurrence;
 import org.junit.Test;
 
 public class CommandHelperTest {
-    
+
     //@@author A0148096W
     /*
      * Equivalence partitions for date strings:
@@ -54,8 +54,17 @@ public class CommandHelperTest {
     }
 
     //@@author A0127014W
+    /*
+     *Equivalence partitions for date strings:
+     *-Dates in numbers
+     *-Dates in words
+     *-Strings which do not contain dates
+     *-Empty string
+     *-null
+     *-
+     */
     @Test
-    public void convertStringToMultipleDates_shortName_correct_date_month_year() {
+    public void convertStringToMultipleDates_shortName_validInput_validOrdering() {
         String date = "13 sep 2013";
         List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
         assertTrue(dates.get(0).getDate() == 13);
@@ -67,24 +76,40 @@ public class CommandHelperTest {
         assertTrue(dates2.get(0).getDate() == 13);
         assertTrue(dates2.get(0).getMonth() == 8);
         assertTrue(dates2.get(0).getYear() == 2000 - 1900);
+    }
 
-        String date3 = "sept 13 1900";
+    @Test
+    public void convertStringToMultipleDates_fullName_validInput_validOrdering() {
+        String date = "thirteenth september";
+        List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
+        assertTrue(dates.get(0).getDate() == 13);
+        assertTrue(dates.get(0).getMonth() == 8);
+
+        String date2 = "september thirteenth 2013";
+        List<Date> dates2 = CommandHelper.convertStringToMultipleDates(date2);
+        assertTrue(dates2.get(0).getDate() == 13);
+        assertTrue(dates2.get(0).getMonth() == 8);
+        assertTrue(dates2.get(0).getYear() == 2013 - 1900);
+
+    }
+
+    @Test
+    public void convertStringToMultipleDates_invalid_ordering() {
+        String date = "2013 september thirteenth";
+        List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
+        assertTrue(dates.get(0).getDate() == 13);
+        assertTrue(dates.get(0).getMonth() == 8);
+        assertEquals(dates.get(0).getYear(), new Date().getYear()); //wrong year
+
+        String date3 = "sep 1900 13";
         List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
-        assertTrue(dates3.get(0).getDate() == 13);
+        assertTrue(dates3.get(0).getDate() == 1); //wrong date
         assertTrue(dates3.get(0).getMonth() == 8);
         assertTrue(dates3.get(0).getYear() == 1900 - 1900);
     }
 
     @Test
-    public void convertStringToMultipleDates_fullName_correct_date_month() {
-        String date = "thirteenth september";
-        List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
-        assertTrue(dates.get(0).getDate() == 13);
-        assertTrue(dates.get(0).getMonth() == 8);
-    }
-
-    @Test
-    public void convertStringToMultipleDates_correct_dayOfWeek_timeOfDayInNumbers() {
+    public void convertStringToMultipleDates_dayOfWeek_timeOfDayInNumbers_valid() {
         String date = "friday 7pm";
         List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
         assertTrue(dates.get(0).getDay() == 5);
@@ -108,15 +133,11 @@ public class CommandHelperTest {
         assertTrue(dates.get(0).getDay() == 5);
         assertTrue(dates.get(0).getHours() == 19);
 
-        String date2 = "3rd april five in the morning";
+        String date2 = "3rd april five pm";
         List<Date> dates2 = CommandHelper.convertStringToMultipleDates(date2);
         assertTrue(dates2.get(0).getDate() == 3);
-        assertTrue(dates2.get(0).getHours() == 5);
+        assertTrue(dates2.get(0).getHours() == 17);
 
-        String date3 = "6 april three pm";
-        List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
-        assertTrue(dates3.get(0).getDate() == 6);
-        assertTrue(dates3.get(0).getHours() == 15);
     }
 
     @Test
@@ -191,7 +212,7 @@ public class CommandHelperTest {
         } catch (IllegalValueException e) {
         }
     }
-    
+
     //@@author A0140011L
     @Test
     public void convertDateToPrettyTimeParserFriendlyString_validInput() {
