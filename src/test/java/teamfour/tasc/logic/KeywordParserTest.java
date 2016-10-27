@@ -16,7 +16,7 @@ public class KeywordParserTest {
 
         String input = "add \"Assignment\"";
         KeywordParser parser = new KeywordParser("add");
-        HashMap<String, String> list = parser.parse(input);
+        HashMap<String, String> list = parser.parseKeywordsWithoutFixedOrder(input);
         assertTrue(list.get("add").equals("Assignment"));
     }
 
@@ -25,7 +25,7 @@ public class KeywordParserTest {
 
         String input = "add \"Assignment\" by friday tag important";
         KeywordParser parser = new KeywordParser("add", "by", "tag");
-        HashMap<String, String> list = parser.parse(input);
+        HashMap<String, String> list = parser.parseKeywordsWithoutFixedOrder(input);
         assertEquals(list.get("add"), "Assignment");
         assertEquals(list.get("by"), "friday");
         assertEquals(list.get("tag"), "important");
@@ -36,7 +36,7 @@ public class KeywordParserTest {
 
         String input = "add \"Assignment\" from friday to saturday tag important";
         KeywordParser parser = new KeywordParser("add", "from", "to", "tag");
-        HashMap<String, String> list = parser.parse(input);
+        HashMap<String, String> list = parser.parseKeywordsWithoutFixedOrder(input);
         assertTrue(list.get("add").equals("Assignment"));
         assertEquals(list.get("from"), "friday");
         assertEquals(list.get("to"), "saturday");
@@ -47,7 +47,7 @@ public class KeywordParserTest {
 
         String input = "add \"Assignment\" by friday tag important school urgent";
         KeywordParser parser = new KeywordParser("add", "by", "tag");
-        HashMap<String, String> list = parser.parse(input);
+        HashMap<String, String> list = parser.parseKeywordsWithoutFixedOrder(input);
         assertTrue(list.get("add").equals("Assignment"));
         assertEquals(list.get("by"), "friday");
         assertTrue(list.get("tag").equals("important school urgent"));
