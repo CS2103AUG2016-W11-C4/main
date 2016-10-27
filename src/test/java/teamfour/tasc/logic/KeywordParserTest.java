@@ -69,6 +69,35 @@ public class KeywordParserTest {
         assertEquals(list2.get("from"), "monday");
         assertEquals(list2.get("to"), "thursday");
     }
+
+    @Test
+    public void parses_addCommand_multipleQuotes() {
+
+        String input = "add \"Assignment\" tag \"important\"";
+        KeywordParser parser = new KeywordParser("add", "by", "tag");
+        HashMap<String, String> list = parser.parseKeywordsWithoutFixedOrder(input);
+        assertEquals(list.get("add"), "Assignment");
+        assertEquals(list.get("tag"), "important");
+
+    }
+
+    @Test
+    public void parses_addCommand_moreOpenQuotesThanCloseQuotes() {
+
+        String input = "add \"Assignment\" tag \"important";
+        KeywordParser parser = new KeywordParser("add", "by", "tag");
+        HashMap<String, String> list = parser.parseKeywordsWithoutFixedOrder(input);
+        assertEquals(list.get("add"), "Assignment");
+        assertEquals(list.get("tag"), "important");
+
+        String input2 = "add \"Assignment from monday to thursday";
+        KeywordParser parser2 = new KeywordParser("add", "from", "to", "tag");
+        HashMap<String, String> list2 = parser2.parseKeywordsWithoutFixedOrder(input2);
+        assertEquals(list2.get("add"), "Assignment from monday to thursday");
+        assertEquals(list2.get("from"), null);
+        assertEquals(list2.get("to"), null);
+
+    }
     //@@author
 
     @Test
