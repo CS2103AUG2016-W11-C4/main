@@ -164,36 +164,20 @@ public class CommandHelper {
     private static Recurrence getRecurrenceWithPatternFromParameters(HashMap<String, String> repeatParameters)
             throws IllegalValueException {
         if(repeatParameters.containsKey("daily")){
-            try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.DAILY, Integer.parseInt(repeatParameters.get("daily")));
-                return recurrence;
-            } catch (NumberFormatException | IllegalValueException e) {
-                throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
-            }
+            Recurrence recurrence = new Recurrence(Recurrence.Pattern.DAILY, Integer.parseInt(repeatParameters.get("daily")));
+            return recurrence;
         }
         else if(repeatParameters.containsKey("weekly")){
-            try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.WEEKLY, Integer.parseInt(repeatParameters.get("weekly")));
-                return recurrence;
-            } catch (NumberFormatException | IllegalValueException e) {
-                throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
-            }
+            Recurrence recurrence = new Recurrence(Recurrence.Pattern.WEEKLY, Integer.parseInt(repeatParameters.get("weekly")));
+            return recurrence;
         }
         else if(repeatParameters.containsKey("monthly")){
-            try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.MONTHLY, Integer.parseInt(repeatParameters.get("monthly")));
-                return recurrence;
-            } catch (NumberFormatException | IllegalValueException e) {
-                throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
-            }
+            Recurrence recurrence = new Recurrence(Recurrence.Pattern.MONTHLY, Integer.parseInt(repeatParameters.get("monthly")));
+            return recurrence;
         }
         else if(repeatParameters.containsKey("yearly")){
-            try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.YEARLY, Integer.parseInt(repeatParameters.get("yearly")));
-                return recurrence;
-            } catch (NumberFormatException | IllegalValueException e) {
-                throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
-            }
+            Recurrence recurrence = new Recurrence(Recurrence.Pattern.YEARLY, Integer.parseInt(repeatParameters.get("yearly")));
+            return recurrence;
         }
         else{
             return new Recurrence();
