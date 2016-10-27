@@ -15,6 +15,8 @@ import teamfour.tasc.logic.parser.KeywordParser;
 import teamfour.tasc.model.task.Recurrence;
 
 public class CommandHelper {
+    private static final String MESSAGE_INVALID_DATES = "Invalid dates";
+
     private static final Logger logger = LogsCenter.getLogger(CommandHelper.class);
 
     public static String MESSAGE_REPEAT_PARAMETERS_INVALID = "Invalid repeat parameters";
@@ -85,6 +87,9 @@ public class CommandHelper {
      * @return List of dates parsed from dateInString
      */
     public static List<Date> convertStringToMultipleDates(String dateInString){
+        if(dateInString == null){
+            dateInString = "";
+        }
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
         return dates;
     }
@@ -101,7 +106,7 @@ public class CommandHelper {
         if(dateInString.toLowerCase().contains("today")){
             List<Date> dates = new PrettyTimeParser().parse(dateInString);
             if(dates.size() != 1){
-                throw new IllegalValueException("Multiple dates found");
+                throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
             if( (new Date().getDate() == dates.get(0).getDate() )&& ((new Date().after(dates.get(0))) || (new Date().equals(dates.get(0))) ) ){
                 dateInString = "today 11.59pm";
@@ -110,7 +115,7 @@ public class CommandHelper {
         //normal case
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
         if(dates.size() != 1){
-            throw new IllegalValueException("Multiple dates found");
+            throw new IllegalValueException(MESSAGE_INVALID_DATES);
         }
         return dates.get(0);
     }

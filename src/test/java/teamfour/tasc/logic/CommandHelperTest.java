@@ -59,10 +59,25 @@ public class CommandHelperTest {
      *-Dates in numbers
      *-Dates in words
      *-Strings which do not contain dates
-     *-Empty string
+     *-Empty strings
      *-null
-     *-
      */
+
+    @Test
+    public void convertStringToMultipleDates_invalidInputs() {
+        String date = "";
+        List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
+        assertTrue(dates.isEmpty());
+
+        String date2 = "notADate";
+        List<Date> dates2 = CommandHelper.convertStringToMultipleDates(date2);
+        assertTrue(dates2.isEmpty());
+
+        String date3 = null;
+        List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
+        assertTrue(dates3.isEmpty());
+    }
+
     @Test
     public void convertStringToMultipleDates_shortName_validInput_validOrdering() {
         String date = "13 sep 2013";
@@ -109,13 +124,27 @@ public class CommandHelperTest {
     }
 
     @Test
-    public void convertStringToMultipleDates_dayOfWeek_timeOfDayInNumbers_valid() {
-        String date = "friday 7pm";
+    public void convertStringToMultipleDates_dayOfWeek_valid() {
+        String date = "friday";
         List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
         assertTrue(dates.get(0).getDay() == 5);
+
+        String date2 = "next wed";
+        List<Date> dates2 = CommandHelper.convertStringToMultipleDates(date2);
+        assertTrue(dates2.get(0).getDay() == 3);
+
+        String date3 = "this monday";
+        List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
+        assertTrue(dates3.get(0).getDay() == 1);
+    }
+
+    @Test
+    public void convertStringToMultipleDates_timeOfDayInNumbers_valid() {
+        String date = "7pm";
+        List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
         assertTrue(dates.get(0).getHours() == 19);
 
-        String date2 = "next wed 3 afternoon";
+        String date2 = "3 afternoon next wed";
         List<Date> dates2 = CommandHelper.convertStringToMultipleDates(date2);
         assertTrue(dates2.get(0).getDay() == 3);
         assertTrue(dates2.get(0).getHours() == 15);
@@ -127,7 +156,7 @@ public class CommandHelperTest {
     }
 
     @Test
-    public void convertStringToMultipleDates_timeOfDayInWords() {
+    public void convertStringToMultipleDates_timeOfDayInWords_valid() {
         String date = "next friday seven evening";
         List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
         assertTrue(dates.get(0).getDay() == 5);
@@ -138,15 +167,6 @@ public class CommandHelperTest {
         assertTrue(dates2.get(0).getDate() == 3);
         assertTrue(dates2.get(0).getHours() == 17);
 
-    }
-
-    @Test
-    public void convertStringToMultipleDates_yearWithTime() {
-        String date = "6 april 2004 3 pm";
-        List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
-        assertTrue(dates.get(0).getDate() == 6);
-        assertTrue(dates.get(0).getHours() == 15);
-        assertTrue(dates.get(0).getYear() == 2004 - 1900);
     }
 
     @Test
