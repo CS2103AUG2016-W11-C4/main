@@ -96,14 +96,29 @@ public class CommandHelper {
 
     /**
      * Like convertStringToMultipleDates(String dateInString), but only returns one Date
-     * Throws exception if multiple dates can be parsed from one dateInString
+     * Throws exception if multiple dates/no dates can be parsed from one dateInString
      * If date given is today, and no time is set/time set is in the past, then time will be set to 11.59pm
      * @param dateInString
      * @return Date parsed from dateInString
      * @throws Exception
      */
     public static Date convertStringToDate(String dateInString) throws IllegalValueException{
-        //special case if date is "today", but no valid time given
+        dateInString = convertStringIfTodayAndNoValidTime(dateInString);
+        List<Date> dates = new PrettyTimeParser().parse(dateInString);
+        if(dates.size() != 1){
+            throw new IllegalValueException(MESSAGE_INVALID_DATES);
+        }
+        return dates.get(0);
+    }
+
+    /**
+     * Converts dateInString to "today 11.59pm" if it contains "today",
+     * and no time is given or time given is in the past
+     * @param dateInString
+     * @return dateInString
+     * @throws IllegalValueException
+     */
+    private static String convertStringIfTodayAndNoValidTime(String dateInString) throws IllegalValueException {
         if(dateInString.toLowerCase().contains("today")){
             List<Date> dates = new PrettyTimeParser().parse(dateInString);
             if(dates.size() != 1){
@@ -114,12 +129,7 @@ public class CommandHelper {
                 dateInString = "today 11.59pm";
             }
         }
-        //normal case
-        List<Date> dates = new PrettyTimeParser().parse(dateInString);
-        if(dates.size() != 1){
-            throw new IllegalValueException(MESSAGE_INVALID_DATES);
-        }
-        return dates.get(0);
+        return dateInString;
     }
 
     /**
