@@ -109,7 +109,8 @@ public class CommandHelper {
             if(dates.size() != 1){
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
-            if( (new Date().getDate() == dates.get(0).getDate())&& (new Date().after(dates.get(0)) || new Date().equals(dates.get(0)))){
+            if ((new Date().getDate() == dates.get(0).getDate())
+                    && (new Date().after(dates.get(0)) || new Date().equals(dates.get(0)))) {
                 dateInString = "today 11.59pm";
             }
         }
