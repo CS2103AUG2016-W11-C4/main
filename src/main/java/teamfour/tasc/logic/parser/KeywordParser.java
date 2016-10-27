@@ -28,7 +28,7 @@ public class KeywordParser {
      * @param string to be parsed
      * @return HashMap containing the keyword - associated substring pairs
      */
-    //TODO Make parsing not depend on order of input keywords
+    //TODO Delete this
     public HashMap<String, String> parse(String inputString){
         HashMap<String, String> words = new HashMap<String, String>();
         for(int i = 0; i < keywords.size(); i++){
@@ -160,6 +160,7 @@ public class KeywordParser {
      * @param inputString
      * @return HashMap containing the keyword - associated substring pair
      */
+    //TODO delete this
     public HashMap<String, String> parseForOneKeyword(String inputString){
         HashMap<String, String> words = new HashMap<String, String>();
         for(int i = 0; i < keywords.size(); i++){

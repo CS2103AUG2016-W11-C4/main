@@ -97,6 +97,7 @@ public class CommandHelper {
     /**
      * Like convertStringToMultipleDates(String dateInString), but only returns one Date
      * Throws exception if multiple dates can be parsed from one dateInString
+     * If date given is today, and no time is set/time set is in the past, then time will be set to 11.59pm
      * @param dateInString
      * @return Date parsed from dateInString
      * @throws Exception
@@ -108,7 +109,7 @@ public class CommandHelper {
             if(dates.size() != 1){
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
-            if( (new Date().getDate() == dates.get(0).getDate() )&& ((new Date().after(dates.get(0))) || (new Date().equals(dates.get(0))) ) ){
+            if( (new Date().getDate() == dates.get(0).getDate())&& (new Date().after(dates.get(0)) || new Date().equals(dates.get(0)))){
                 dateInString = "today 11.59pm";
             }
         }
@@ -129,7 +130,7 @@ public class CommandHelper {
     public static Recurrence getRecurrence(String repeatParameter) throws IllegalValueException{
         String parseThis = repeatParameter.toLowerCase();
         KeywordParser kp = new KeywordParser("daily","weekly","monthly","yearly");
-        HashMap<String, String> parameters = kp.parseForOneKeyword(parseThis);
+        HashMap<String, String> parameters = kp.parseKeywordsWithoutFixedOrder(parseThis);
         if(parameters.containsKey("daily")){
             try {
                 Recurrence recurrence = new Recurrence(Recurrence.Pattern.DAILY, Integer.parseInt(parameters.get("daily")));

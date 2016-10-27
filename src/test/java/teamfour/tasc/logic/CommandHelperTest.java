@@ -114,13 +114,18 @@ public class CommandHelperTest {
         List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
         assertTrue(dates.get(0).getDate() == 13);
         assertTrue(dates.get(0).getMonth() == 8);
-        assertEquals(dates.get(0).getYear(), new Date().getYear()); //wrong year
+        assertTrue(dates.get(0).getYear() != 2013); //wrong year
 
-        String date3 = "sep 1900 13";
+        String date2 = "sep 1900 13th";
+        List<Date> dates2 = CommandHelper.convertStringToMultipleDates(date2);
+        assertTrue(dates2.get(0).getDate() != 13); //wrong date
+        assertTrue(dates2.get(0).getMonth() == 8);
+        assertTrue(dates2.get(0).getYear() == 1900 - 1900);
+
+        String date3 = "4th april 1600 hours";
         List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
-        assertTrue(dates3.get(0).getDate() == 1); //wrong date
-        assertTrue(dates3.get(0).getMonth() == 8);
-        assertTrue(dates3.get(0).getYear() == 1900 - 1900);
+        assertTrue(dates3.get(0).getDate() == 4);
+        assertTrue(dates3.get(0).getHours() != 16); //wrong time
     }
 
     @Test
@@ -149,17 +154,16 @@ public class CommandHelperTest {
         assertTrue(dates2.get(0).getDay() == 3);
         assertTrue(dates2.get(0).getHours() == 15);
 
-        String date3 = "this monday 1600 hours";
+        String date3 = "1600 hours 4th april";
         List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
-        assertTrue(dates3.get(0).getDay() == 1);
+        assertTrue(dates3.get(0).getDate() == 4);
         assertTrue(dates3.get(0).getHours() == 16);
     }
 
     @Test
     public void convertStringToMultipleDates_timeOfDayInWords_valid() {
-        String date = "next friday seven evening";
+        String date = "seven evening";
         List<Date> dates = CommandHelper.convertStringToMultipleDates(date);
-        assertTrue(dates.get(0).getDay() == 5);
         assertTrue(dates.get(0).getHours() == 19);
 
         String date2 = "3rd april five pm";
@@ -177,7 +181,7 @@ public class CommandHelperTest {
     }
 
     @Test
-    public void convertStringToDate_shortName_correct_date_month() {
+    public void convertStringToDate_shortName_validInput() {
         String dateString = "13 sep";
         Date date;
         try {
@@ -198,6 +202,40 @@ public class CommandHelperTest {
             fail("Exception expected");
         } catch (Exception e) {
 
+        }
+    }
+
+    @Test
+    public void convertStringToDate_today_noTimeGiven_setTimeTo1159() {
+        String dateString = "today";
+        Date date;
+        try {
+            date = CommandHelper.convertStringToDate(dateString);
+            assertTrue(date.getHours() == 23);
+            assertTrue(date.getMinutes() == 59);
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void convertStringToDate_today_timeGiven_setTimeToGivenIfGivenIsLaterThanPresent() {
+        String dateString = "today 7pm";
+        Date testDate = new Date();
+        testDate.setHours(19);
+        Date date;
+        try {
+            date = CommandHelper.convertStringToDate(dateString);
+            if(new Date().after(testDate) || (new Date().equals(testDate))){
+                assertTrue(date.getHours() == 23);
+                assertTrue(date.getMinutes() == 59);
+            }
+            else{
+                assertTrue(date.getHours() == 19);
+                assertTrue(date.getMinutes() == 0);
+            }
+        } catch (Exception e) {
+            fail();
         }
     }
 
