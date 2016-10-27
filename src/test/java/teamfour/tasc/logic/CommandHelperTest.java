@@ -219,7 +219,7 @@ public class CommandHelperTest {
     }
 
     @Test
-    public void convertStringToDate_today_timeGiven_setTimeToGivenIfGivenIsLaterThanPresent() {
+    public void convertStringToDate_today_timeGiven_setTimeToGiven_IfGivenIsLaterThanPresent() {
         String dateString = "today 7pm";
         Date testDate = new Date();
         testDate.setHours(19);
