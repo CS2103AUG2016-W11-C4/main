@@ -45,17 +45,33 @@ public class AddCommand extends Command {
      * @throws IllegalValueException if any of the raw values are invalid
      */
     public AddCommand(String name, String by, String startTime, String endTime, String repeat, Set<String> tags) throws IllegalValueException {
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+        final Set<Tag> tagSet = getTagSetFromStringSet(tags);
+        Deadline deadline = getDeadlineFromString(by);
+        Period period = getPeriodFromStrings(by, startTime, endTime);
+        Recurrence taskRecurrence = getRecurrenceFromStrings(startTime, endTime, repeat, deadline);
+
+        this.toAdd = new Task(
+                new Name(name),
+                new Complete(false),
+                deadline,
+                period,
+                taskRecurrence,
+                new UniqueTagList(tagSet)
+        );
+    }
+
+    private Recurrence getRecurrenceFromStrings(String startTime, String endTime, String repeat, Deadline deadline)
+            throws IllegalValueException {
+        Recurrence taskRecurrence = new Recurrence();
+        if(repeat != null) {
+            if ((startTime != null && endTime != null) || deadline != null) {
+                taskRecurrence = CommandHelper.getRecurrence(repeat);
+            }
         }
-        // TODO ensure that we input the correct details!
-        // TODO refactor this - extract methods
-        //Input validation
-        Deadline deadline = new Deadline();
-        if(by != null){
-            deadline = new Deadline(CommandHelper.convertStringToDate(by));
-        }
+        return taskRecurrence;
+    }
+
+    private Period getPeriodFromStrings(String by, String startTime, String endTime) throws IllegalValueException {
         Period period = new Period();
         if((startTime != null)&&(endTime != null)){
             List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + endTime);
@@ -71,21 +87,23 @@ public class AddCommand extends Command {
             }
             period = new Period(dates.get(0), dates.get(1));
         }
-        Recurrence taskRecurrence = new Recurrence();
-        if(repeat != null) {
-            if ((startTime != null && endTime != null) || deadline != null) {
-                taskRecurrence = CommandHelper.getRecurrence(repeat);
-            }
-        }
+        return period;
+    }
 
-        this.toAdd = new Task(
-                new Name(name),
-                new Complete(false),
-                deadline,
-                period,
-                taskRecurrence,
-                new UniqueTagList(tagSet)
-        );
+    private Deadline getDeadlineFromString(String by) throws IllegalValueException {
+        Deadline deadline = new Deadline();
+        if(by != null){
+            deadline = new Deadline(CommandHelper.convertStringToDate(by));
+        }
+        return deadline;
+    }
+
+    private Set<Tag> getTagSetFromStringSet(Set<String> tags) throws IllegalValueException {
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        return tagSet;
     }
 
     @Override
