@@ -203,6 +203,14 @@ public class CommandHelperTest {
         } catch (Exception e) {
 
         }
+        String dateString2 = "today and tomorrow";
+        Date date2;
+        try {
+            date2 = CommandHelper.convertStringToDate(dateString2);
+            fail("Exception expected");
+        } catch (Exception e) {
+
+        }
     }
 
     @Test

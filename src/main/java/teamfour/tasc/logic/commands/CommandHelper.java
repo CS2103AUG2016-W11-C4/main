@@ -123,41 +123,51 @@ public class CommandHelper {
 
     /**
      * Input parameter includes the pattern of recurrence, and frequency of recurrence
-     * @param repeatParameter
-     * @return Recurrence object from repeatParameter
+     * @param repeatString
+     * @return Recurrence object from repeatString
      * @throws IllegalValueException
      */
-    public static Recurrence getRecurrence(String repeatParameter) throws IllegalValueException{
-        String parseThis = repeatParameter.toLowerCase();
+    public static Recurrence getRecurrence(String repeatString) throws IllegalValueException{
         KeywordParser kp = new KeywordParser("daily","weekly","monthly","yearly");
-        HashMap<String, String> parameters = kp.parseKeywordsWithoutFixedOrder(parseThis);
-        if(parameters.containsKey("daily")){
+        HashMap<String, String> repeatParameters = kp.parseKeywordsWithoutFixedOrder(repeatString.toLowerCase());
+        return getRecurrenceWithPatternFromParameters(repeatParameters);
+
+    }
+    /**
+     *
+     * @param repeatParameters
+     * @return Recurrence object with pattern depending on parameters
+     * @throws IllegalValueException
+     */
+    private static Recurrence getRecurrenceWithPatternFromParameters(HashMap<String, String> repeatParameters)
+            throws IllegalValueException {
+        if(repeatParameters.containsKey("daily")){
             try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.DAILY, Integer.parseInt(parameters.get("daily")));
+                Recurrence recurrence = new Recurrence(Recurrence.Pattern.DAILY, Integer.parseInt(repeatParameters.get("daily")));
                 return recurrence;
             } catch (NumberFormatException | IllegalValueException e) {
                 throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
             }
         }
-        else if(parameters.containsKey("weekly")){
+        else if(repeatParameters.containsKey("weekly")){
             try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.WEEKLY, Integer.parseInt(parameters.get("weekly")));
+                Recurrence recurrence = new Recurrence(Recurrence.Pattern.WEEKLY, Integer.parseInt(repeatParameters.get("weekly")));
                 return recurrence;
             } catch (NumberFormatException | IllegalValueException e) {
                 throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
             }
         }
-        else if(parameters.containsKey("monthly")){
+        else if(repeatParameters.containsKey("monthly")){
             try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.MONTHLY, Integer.parseInt(parameters.get("monthly")));
+                Recurrence recurrence = new Recurrence(Recurrence.Pattern.MONTHLY, Integer.parseInt(repeatParameters.get("monthly")));
                 return recurrence;
             } catch (NumberFormatException | IllegalValueException e) {
                 throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
             }
         }
-        else if(parameters.containsKey("yearly")){
+        else if(repeatParameters.containsKey("yearly")){
             try {
-                Recurrence recurrence = new Recurrence(Recurrence.Pattern.YEARLY, Integer.parseInt(parameters.get("yearly")));
+                Recurrence recurrence = new Recurrence(Recurrence.Pattern.YEARLY, Integer.parseInt(repeatParameters.get("yearly")));
                 return recurrence;
             } catch (NumberFormatException | IllegalValueException e) {
                 throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
@@ -166,7 +176,6 @@ public class CommandHelper {
         else{
             return new Recurrence();
         }
-
     }
 
     //@@author A0140011L
