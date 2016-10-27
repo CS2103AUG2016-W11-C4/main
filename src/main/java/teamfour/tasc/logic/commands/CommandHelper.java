@@ -122,7 +122,8 @@ public class CommandHelper {
     }
 
     /**
-     * Input parameter includes the pattern of recurrence, and frequency of recurrence
+     * Gets a Recurrence object from a string containing repeat parameters for recurrence
+     * Input parameter repeatString includes the pattern of recurrence, and frequency of recurrence
      * @param repeatString
      * @return Recurrence object from repeatString
      * @throws IllegalValueException
@@ -134,9 +135,9 @@ public class CommandHelper {
 
     }
     /**
-     *
+     * Creates and returns Recurrence object with Pattern based on repeatParameter
      * @param repeatParameters
-     * @return Recurrence object with pattern depending on parameters
+     * @return Recurrence object
      * @throws IllegalValueException
      */
     private static Recurrence getRecurrenceWithPatternFromParameters(HashMap<String, String> repeatParameters)
