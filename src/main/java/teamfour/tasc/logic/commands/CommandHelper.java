@@ -125,7 +125,11 @@ public class CommandHelper {
             if(dates.size() != 1){
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
-            if (isTimeParsedEarlierThanOrEqualToNow(dates.get(0))) {
+            Date today = new Date();
+            Date parsedDate = dates.get(0);
+            boolean isParsedDateEqualToOrEarlierThanToday = (today.getDate() == parsedDate.getDate())
+                                                            && (today.after(parsedDate) || today.equals(parsedDate));
+            if (isParsedDateEqualToOrEarlierThanToday) {
                 dateInStringConverted = "today 11.59pm";
             }
         }
@@ -133,19 +137,9 @@ public class CommandHelper {
     }
 
     /**
-     * Returns true if date is on the same day as today, but at earlier/same time. Returns false otherwise
-     * @param date  The Date parsed by PrettyTimeParser
-     * @return true or false
-     */
-    private static boolean isTimeParsedEarlierThanOrEqualToNow(Date date) {
-        return (new Date().getDate() == date.getDate())
-                && (new Date().after(date) || new Date().equals(date));
-    }
-
-    /**
      * Gets a Recurrence object from a string containing repeat parameters for recurrence
      * Input parameter repeatString includes the pattern of recurrence, and frequency of recurrence
-     * @param repeatString
+     * @param repeatString  String containing repeat parameters
      * @return Recurrence object from repeatString
      * @throws IllegalValueException
      */
@@ -157,8 +151,8 @@ public class CommandHelper {
     }
     /**
      * Creates and returns Recurrence object with Pattern based on repeatParameter
-     * @param repeatParameters
-     * @return Recurrence object
+     * @param repeatParameters  HashMap with parameters parsed from string using recurrence keywords
+     * @return recurrence   Recurrence object with Pattern matching repeatParameters
      * @throws IllegalValueException
      */
     private static Recurrence getRecurrenceWithPatternFromParameters(HashMap<String, String> repeatParameters)
