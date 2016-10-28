@@ -19,6 +19,8 @@ public class CalendarCommandTest extends AddressBookGuiTest {
      * calendar week
      *     - Day changed to week view
      *     - Already in week view
+     * calendar today
+     *     - Calendar shows current time and success message
      * calendar (all other arguments)
      * calendar (empty string) = no arguments
      *     - Wrong command format message
@@ -46,6 +48,17 @@ public class CalendarCommandTest extends AddressBookGuiTest {
         commandBox.runCommand("calendar day");
         assertCalendarResult("calendar " + calendarView, 
                 String.format(CalendarCommand.MESSAGE_SUCCESS, calendarView), calendarView);
+    }
+    
+    @Test
+    public void calendar_today_messageSuccess(){
+        commandBox.runCommand("calendar week");
+        assertCalendarResult("calendar today", 
+                CalendarCommand.MESSAGE_SUCCESS_SELECTED_TODAY, "week");
+        
+        commandBox.runCommand("calendar day");
+        assertCalendarResult("calendar today", 
+                CalendarCommand.MESSAGE_SUCCESS_SELECTED_TODAY, "day");
     }
     
     @Test
