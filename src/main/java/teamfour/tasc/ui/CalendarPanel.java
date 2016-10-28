@@ -124,6 +124,15 @@ public class CalendarPanel extends UiPart {
         selectLastSelectedTask();
     }
     
+    /**
+     * Selects and shows the given date on calendar.
+     * @param date date to select
+     */
+    public void selectDate(Date date) {
+        LocalDateTime time = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        agendaView.setDisplayedLocalDateTime(time);
+    }
+    
     //@@author A0140011L
     /** 
      * Refresh the calendar using the new task list given.
@@ -215,8 +224,7 @@ public class CalendarPanel extends UiPart {
      * Re-selects the last selected task.
      */
     public void selectLastSelectedTask() {
-        LocalDateTime time = (new Date()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        agendaView.setDisplayedLocalDateTime(time);
+        selectDate(new Date());
         if (lastSelectedTask != null) {
             selectTask(lastSelectedTask);
         }
