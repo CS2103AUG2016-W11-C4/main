@@ -9,13 +9,6 @@ import java.util.LinkedList;
  * Automatically removes older items when max limit is reached.
  */
 public class HistoryStack<T extends HistoryItem<T>> {
-
-    /** Thrown when trying to pop an empty HistoryStack */
-    public static class OutOfHistoryException extends Exception {
-        protected OutOfHistoryException() {
-            super("This history queue is empty.");
-        }
-    }
     
     private static final int DEFAULT_MAX_NUM_OF_STATES = 10;
     private final int maxNumOfStates;
@@ -23,6 +16,13 @@ public class HistoryStack<T extends HistoryItem<T>> {
     // Uses a LinkedList so that can removeFirst 
     // for states that are too old.
     private final LinkedList<T> historyLL;
+    
+    /** Exception thrown when trying to pop an empty HistoryStack */
+    public static class OutOfHistoryException extends Exception {
+        protected OutOfHistoryException() {
+            super("This history queue is empty.");
+        }
+    }
     
     /**
      * Default constructor creates with default size.
