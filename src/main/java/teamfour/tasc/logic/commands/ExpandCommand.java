@@ -15,13 +15,13 @@ public class ExpandCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Task view expanded";
     public static final String MESSAGE_FAILURE_ALREADY_EXPANDED = "Already in expanded view, type \"collapse\" to go into collapsed view";
 
-    public ExpandCommand(){
+    public ExpandCommand() {
 
     }
 
-    public CommandResult execute(){
+    public CommandResult execute() {
         assert model!= null;
-        if(CollapseChangeEvent.getCollapsed()){
+        if(CollapseChangeEvent.getCollapsed()) {
             EventsCenter.getInstance().post(new CollapseChangeEvent(false));
             model.updateFilteredTaskListByFilter(); //refresh the list view
             return new CommandResult(MESSAGE_SUCCESS);
