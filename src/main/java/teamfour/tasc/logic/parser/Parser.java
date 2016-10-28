@@ -222,9 +222,9 @@ public class Parser {
      */
     private String removeFullStopsAndCommas(String string) {
         assert string != null;
-        string = string.replace(",", "");
-        string = string.replace(".", "");
-        return string;
+        String resultString = string.replace(",", "");
+        resultString = resultString.replace(".", "");
+        return resultString;
     }
 
     /**

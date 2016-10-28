@@ -504,16 +504,18 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public int compare(ReadOnlyTask a, ReadOnlyTask b) {
             int timeA = 0;
-            if (a.getDeadline().hasDeadline())
+            if (a.getDeadline().hasDeadline()) {
                 timeA = (int)(a.getDeadline().getDeadline().getTime() / 1000);
-            else if (a.getPeriod().hasPeriod())
+            } else if (a.getPeriod().hasPeriod()) {
                 timeA = (int)(a.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             int timeB = 0;
-            if (b.getDeadline().hasDeadline())
+            if (b.getDeadline().hasDeadline()) {
                 timeB = (int)(b.getDeadline().getDeadline().getTime() / 1000);
-            else if (b.getPeriod().hasPeriod())
+            } else if (b.getPeriod().hasPeriod()) {
                 timeB = (int)(b.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             return timeA - timeB;
         }
@@ -523,16 +525,18 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public int compare(ReadOnlyTask a, ReadOnlyTask b) {
             int timeA = 0;
-            if (a.getDeadline().hasDeadline())
+            if (a.getDeadline().hasDeadline()) {
                 timeA = (int)(a.getDeadline().getDeadline().getTime() / 1000);
-            else if (a.getPeriod().hasPeriod())
+            } else if (a.getPeriod().hasPeriod()) {
                 timeA = (int)(a.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             int timeB = 0;
-            if (b.getDeadline().hasDeadline())
+            if (b.getDeadline().hasDeadline()) {
                 timeB = (int)(b.getDeadline().getDeadline().getTime() / 1000);
-            else if (b.getPeriod().hasPeriod())
+            } else if (b.getPeriod().hasPeriod()) {
                 timeB = (int)(b.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             return timeB - timeA;
         }
