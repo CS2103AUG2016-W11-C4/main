@@ -26,7 +26,7 @@ public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppoint
     @Override
     public AppointmentGroup getAppointmentGroup() {
         if (associatedTask.getDeadline().hasDeadline()) {
-            if (associatedTask.isOverdue(DateUtil.getCurrentTime())) {
+            if (associatedTask.isOverdue(DateUtil.getInstance().getCurrentTime())) {
                 return CalendarAppointmentGroups.OVERDUE;
             }
         }

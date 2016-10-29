@@ -20,7 +20,7 @@ public class TaskTest {
     public void isOverdue_noDeadline_returnsFalse() throws IllegalValueException {
         TestTask noDeadlineTask = new TaskBuilder().withName("No deadline").build();
 
-        assertFalse(noDeadlineTask.isOverdue(DateUtil.getCurrentTime()));
+        assertFalse(noDeadlineTask.isOverdue(DateUtil.getInstance().getCurrentTime()));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TaskTest {
     public void getEventStatus_noPeriod_returnsNotAnEvent() throws IllegalValueException {
         TestTask noPeriod = new TaskBuilder().withName("No period").build();
 
-        assertEquals(EventStatus.NOT_AN_EVENT, noPeriod.getEventStatus(DateUtil.getCurrentTime()));
+        assertEquals(EventStatus.NOT_AN_EVENT, noPeriod.getEventStatus(DateUtil.getInstance().getCurrentTime()));
     }
 
     @Test
