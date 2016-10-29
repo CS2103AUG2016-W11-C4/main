@@ -497,8 +497,7 @@ Or perhaps you prefer to see an overview of many tasks at one glance at the task
 This will change the view from something like this: <br>
 <img src="images/Ui-collapse1.png" width="600"><br>
 *Figure 6: The expanded view*
-<br>
-
+<br><br>
 
 To this:<br>
 <img src="images/Ui-collapse2.png" width="600"><br>
