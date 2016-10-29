@@ -9,6 +9,7 @@
     * [Using the Interface](#using-the-interface)
 * [Features](#features)
     * [Adding a new task/event: `add`](#adding-a-new-taskevent-add)
+    * [Selecting a task to view its details: `select`](#selecting-a-task-to-view-its-details-select)
     * [Listing all tasks/events with specified conditions: `list`](#listing-all-tasksevents-with-specified-conditions-list)
     * [Narrowing listing results with specified type, date or tags: `show`](#narrowing-listing-results-with-specified-type-date-or-tags-show)
     * [Hiding listing results with specified type, date or tags: `hide`](#hiding-listing-results-with-specified-type-date-or-tags-hide)
@@ -147,6 +148,29 @@ In general, you may use this format to add tasks with various parameters.<br>
 <br>
 
 <!-- @@author A0148096W -->
+### Selecting a task to view its details: `select`
+
+Now that you have added your tasks, you can select the first task on the list by typing:
+
+`select 1`
+
+The task will be shown and highlighted on the task list and calendar, where you can see all its details such as its time period.
+
+The task list will also automatically scroll to the task details on the task list. 
+For example, if you have many tasks and you would like to see the fourteenth task which is not shown in the task list, just type:
+
+`select 14`
+
+Additionally, if you would like to see the last task in the task list, you can type:
+
+`select last`
+<br><br>
+
+In general, you may use this format to select specific tasks on the task list.<br>
+`select INDEX|last`
+
+<br>
+
 ### Listing all tasks/events with specified conditions: `list`
 
 You may have a lot of tasks in your task list after using TaSc for a
@@ -201,6 +225,7 @@ Finally, if you need to sort your tasks, enter the following:
   and `a-z`, `z-a` for task descriptions.
 
 <br>
+
 <img src="images/Ui-List.png" width="600"><br>
 *Figure 4a: Filter your tasks by period end time.*
 <br><br>
@@ -209,8 +234,10 @@ Finally, if you need to sort your tasks, enter the following:
 *Figure 4b: The `list` command allows you to filter your tasks easily.*
 <br><br>
 
-In general, you may use this format to list tasks with various filters<br>
+In general, you may use this format to list tasks with various filters.<br>
 `list [TYPE...] [by DEADLINE] [from START_TIME] [to END_TIME] [tag TAG...] [sort SORTING_ORDER]`
+
+<br>
 
 ### Narrowing listing results with specified type, date or tags: `show`
 
@@ -271,10 +298,11 @@ To show your task named "**V0.0 Deliverables**" in **Sep**tember:
 > **Note:**<br>
 > Words enclosed in quotation marks `" "` use exact match and are case-sensitive.<br>
 > The task list results are shown in an order which prioritizes the closest match, followed by completion status and date.
-
 <br>
+
 In general, you may use this format to find tasks using keywords.<br>
 `find KEYWORD...`
+
 <br>
 
 <!-- @@author A0140011L -->
@@ -307,11 +335,12 @@ Or if the deadline is no longer valid, remove it by adding `remove` before the k
 > **Tip:**<br>
 > This works for any other keywords you may have used in your `add` command,
 > like `removefrom`, `removeto`, `removerepeat`, `removetag` etc.
+<br><br>
 
-<br>
-In general, you may use this format to update your tasks' various parameters.
+In general, you may use this format to update your tasks' various parameters.<br>
 `update INDEX [name NAME] [by DEADLINE] [from START_TIME to END_TIME] [repeat PATTERN FREQUENCY] [tag TAG...]`
  * INDEX refers to the task's index number as shown in the task list.
+
 <br>
 
 ### Marking a task as complete: `complete`
@@ -323,8 +352,9 @@ Once you have completed a task, you can mark it as complete.
 <img src="images/Ui-Complete.png" width="600"><br>
 *Figure 5: Marking a task as complete*
 <br><br>
-In general, you may use this format to mark your tasks as complete.
+In general, you may use this format to mark your tasks as complete.<br>
 `complete INDEX`
+
 <br>
 
 <!-- @@author A0148096W -->
@@ -344,15 +374,16 @@ last 5 actions taken:
 > **Note:**<br>
 > Sorry! To help you save memory on your computer, 
 > you can only undo up to the 10 most recent tasks.
+<br><br>
 
-<br>
-In general, you may use this format to undo various number of changes.
+In general, you may use this format to undo various number of changes.<br>
 `undo [LAST STEPS]`
  * LAST STEPS refer to the number of steps to undo, starting from the lastest step. 
 
 If you simply type:
 `undo`
 , the last step will be undone.
+
 <br>
 
 <!-- @@author A0147971U -->
@@ -369,15 +400,16 @@ You can redo the last *X* number of actions. For example, to redo the
 last 4 actions taken:
 
 `redo 4`
+<br><br>
 
-<br>
-In general, you may use this format to redo various number of changes.
+In general, you may use this format to redo various number of changes.<br>
 `redo [LAST STEPS]`
  * LAST STEPS refer to the number of steps to redo, starting from the lastest step. 
 
 If you simply type:
 `redo`
 , the last step undone will be redone.
+
 <br>
 
 <!-- @@author A0127014W -->
@@ -389,14 +421,14 @@ your task list to save disk space on your computer.
 `delete 3`
 
 > **Caution:**<br>
-> Tasks deleted cannot be recovered **after** you exit the application. If you
+> Deleted tasks cannot be recovered **after** you exit the application. If you
 > wish to keep the details of the task, use `complete` instead.
+<br><br>
 
-<br>
-In general, you may use this format to delete your tasks.
+In general, you may use this format to delete your tasks.<br>
 `delete INDEX`
-<br>
 
+<br>
 
 ### Clearing all data: `clear`
 
@@ -405,7 +437,7 @@ Same as `delete`, but deletes the entire list.
 `clear`
 
 > **Caution:**<br>
-> Tasks deleted cannot be recovered **after** you exit the application. If you
+> Deleted tasks cannot be recovered **after** you exit the application. If you
 > wish to keep the details of the task, use `complete` instead.
 
 <br>
@@ -424,12 +456,12 @@ To do so, simply type the switch list command:
 > **Tip:**<br>
 > If the file does not exist, TaSc will assume that you want to create a new
 > task list, and will create an empty file for you automatically.
+<br><br>
 
-<br>
-In general, you may use this format to switch to different lists.
+In general, you may use this format to switch to different lists.<br>
 `switchlist FILENAME`
-<br>
 
+<br>
 
 ### Renaming the task list file: `renamelist`
 
@@ -438,9 +470,10 @@ currently named `life.xml` and you would like to rename it to `family.xml`, ente
 
 `renamelist family`
 
-<br>
-In general, you may use this format to rename lists.
+
+In general, you may use this format to rename lists.<br>
 `renamelist FILENAME`
+
 <br>
 
 ### Relocating the data storage location: `relocate`
@@ -455,10 +488,11 @@ folder is at `/dropbox/`, you may do so by typing:
 > **Tip:**<br>
 > enter `relocate` without designated path and the app will relocate the
 > file to the original path.
+<br><br>
 
-<br>
-In general, you may use this format to relocate your data to different location.
+In general, you may use this format to relocate your data to different location.<br>
 `relocate PATH`
+
 <br>
 
 <!-- @@author A0127014W -->
@@ -478,19 +512,25 @@ To this:<br>
 If you want to see all the details of your tasks agains, type:
 
 `expand`
-<br><br>
+
+<br>
 
 <!-- @@author A0148096W -->
 ### Changing calendar view: `calendar`
 
-Sometimes, you may want to focus on your day, and find the calendar too cluttered. We can fix that for you, just type:
+Sometimes, you may want to focus on a day on the calendar. To do so, just type: 
 
 `calendar day`
 
-You can switch back to the week view by typing:
+You can switch back to the calendar week view by typing:
 
 `calendar week`
-<br><br>
+
+At any time, you can show your current time on the calendar to see your upcoming schedules, using:
+
+`calendar today`
+
+<br>
 
 <!-- @@author -->
 ### Viewing help: `help`
@@ -500,7 +540,7 @@ Just open this document anytime again by typing the `help` command:
 
 `help`
 
-<br>
+<br><br>
 
 ## Other Features
 
@@ -519,6 +559,8 @@ and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword.
 ### Saving the Data
 TaSc saves automatically after every command that changes the data.
 Don't worry about your data getting lost.
+
+<br>
 
 ## FAQ
 
@@ -548,7 +590,7 @@ Clear | `clear`
 Switch List | `switchlist FILENAME`
 Rename List | `renamelist FILENAME`
 Relocate | `relocate PATH`
-Calendar | `calendar day|week`
 Collapse | `collapse`
 Expand | `expand`
+Calendar | `calendar day|week|today`
 Help | `help`
