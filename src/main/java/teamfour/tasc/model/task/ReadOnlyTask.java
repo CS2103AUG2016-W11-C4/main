@@ -68,18 +68,7 @@ public interface ReadOnlyTask {
      * Get whether the event has started or not.
      */
     default EventStatus getEventStatus(Date currentTime) {
-        if (!getPeriod().hasPeriod()) {
-            return EventStatus.NOT_AN_EVENT;
-        }
-        
-        if (currentTime.before(getPeriod().getStartTime())) {
-            return EventStatus.NOT_STARTED;
-        }
-        else if (currentTime.after(getPeriod().getEndTime())) {
-            return EventStatus.ENDED;
-        }
-        
-        return EventStatus.IN_PROGRESS;
+        return getPeriod().getEventStatus(currentTime);
     }
     
     //@@author A0148096W
