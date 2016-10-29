@@ -79,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateTaskListChanged() {
         raise(new TaskListChangedEvent(taskList));
     }
-    
+
     //@@author A0148096W
     @Override
     public void saveTaskListHistory() {
@@ -136,7 +136,7 @@ public class ModelManager extends ComponentManager implements Model {
         redoTaskListHistory = new HistoryStack<TaskList>();
     }
     //@@author
-    
+
 
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
@@ -346,7 +346,7 @@ public class ModelManager extends ComponentManager implements Model {
                     .findAny()
                     .isPresent();
         }
-        //@@author A0127014W
+        //@@author
         @Override
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
