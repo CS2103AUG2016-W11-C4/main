@@ -162,11 +162,11 @@ public class CalendarReadOnlyAppointment implements Appointment {
     @Override
     public LocalDateTime getStartLocalDateTime() {
         if (associatedTask.getDeadline().hasDeadline()) {
-            return convertToLocalDateTime(associatedTask.getDeadline().getDeadline());
+            return DateUtil.convertToLocalDateTime(associatedTask.getDeadline().getDeadline());
         }
 
         if (associatedTask.getPeriod().hasPeriod()) {
-            return convertToLocalDateTime(associatedTask.getPeriod().getStartTime());
+            return DateUtil.convertToLocalDateTime(associatedTask.getPeriod().getStartTime());
         }
 
         return null;
@@ -180,11 +180,12 @@ public class CalendarReadOnlyAppointment implements Appointment {
     @Override
     public LocalDateTime getEndLocalDateTime() {
         if (associatedTask.getDeadline().hasDeadline()) {
-            return convertToLocalDateTime(associatedTask.getDeadline().getDeadline()).plusHours(1);
+            return DateUtil.convertToLocalDateTime(associatedTask.getDeadline().getDeadline())
+                    .plusHours(1);
         }
 
         if (associatedTask.getPeriod().hasPeriod()) {
-            return convertToLocalDateTime(associatedTask.getPeriod().getEndTime());
+            return DateUtil.convertToLocalDateTime(associatedTask.getPeriod().getEndTime());
         }
 
         return null;
@@ -193,12 +194,5 @@ public class CalendarReadOnlyAppointment implements Appointment {
     @Override
     public void setEndLocalDateTime(LocalDateTime v) {
         // do nothing (read-only)
-    }
-
-    /**
-     * Convert a java.util.Date to a java.time.LocalDateTime
-     */
-    protected LocalDateTime convertToLocalDateTime(Date date) {
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 }

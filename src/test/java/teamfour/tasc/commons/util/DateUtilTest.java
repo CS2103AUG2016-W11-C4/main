@@ -8,8 +8,6 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-
 import teamfour.tasc.testutil.TestClock;
 
 public class DateUtilTest {

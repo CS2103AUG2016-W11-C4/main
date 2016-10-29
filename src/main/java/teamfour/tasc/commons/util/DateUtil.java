@@ -2,6 +2,7 @@
 package teamfour.tasc.commons.util;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import teamfour.tasc.commons.util.clock.Clock;
@@ -39,6 +40,13 @@ public class DateUtil {
      */
     public Date getCurrentTime() {
         return clock.getCurrentTime();
+    }
+
+    /**
+     * Convert a java.util.Date to a java.time.LocalDateTime
+     */
+    public static LocalDateTime convertToLocalDateTime(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
     
     /**
