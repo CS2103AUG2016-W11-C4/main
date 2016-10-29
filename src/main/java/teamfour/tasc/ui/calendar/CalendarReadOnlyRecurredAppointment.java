@@ -44,7 +44,7 @@ public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppoint
     @Override
     public LocalDateTime getStartLocalDateTime() {
         if (deadlineForOccurrence.hasDeadline()) {
-            return DateUtil.convertToLocalDateTime(deadlineForOccurrence.getDeadline());
+            return getProperDeadlineStartTime(deadlineForOccurrence.getDeadline());
         }
 
         if (periodForOccurence.hasPeriod()) {
@@ -57,8 +57,7 @@ public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppoint
     @Override
     public LocalDateTime getEndLocalDateTime() {
         if (deadlineForOccurrence.hasDeadline()) {
-            return DateUtil.convertToLocalDateTime(deadlineForOccurrence.getDeadline())
-                    .plusHours(1);
+            return getProperDeadlineEndTime(deadlineForOccurrence.getDeadline());
         }
 
         if (periodForOccurence.hasPeriod()) {
