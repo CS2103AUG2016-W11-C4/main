@@ -44,19 +44,19 @@ public class AddCommand extends Command {
      * @throws IllegalValueException
      *             if any of the raw values are invalid
      */
-    public AddCommand(String name, String by, String startTime, String endTime, String repeat, Set<String> tags)
-            throws IllegalValueException {
+    public AddCommand(String name, String deadlineTime, String startTime,
+                      String endTime, String repeat, Set<String> tags)throws IllegalValueException {
         final Set<Tag> tagSet = getTagSetFromStringSet(tags);
-        Deadline deadline = getDeadlineFromString(by);
-        Period period = getPeriodFromStrings(by, startTime, endTime);
+        Deadline deadline = getDeadlineFromString(deadlineTime);
+        Period period = getPeriodFromStrings(deadlineTime, startTime, endTime);
         Recurrence taskRecurrence = getRecurrenceFromStrings(startTime, endTime, repeat, deadline);
 
         this.toAdd = new Task(new Name(name), new Complete(false), deadline, period, taskRecurrence,
                               new UniqueTagList(tagSet));
     }
 
-    private Recurrence getRecurrenceFromStrings(String startTime, String endTime, String repeat, Deadline deadline)
-            throws IllegalValueException {
+    private Recurrence getRecurrenceFromStrings(String startTime, String endTime,
+            String repeat, Deadline deadline) throws IllegalValueException {
         Recurrence taskRecurrence = new Recurrence();
         if (repeat != null) {
             if ((startTime != null && endTime != null) || deadline != null) {

@@ -146,7 +146,7 @@ public class Parser {
         final KeywordParser parser = new KeywordParser("add", "by", "from", "to", "repeat", "tag");
         HashMap<String, String> parsed = parser.parseKeywordsWithoutFixedOrder(args);
         String name = parsed.get("add");
-        String by = parsed.get("by");
+        String deadlineTime = parsed.get("by");
         String startTime = parsed.get("from");
         String endTime = parsed.get("to");
         String recurrence = parsed.get("repeat");
@@ -159,7 +159,7 @@ public class Parser {
             tags = "";
         }
         try {
-            return new AddCommand(name, by, startTime, endTime, recurrence, getTagsFromArgs(tags));
+            return new AddCommand(name, deadlineTime, startTime, endTime, recurrence, getTagsFromArgs(tags));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
