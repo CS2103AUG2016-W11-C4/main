@@ -341,9 +341,16 @@ public class ModelManager extends ComponentManager implements Model {
         //@@author A0127014W
         @Override
         public boolean run(ReadOnlyTask task) {
+            boolean tagFound = false;
+            for (String keyword : nameKeyWords) {
+                tagFound = task.getTags().getInternalList().stream()
+                        .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny()
+                        .isPresent() || tagFound;
+            }
+
             return nameKeyWords.stream()
                     .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                    .findAny().isPresent();
+                    .findAny().isPresent() || tagFound;
         }
         //@@author
         @Override
