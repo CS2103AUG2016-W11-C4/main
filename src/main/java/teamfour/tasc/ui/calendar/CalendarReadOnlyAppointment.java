@@ -91,9 +91,9 @@ public class CalendarReadOnlyAppointment implements Appointment {
         }
 
         if (associatedTask.getPeriod().hasPeriod()) {
-            if (associatedTask
-                    .getEventStatus(DateUtil.getInstance().getCurrentTime()) == EventStatus.ENDED) {
-                return CalendarAppointmentGroups.OVERDUE;
+            if (associatedTask.getEventStatus(DateUtil.getInstance().getCurrentTime()) 
+                    == EventStatus.ENDED) {
+                return CalendarAppointmentGroups.COMPLETED;
             }
 
             return CalendarAppointmentGroups.PERIOD;
