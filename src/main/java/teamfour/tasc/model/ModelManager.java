@@ -343,8 +343,7 @@ public class ModelManager extends ComponentManager implements Model {
         public boolean run(ReadOnlyTask task) {
             return nameKeyWords.stream()
                     .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                    .findAny()
-                    .isPresent();
+                    .findAny().isPresent();
         }
         //@@author
         @Override
