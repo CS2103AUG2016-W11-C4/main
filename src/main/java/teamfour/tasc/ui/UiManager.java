@@ -57,9 +57,10 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = MainWindow.load(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
-            
+
             mainWindow.getCalendarPanel().changeView(prefs.getCalendarView());
             mainWindow.getTaskListPanel().setCollapsed(true);
+            CollapseChangeEvent.setCollapsed(true);
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
@@ -140,7 +141,7 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getCalendarPanel().refreshTasks(event.getNewTaskList());
     }
-    
+
     //@@author A0148096W
     /**
      * Handle the event when change calendar view is requested.
@@ -151,7 +152,7 @@ public class UiManager extends ComponentManager implements Ui {
         mainWindow.getCalendarPanel().changeView(event.getCalendarViewType());
         prefs.setCalendarView(event.getCalendarViewType());
     }
-    
+
     /**
      * Handle the event when calendar is requested to jump to date.
      */
