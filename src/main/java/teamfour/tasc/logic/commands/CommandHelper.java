@@ -144,7 +144,7 @@ public class CommandHelper {
      * @throws IllegalValueException
      */
     public static Recurrence getRecurrence(String repeatString) throws IllegalValueException{
-        KeywordParser kp = new KeywordParser("daily","weekly","monthly","yearly");
+        KeywordParser kp = new KeywordParser("daily","weekly","monthly","yearly","none");
         HashMap<String, String> repeatParameters = kp.parseKeywordsWithoutFixedOrder(repeatString.toLowerCase());
         try {
             return getRecurrenceWithPatternFromParameters(repeatParameters);
@@ -178,6 +178,8 @@ public class CommandHelper {
             Recurrence recurrence = new Recurrence(Recurrence.Pattern.YEARLY,
                     Integer.parseInt(repeatParameters.get("yearly")));
             return recurrence;
+        } else if(repeatParameters.containsKey("none")){
+            return new Recurrence();
         } else {
             throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
         }
