@@ -50,24 +50,24 @@ public class AddCommand extends Command {
         final Set<Tag> tagSet = getTagSetFromStringSet(tags);
         Deadline deadline = getDeadlineFromString(deadlineTime);
         Period period = getPeriodFromStrings(deadlineTime, startTime, endTime);
-        Recurrence taskRecurrence = getRecurrenceFromStrings(startTime, endTime, repeat, deadline);
+        Recurrence taskRecurrence = getRecurrenceFromStrings(startTime, endTime, repeat, deadlineTime);
 
         this.toAdd = new Task(new Name(name), new Complete(false), deadline, period, taskRecurrence,
                               new UniqueTagList(tagSet));
     }
 
     private Recurrence getRecurrenceFromStrings(String startTime, String endTime,
-            String repeat, Deadline deadline) throws IllegalValueException {
+            String repeat, String deadlineTime) throws IllegalValueException {
         Recurrence taskRecurrence = new Recurrence();
         if (repeat != null) {
-            if ((startTime != null && endTime != null) || deadline != null) {
+            if ((startTime != null && endTime != null) || deadlineTime != null) {
                 taskRecurrence = CommandHelper.getRecurrence(repeat);
             }
         }
         return taskRecurrence;
     }
 
-    private Period getPeriodFromStrings(String by, String startTime,
+    private Period getPeriodFromStrings(String deadlineTime, String startTime,
             String endTime) throws IllegalValueException {
         Period period = new Period();
         if ((startTime != null) && (endTime != null)) {
@@ -76,8 +76,8 @@ public class AddCommand extends Command {
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
             period = new Period(dates.get(0), dates.get(1));
-        } else if ((startTime != null) && (by != null)) {
-            List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + by);
+        } else if ((startTime != null) && (deadlineTime != null)) {
+            List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + deadlineTime);
             if (dates.size() < 2) {
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
@@ -86,10 +86,10 @@ public class AddCommand extends Command {
         return period;
     }
 
-    private Deadline getDeadlineFromString(String by) throws IllegalValueException {
+    private Deadline getDeadlineFromString(String deadlineTime) throws IllegalValueException {
         Deadline deadline = new Deadline();
-        if (by != null) {
-            deadline = new Deadline(CommandHelper.convertStringToDate(by));
+        if (deadlineTime != null) {
+            deadline = new Deadline(CommandHelper.convertStringToDate(deadlineTime));
         }
         return deadline;
     }
@@ -114,7 +114,9 @@ public class AddCommand extends Command {
         }
 
     }
-
+    /**
+     * Raises an event to select the last task that was added
+     */
     private void selectAddedTask() {
         UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
         int targetIndex = lastShownList.size();
