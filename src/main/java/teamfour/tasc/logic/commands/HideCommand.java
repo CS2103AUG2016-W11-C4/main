@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import teamfour.tasc.commons.exceptions.IllegalValueException;
-import teamfour.tasc.model.keyword.ByKeyword;
-import teamfour.tasc.model.keyword.FromKeyword;
-import teamfour.tasc.model.keyword.HideCommandKeyword;
-import teamfour.tasc.model.keyword.OnKeyword;
-import teamfour.tasc.model.keyword.TagKeyword;
-import teamfour.tasc.model.keyword.ToKeyword;
+import teamfour.tasc.logic.keyword.ByKeyword;
+import teamfour.tasc.logic.keyword.FromKeyword;
+import teamfour.tasc.logic.keyword.HideCommandKeyword;
+import teamfour.tasc.logic.keyword.OnKeyword;
+import teamfour.tasc.logic.keyword.TagKeyword;
+import teamfour.tasc.logic.keyword.ToKeyword;
 
 /**
  * Hides results from current listing results to the user that match the filters.

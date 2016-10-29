@@ -5,7 +5,7 @@ import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.commons.util.DateUtil;
-import teamfour.tasc.model.keyword.CompleteCommandKeyword;
+import teamfour.tasc.logic.keyword.CompleteCommandKeyword;
 import teamfour.tasc.model.task.Complete;
 import teamfour.tasc.model.task.ReadOnlyTask;
 import teamfour.tasc.model.task.Task;

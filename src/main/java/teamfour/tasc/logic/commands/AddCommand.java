@@ -4,7 +4,7 @@ import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
-import teamfour.tasc.model.keyword.AddCommandKeyword;
+import teamfour.tasc.logic.keyword.AddCommandKeyword;
 import teamfour.tasc.model.tag.Tag;
 import teamfour.tasc.model.tag.UniqueTagList;
 import teamfour.tasc.model.task.Complete;

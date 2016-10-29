@@ -2,7 +2,7 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.ui.ExitAppRequestEvent;
-import teamfour.tasc.model.keyword.ExitCommandKeyword;
+import teamfour.tasc.logic.keyword.ExitCommandKeyword;
 
 /**
  * Terminates the program.

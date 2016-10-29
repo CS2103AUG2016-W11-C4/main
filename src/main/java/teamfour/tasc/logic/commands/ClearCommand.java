@@ -1,7 +1,7 @@
 package teamfour.tasc.logic.commands;
 
+import teamfour.tasc.logic.keyword.ClearCommandKeyword;
 import teamfour.tasc.model.TaskList;
-import teamfour.tasc.model.keyword.ClearCommandKeyword;
 
 /**
  * Clears the address book.

@@ -8,10 +8,10 @@ import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.ui.ChangeCalendarViewRequestEvent;
 import teamfour.tasc.commons.events.ui.JumpToCalendarDateRequestEvent;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
-import teamfour.tasc.model.keyword.CalendarCommandKeyword;
-import teamfour.tasc.model.keyword.DayKeyword;
-import teamfour.tasc.model.keyword.WeekKeyword;
-import teamfour.tasc.model.keyword.TodayKeyword;
+import teamfour.tasc.logic.keyword.CalendarCommandKeyword;
+import teamfour.tasc.logic.keyword.DayKeyword;
+import teamfour.tasc.logic.keyword.TodayKeyword;
+import teamfour.tasc.logic.keyword.WeekKeyword;
 import teamfour.tasc.ui.CalendarPanel;
 
 /**

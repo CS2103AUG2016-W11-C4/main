@@ -2,8 +2,8 @@
 
 package teamfour.tasc.logic.commands;
 
-import teamfour.tasc.model.keyword.UndoCommandKeyword;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
+import teamfour.tasc.logic.keyword.UndoCommandKeyword;
 
 /**
  * Undo the last (n) commands.

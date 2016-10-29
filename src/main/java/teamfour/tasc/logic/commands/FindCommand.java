@@ -2,7 +2,7 @@ package teamfour.tasc.logic.commands;
 
 import java.util.Set;
 
-import teamfour.tasc.model.keyword.FindCommandKeyword;
+import teamfour.tasc.logic.keyword.FindCommandKeyword;
 
 /**
  * Finds and lists all tasks in task list which has names containing the keywords.

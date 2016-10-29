@@ -2,7 +2,7 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
-import teamfour.tasc.model.keyword.DeleteCommandKeyword;
+import teamfour.tasc.logic.keyword.DeleteCommandKeyword;
 import teamfour.tasc.model.task.ReadOnlyTask;
 import teamfour.tasc.model.task.UniqueTaskList.TaskNotFoundException;
 

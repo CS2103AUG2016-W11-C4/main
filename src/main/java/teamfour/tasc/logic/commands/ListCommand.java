@@ -7,13 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import teamfour.tasc.commons.exceptions.IllegalValueException;
+import teamfour.tasc.logic.keyword.ByKeyword;
+import teamfour.tasc.logic.keyword.FromKeyword;
+import teamfour.tasc.logic.keyword.ListCommandKeyword;
+import teamfour.tasc.logic.keyword.SortKeyword;
+import teamfour.tasc.logic.keyword.TagKeyword;
+import teamfour.tasc.logic.keyword.ToKeyword;
 import teamfour.tasc.model.Model;
-import teamfour.tasc.model.keyword.ByKeyword;
-import teamfour.tasc.model.keyword.FromKeyword;
-import teamfour.tasc.model.keyword.ListCommandKeyword;
-import teamfour.tasc.model.keyword.SortKeyword;
-import teamfour.tasc.model.keyword.TagKeyword;
-import teamfour.tasc.model.keyword.ToKeyword;
 
 /**
  * Lists all tasks in the task list to the user with filters and sort.
