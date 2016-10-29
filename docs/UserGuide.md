@@ -284,21 +284,12 @@ In general, you may use this format to hide various tasks from the tasks listed.
 ### Finding tasks/events which match keywords: `find`
 
 You don't have to remember every details of the tasks you added, just use the `find`
-command which returns the list of tasks which partially match by their names, dates, types or tags.
+command which returns the list of tasks which partially match by their names or tags.
 
 To show tasks with names such as "Up**grad**e myself", or tags such as
 "**Grad**ed":
 
-`find grad`
-
-To show your task named "**V0.0 Deliverables**" in **Sep**tember:
-
-`find "V0.0 Deliverables" sep`
-
-> **Note:**<br>
-> Words enclosed in quotation marks `" "` use exact match and are case-sensitive.<br>
-> The task list results are shown in an order which prioritizes the closest match, followed by completion status and date.
-<br>
+`find grad`<br>
 
 In general, you may use this format to find tasks using keywords.<br>
 `find KEYWORD...`
