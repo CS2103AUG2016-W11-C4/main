@@ -495,10 +495,13 @@ Or perhaps you prefer to see an overview of many tasks at one glance at the task
 `collapse`
 
 This will change the view from something like this: <br>
-//TODO Attach screenshot
+<img src="images/Ui-collapse1.png" width="600"><br>
+*Figure 6: The expanded view*
+
 
 To this:<br>
-//Todo Attach screenshot
+<img src="images/Ui-collapse2.png" width="600"><br>
+*Figure 6: The collapsed view*
 
 If you want to see all the details of your tasks agains, type:
 
