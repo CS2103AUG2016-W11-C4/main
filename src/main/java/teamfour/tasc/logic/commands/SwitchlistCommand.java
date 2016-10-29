@@ -2,7 +2,7 @@
 package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.events.storage.RequestTaskListSwitchEvent;
-import teamfour.tasc.model.keyword.SwitchListCommandKeyword;
+import teamfour.tasc.logic.keyword.SwitchListCommandKeyword;
 import teamfour.tasc.commons.core.EventsCenter;
 
 /**

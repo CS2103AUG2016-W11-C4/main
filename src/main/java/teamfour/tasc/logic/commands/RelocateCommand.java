@@ -4,7 +4,7 @@ package teamfour.tasc.logic.commands;
 import teamfour.tasc.MainApp;
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.storage.FileRelocateEvent;
-import teamfour.tasc.model.keyword.RelocateCommandKeyword;
+import teamfour.tasc.logic.keyword.RelocateCommandKeyword;
 
 /**
  * Moves the data storage file to a new directory.

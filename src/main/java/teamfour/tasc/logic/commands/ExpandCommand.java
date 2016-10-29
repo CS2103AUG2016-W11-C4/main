@@ -3,7 +3,7 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.ui.CollapseChangeEvent;
-import teamfour.tasc.model.keyword.ExpandCommandKeyword;
+import teamfour.tasc.logic.keyword.ExpandCommandKeyword;
 
 /**
  * Expands the task list panel view

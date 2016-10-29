@@ -3,7 +3,7 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.ui.ShowHelpRequestEvent;
-import teamfour.tasc.model.keyword.HelpCommandKeyword;
+import teamfour.tasc.logic.keyword.HelpCommandKeyword;
 
 /**
  * Format full help instructions for every command for display.
