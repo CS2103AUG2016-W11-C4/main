@@ -11,16 +11,17 @@ import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
 import teamfour.tasc.commons.util.DateUtil;
 import teamfour.tasc.model.task.ReadOnlyTask;
+import teamfour.tasc.model.task.status.EventStatus;
 
 /**
- * An implementation of the jfxtra's appointment class to
- * display a task in our agendar calendar control.
+ * An implementation of the jfxtra's appointment class to display a task in our
+ * agendar calendar control.
  */
 public class CalendarReadOnlyAppointment implements Appointment {
 
     protected ReadOnlyTask associatedTask;
     private int associatedIndex;
-    
+
     public CalendarReadOnlyAppointment(ReadOnlyTask associatedTask, int associatedIndex) {
         this.associatedTask = associatedTask;
         this.associatedIndex = associatedIndex;
@@ -88,19 +89,23 @@ public class CalendarReadOnlyAppointment implements Appointment {
         if (associatedTask.getComplete().isCompleted()) {
             return CalendarAppointmentGroups.COMPLETED;
         }
-        
+
         if (associatedTask.getPeriod().hasPeriod()) {
+            if (associatedTask.getEventStatus(DateUtil.getCurrentTime()) == EventStatus.ENDED) {
+                return CalendarAppointmentGroups.OVERDUE;
+            }
+            
             return CalendarAppointmentGroups.PERIOD;
         }
-        
+
         if (associatedTask.getDeadline().hasDeadline()) {
             if (associatedTask.isOverdue(DateUtil.getCurrentTime())) {
                 return CalendarAppointmentGroups.OVERDUE;
             }
-            
+
             return CalendarAppointmentGroups.DEADLINE;
         }
-        
+
         return null;
     }
 
@@ -158,7 +163,7 @@ public class CalendarReadOnlyAppointment implements Appointment {
         if (associatedTask.getDeadline().hasDeadline()) {
             return convertToLocalDateTime(associatedTask.getDeadline().getDeadline());
         }
-        
+
         if (associatedTask.getPeriod().hasPeriod()) {
             return convertToLocalDateTime(associatedTask.getPeriod().getStartTime());
         }
@@ -176,7 +181,7 @@ public class CalendarReadOnlyAppointment implements Appointment {
         if (associatedTask.getDeadline().hasDeadline()) {
             return convertToLocalDateTime(associatedTask.getDeadline().getDeadline()).plusHours(1);
         }
-        
+
         if (associatedTask.getPeriod().hasPeriod()) {
             return convertToLocalDateTime(associatedTask.getPeriod().getEndTime());
         }
