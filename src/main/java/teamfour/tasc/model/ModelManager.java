@@ -332,13 +332,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author A0127014W
     private class NameQualifier implements Qualifier {
         private Set<String> nameKeyWords;
 
         NameQualifier(Set<String> nameKeyWords) {
             this.nameKeyWords = nameKeyWords;
         }
-        //@@author A0127014W
         @Override
         public boolean run(ReadOnlyTask task) {
             return nameKeyWords.stream()
@@ -346,13 +346,13 @@ public class ModelManager extends ComponentManager implements Model {
                     .findAny()
                     .isPresent();
         }
-        //@@author A0127014W
         @Override
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
         }
     }
 
+    //@@author A0148096W
     private class TypeQualifier implements Qualifier {
         private String type;
 
