@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/CS2103AUG2016-W11-C4/main.svg?branch=master)](https://travis-ci.org/CS2103AUG2016-W11-C4/main)
 [![Coverage Status](https://coveralls.io/repos/github/CS2103AUG2016-W11-C4/main/badge.svg?branch=master)](https://coveralls.io/github/CS2103AUG2016-W11-C4/main?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3d7c76a2a50449458bdccde4f9d313eb)](https://www.codacy.com/app/tanwangleng/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103AUG2016-W11-C4/main&amp;utm_campaign=Badge_Grade)
 
 # TaSc
 
