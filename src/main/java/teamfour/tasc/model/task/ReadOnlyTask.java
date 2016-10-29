@@ -61,11 +61,7 @@ public interface ReadOnlyTask {
      * (Only make sense if task has a deadline).
      */
     default boolean isOverdue(Date currentTime) {
-        if (!getDeadline().hasDeadline()) {
-            return false;
-        }
-
-        return currentTime.after(getDeadline().getDeadline());
+        return getDeadline().isOverdue(currentTime);
     }
     
     /**
