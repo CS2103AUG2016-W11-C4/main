@@ -14,9 +14,6 @@ public class UndoCommandTest extends AddressBookGuiTest {
     
     @Before
     public void prepare() {
-        commandBox.runCommand("add \"undo test case 1\"");
-        commandBox.runCommand("add \"undo test case 2\"");
-        commandBox.runCommand("add \"undo test case 3\"");
         commandBox.runCommand("delete 1");
         commandBox.runCommand("delete 1");
         commandBox.runCommand("delete 1");
