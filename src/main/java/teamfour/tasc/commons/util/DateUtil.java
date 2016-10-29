@@ -1,6 +1,7 @@
 //@@author A0140011L
 package teamfour.tasc.commons.util;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import teamfour.tasc.commons.util.clock.Clock;
@@ -38,5 +39,17 @@ public class DateUtil {
      */
     public Date getCurrentTime() {
         return clock.getCurrentTime();
+    }
+    
+    /**
+     * Clamp the dateTime so that the latest hour can only be maxAllowedHour.
+     */
+    public static LocalDateTime clampDateTimeWithMaxAllowedHour(LocalDateTime dateTime,
+            int maxAllowedHour) {
+        if (dateTime.getHour() >= maxAllowedHour) {
+            return dateTime.withHour(maxAllowedHour).withMinute(0);
+        }
+
+        return dateTime;
     }
 }
