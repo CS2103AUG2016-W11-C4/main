@@ -121,7 +121,7 @@ public class TaskCompleteConverterTest {
                 .withPeriod(firstDayOfDecember3am, firstDayOfDecember5am).build();
 
         TestTask noRecurrenceTaskCompleted = new TaskBuilder()
-                .withName("No recurrence" + completedAtNowString).withDeadline(firstDayOfDecember)
+                .withName("No recurrence " + completedAtNowString).withDeadline(firstDayOfDecember)
                 .withPeriod(firstDayOfDecember3am, firstDayOfDecember5am).withCompleteStatus(true)
                 .build();
 
@@ -140,7 +140,7 @@ public class TaskCompleteConverterTest {
                 .build();
 
         TestTask oneRecurrenceTaskCompleted = new TaskBuilder()
-                .withName("One recurrence" + completedAtNowString).withDeadline(firstDayOfDecember)
+                .withName("One recurrence " + completedAtNowString).withDeadline(firstDayOfDecember)
                 // no recurrence for completed
                 .withCompleteStatus(true).build();
 
@@ -165,7 +165,7 @@ public class TaskCompleteConverterTest {
                 .withRecurrence(Recurrence.Pattern.WEEKLY, 2).build();
 
         TestTask twoRecurrenceTaskCompleted = new TaskBuilder()
-                .withName("Two recurrences" + completedAtNowString)
+                .withName("Two recurrences " + completedAtNowString)
                 .withPeriod(firstDayOfDecember3am, firstDayOfDecember5am)
                 // no recurrence for completed
                 .withCompleteStatus(true).build();
