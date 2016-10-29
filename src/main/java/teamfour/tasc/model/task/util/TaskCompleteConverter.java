@@ -47,7 +47,7 @@ public class TaskCompleteConverter {
         String completedString = String.format(TASK_NAME_COMPLETED_SUFFIX, currentTime);
         
         this.completedTask = new Task(
-                new Name(uncompletedTask.getName().getName() + completedString),
+                new Name(uncompletedTask.getName().getName() + " " + completedString),
                 new Complete(true),
                 uncompletedTask.getDeadline(),
                 uncompletedTask.getPeriod(),
