@@ -369,7 +369,7 @@ last 5 actions taken:
 
 In general, you may use this format to undo various number of changes.<br>
 `undo [LAST STEPS]`
- * LAST STEPS refer to the number of steps to undo, starting from the lastest step. 
+ * LAST STEPS refer to the number of steps to undo, starting from the latest step. 
 
 If you simply type:
 `undo`
@@ -395,7 +395,7 @@ last 4 actions taken:
 
 In general, you may use this format to redo various number of changes.<br>
 `redo [LAST STEPS]`
- * LAST STEPS refer to the number of steps to redo, starting from the lastest step. 
+ * LAST STEPS refer to the number of steps to redo, starting from the latest step. 
 
 If you simply type:
 `redo`
@@ -549,7 +549,7 @@ and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword.
 <!-- @@author -->
 ### Saving the Data
 TaSc saves automatically after every command that changes the data.
-Don't worry about your data getting lost.
+Don't worry about losing your data
 
 <br>
 
