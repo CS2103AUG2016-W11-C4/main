@@ -197,9 +197,12 @@ public class CommandHelperTest {
     public void convertStringToDate_multipleDates_exceptionThrown() throws IllegalValueException{
         String dateString = "13 sep and 14 oct";
         Date date = CommandHelper.convertStringToDate(dateString);
+    }
 
+    @Test(expected = IllegalValueException.class)
+    public void convertStringToDate_multipleRelativeDates_exceptionThrown() throws IllegalValueException{
         String dateString2 = "today and tomorrow";
-        Date date2 = CommandHelper.convertStringToDate(dateString2);;
+        Date date2 = CommandHelper.convertStringToDate(dateString2);
     }
 
     @Test
@@ -257,15 +260,23 @@ public class CommandHelperTest {
         }
     }
 
-    @Test
-    public void getRecurrence_invalidInput(){
+    @Test(expected = IllegalValueException.class)
+    public void getRecurrence_invalidRepeatCount_throwsIllegalValueException() throws IllegalValueException{
         String repeatParameter = "weekly 0";
-        Recurrence recurrence;
-        try {
-            recurrence = CommandHelper.getRecurrence(repeatParameter);
-            fail("Exception expected");
-        } catch (IllegalValueException e) {
-        }
+        Recurrence recurrence = CommandHelper.getRecurrence(repeatParameter);
+
+    }
+
+    @Test(expected = IllegalValueException.class)
+    public void getRecurrence_emptyString_throwsIllegalValueException() throws IllegalValueException{
+        String repeatParameter = "";
+        Recurrence recurrence = CommandHelper.getRecurrence(repeatParameter);
+    }
+
+    @Test(expected = IllegalValueException.class)
+    public void getRecurrence_InvalidString_throwsIllegalValueException() throws IllegalValueException{
+        String repeatParameter = "invalidInput";
+        Recurrence recurrence = CommandHelper.getRecurrence(repeatParameter);
     }
 
     //@@author A0140011L

@@ -139,11 +139,12 @@ public class CommandHelper {
     /**
      * Gets a Recurrence object from a string containing repeat parameters for recurrence
      * Input parameter repeatString includes the pattern of recurrence, and frequency of recurrence
-     * @param repeatString  String containing repeat parameters
+     * @param repeatString  String containing repeat parameters. Cannot be null
      * @return Recurrence object from repeatString
      * @throws IllegalValueException
      */
     public static Recurrence getRecurrence(String repeatString) throws IllegalValueException{
+        assert repeatString != null;
         KeywordParser kp = new KeywordParser("daily","weekly","monthly","yearly","none");
         HashMap<String, String> repeatParameters = kp.parseKeywordsWithoutFixedOrder(repeatString.toLowerCase());
         try {
