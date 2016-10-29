@@ -8,6 +8,7 @@ import teamfour.tasc.commons.util.DateUtil;
 import teamfour.tasc.model.task.Deadline;
 import teamfour.tasc.model.task.Period;
 import teamfour.tasc.model.task.ReadOnlyTask;
+import teamfour.tasc.model.task.status.EventStatus;
 
 public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppointment {
 
@@ -30,7 +31,13 @@ public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppoint
                 return CalendarAppointmentGroups.OVERDUE;
             }
         }
-        
+
+        if (associatedTask.getPeriod().hasPeriod()) {
+            if (associatedTask.getEventStatus(DateUtil.getInstance().getCurrentTime()) 
+                    == EventStatus.ENDED) {
+                return CalendarAppointmentGroups.COMPLETED;
+            }
+        }
         return CalendarAppointmentGroups.RECURRING;
     }
 
