@@ -1,6 +1,8 @@
 //@@author A0140011L
 package teamfour.tasc.commons.util;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 import teamfour.tasc.commons.util.clock.Clock;
@@ -38,5 +40,24 @@ public class DateUtil {
      */
     public Date getCurrentTime() {
         return clock.getCurrentTime();
+    }
+
+    /**
+     * Convert a java.util.Date to a java.time.LocalDateTime
+     */
+    public static LocalDateTime convertToLocalDateTime(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+    
+    /**
+     * Clamp the dateTime so that the latest hour can only be maxAllowedHour.
+     */
+    public static LocalDateTime clampDateTimeWithMaxAllowedHour(LocalDateTime dateTime,
+            int maxAllowedHour) {
+        if (dateTime.getHour() >= maxAllowedHour) {
+            return dateTime.withHour(maxAllowedHour).withMinute(0);
+        }
+
+        return dateTime;
     }
 }
