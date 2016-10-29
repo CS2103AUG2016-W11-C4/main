@@ -26,7 +26,7 @@ public class CalendarCommand extends Command {
     public static final String KEYWORD_CALENDAR_VIEW_TODAY = TodayKeyword.keyword;
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes the calendar view. "
-            + "Parameters: day (or) week\n"
+            + "Parameters: day|week|today\n"
             + "Example: " + COMMAND_WORD + " day";
 
     public static final String MESSAGE_SUCCESS = 
