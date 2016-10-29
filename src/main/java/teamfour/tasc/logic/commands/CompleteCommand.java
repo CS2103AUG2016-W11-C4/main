@@ -51,7 +51,7 @@ public class CompleteCommand extends Command {
         oldReadOnlyTask = lastShownList.get(targetIndex - 1);
 
         try {
-            newTasks = new TaskCompleteConverter(oldReadOnlyTask, DateUtil.getCurrentTime());
+            newTasks = new TaskCompleteConverter(oldReadOnlyTask, DateUtil.getInstance().getCurrentTime());
         } catch (TaskAlreadyCompletedException | IllegalValueException e) {
             return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_ALREADY_COMPLETED,
                     oldReadOnlyTask));
