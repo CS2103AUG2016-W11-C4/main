@@ -47,10 +47,9 @@ public class CalendarCommand extends Command {
      * Validates the calendar view String in the argument.
      */
     private boolean isCalendarViewValid(String calendarView) {
-        if (calendarView != null &&
-                (calendarView.equals(KEYWORD_CALENDAR_VIEW_DAY) ||
-                calendarView.equals(KEYWORD_CALENDAR_VIEW_WEEK))) {
-            return true;
+        if (calendarView != null) {
+            return calendarView.equals(KEYWORD_CALENDAR_VIEW_DAY) ||
+                    calendarView.equals(KEYWORD_CALENDAR_VIEW_WEEK);
         }
         return false;
     }
