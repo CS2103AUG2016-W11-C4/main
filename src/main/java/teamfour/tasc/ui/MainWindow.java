@@ -4,6 +4,7 @@ package teamfour.tasc.ui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
@@ -64,6 +65,9 @@ public class MainWindow extends UiPart {
     @FXML
     private AnchorPane calendarPlaceholder;
 
+
+    private ListView<String> wordList;
+
     public MainWindow() {
         super();
     }
@@ -110,11 +114,15 @@ public class MainWindow extends UiPart {
     }
 
     void fillInnerParts() {
+        wordList = new ListView<String>();
+        wordList.setPrefHeight(0);
+        wordList.setStyle(".word-list");
+        
         calendarPanel = CalendarPanel.load(getCalendarPlaceholder(), logic.getFilteredTaskList());
         taskListPanel = TaskListPanel.load(primaryStage, getTaskListPlaceholder(), logic.getFilteredTaskList());
-        resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder());
+        resultDisplay = ResultDisplay.load(primaryStage, getResultDisplayPlaceholder(), wordList);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getTaskListFilePathAndName());
-        commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, logic);
+        commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), resultDisplay, wordList, logic);
     }
     
     private AnchorPane getCalendarPlaceholder() {

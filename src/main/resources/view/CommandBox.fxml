@@ -9,7 +9,6 @@
    <VBox>
    		<children>
    			<TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" promptText="Enter command here..."/>
-   			<ListView fx:id="wordList" styleClass="word-list"></ListView>
    		</children>
    </VBox>
 </AnchorPane>

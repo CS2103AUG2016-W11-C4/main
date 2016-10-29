@@ -3,6 +3,7 @@ package teamfour.tasc.ui;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -23,13 +24,15 @@ public class ResultDisplay extends UiPart {
 
     private AnchorPane mainPane;
 
-    public static ResultDisplay load(Stage primaryStage, AnchorPane placeHolder) {
-        ResultDisplay statusBar = UiPartLoader.loadUiPart(primaryStage, placeHolder, new ResultDisplay());
-        statusBar.configure();
+    public static ResultDisplay load(Stage primaryStage, AnchorPane placeHolder,
+            ListView<String> wordList) {
+        ResultDisplay statusBar = UiPartLoader.loadUiPart(primaryStage, placeHolder,
+                new ResultDisplay());
+        statusBar.configure(wordList);
         return statusBar;
     }
 
-    public void configure() {
+    public void configure(ListView<String> wordList) {
         resultDisplayArea = new TextArea();
         resultDisplayArea.setEditable(false);
         resultDisplayArea.setId(RESULT_DISPLAY_ID);
@@ -41,6 +44,7 @@ public class ResultDisplay extends UiPart {
         mainPane.getChildren().add(resultDisplayArea);
         FxViewUtil.applyAnchorBoundaryParameters(mainPane, 0.0, 0.0, 0.0, 0.0);
         placeHolder.getChildren().add(mainPane);
+        placeHolder.getChildren().add(wordList);
     }
 
     @Override
