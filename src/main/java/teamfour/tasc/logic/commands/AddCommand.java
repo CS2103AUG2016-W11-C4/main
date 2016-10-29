@@ -35,6 +35,7 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the task list";
+    public static final String MESSAGE_INVALID_DATES = "Invalid date(s)";
 
     private final Task toAdd;
 
@@ -45,7 +46,7 @@ public class AddCommand extends Command {
      *             if any of the raw values are invalid
      */
     public AddCommand(String name, String deadlineTime, String startTime,
-                      String endTime, String repeat, Set<String> tags)throws IllegalValueException {
+            String endTime, String repeat, Set<String> tags) throws IllegalValueException {
         final Set<Tag> tagSet = getTagSetFromStringSet(tags);
         Deadline deadline = getDeadlineFromString(deadlineTime);
         Period period = getPeriodFromStrings(deadlineTime, startTime, endTime);
@@ -66,18 +67,19 @@ public class AddCommand extends Command {
         return taskRecurrence;
     }
 
-    private Period getPeriodFromStrings(String by, String startTime, String endTime) throws IllegalValueException {
+    private Period getPeriodFromStrings(String by, String startTime,
+            String endTime) throws IllegalValueException {
         Period period = new Period();
         if ((startTime != null) && (endTime != null)) {
             List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + endTime);
             if (dates.size() < 2) {
-                throw new IllegalValueException("Invalid Dates");
+                throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
             period = new Period(dates.get(0), dates.get(1));
         } else if ((startTime != null) && (by != null)) {
             List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + by);
             if (dates.size() < 2) {
-                throw new IllegalValueException("Invalid Dates");
+                throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
             period = new Period(dates.get(0), dates.get(1));
         }

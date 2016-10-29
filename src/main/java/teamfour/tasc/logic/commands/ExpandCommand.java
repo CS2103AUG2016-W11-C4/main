@@ -13,11 +13,8 @@ public class ExpandCommand extends Command {
 
     public static final String COMMAND_WORD = ExpandCommandKeyword.keyword;
     public static final String MESSAGE_SUCCESS = "Task view expanded";
-    public static final String MESSAGE_FAILURE_ALREADY_EXPANDED = "Already in expanded view, type \"collapse\" to go into collapsed view";
-
-    public ExpandCommand(){
-
-    }
+    public static final String MESSAGE_FAILURE_ALREADY_EXPANDED = "Already in expanded view, "
+            + "type \"collapse\" to go into collapsed view";
 
     public CommandResult execute(){
         assert model!= null;
