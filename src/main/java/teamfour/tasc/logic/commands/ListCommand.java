@@ -51,7 +51,7 @@ public class ListCommand extends Command {
         this.deadline = null;
         this.startTime = null;
         this.endTime = null;
-        this.tags = new HashSet<>();
+        this.tags = new HashSet<String>();
         this.sortOrder = Model.SORT_ORDER_BY_EARLIEST_FIRST;
     }
 
@@ -67,7 +67,7 @@ public class ListCommand extends Command {
         this.startTime = CommandHelper.tryConvertStringToDateOrReturnNull(startTime);
         this.endTime = CommandHelper.tryConvertStringToDateOrReturnNull(endTime);
 
-        this.tags = new HashSet<>();
+        this.tags = new HashSet<String>();
         for (String tagName : tags) {
             this.tags.add(tagName);
         }
@@ -77,22 +77,28 @@ public class ListCommand extends Command {
 
     /**
      * Precondition: model is not null.
-     * Adds the filters in this command to the model.
+     * Resets the filters in this command to filters in the model.
      * Does not update the list yet.
      */
     private void addCommandFiltersToModel() {
         assert model != null;
+        
         model.resetTaskListFilter();
-        if (type != null)
+        if (type != null) {
             model.addTaskListFilterByType(type, false);
-        if (deadline != null)
+        }
+        if (deadline != null) {
             model.addTaskListFilterByDeadline(deadline, false);
-        if (startTime != null)
+        }
+        if (startTime != null) {
             model.addTaskListFilterByStartTime(startTime, false);
-        if (endTime != null)
+        }
+        if (endTime != null) {
             model.addTaskListFilterByEndTime(endTime, false);
-        if (!tags.isEmpty())
+        }
+        if (!tags.isEmpty()) {
             model.addTaskListFilterByTags(tags, false);
+        }
     }
 
     @Override
@@ -102,8 +108,9 @@ public class ListCommand extends Command {
         addCommandFiltersToModel();
         model.updateFilteredTaskListByFilter();
 
-        if (sortOrder != null)
+        if (sortOrder != null) {
             model.sortFilteredTaskListByOrder(sortOrder);
+        }
 
         return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
     }
