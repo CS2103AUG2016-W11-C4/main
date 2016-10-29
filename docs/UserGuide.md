@@ -499,6 +499,7 @@ This will change the view from something like this: <br>
 *Figure 6: The expanded view*
 <br>
 
+
 To this:<br>
 <img src="images/Ui-collapse2.png" width="600"><br>
 *Figure 7: The collapsed view*
@@ -506,6 +507,7 @@ To this:<br>
 If you want to see all the details of your tasks agains, type:
 
 `expand`
+
 <br>
 
 <!-- @@author A0148096W -->
