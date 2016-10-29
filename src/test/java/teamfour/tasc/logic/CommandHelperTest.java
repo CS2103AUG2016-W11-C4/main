@@ -193,24 +193,13 @@ public class CommandHelperTest {
         }
     }
 
-    @Test
-    public void convertStringToDate_multipleDates_exceptionThrown(){
+    @Test(expected = IllegalValueException.class)
+    public void convertStringToDate_multipleDates_exceptionThrown() throws IllegalValueException{
         String dateString = "13 sep and 14 oct";
-        Date date;
-        try {
-            date = CommandHelper.convertStringToDate(dateString);
-            fail("Exception expected");
-        } catch (Exception e) {
+        Date date = CommandHelper.convertStringToDate(dateString);
 
-        }
         String dateString2 = "today and tomorrow";
-        Date date2;
-        try {
-            date2 = CommandHelper.convertStringToDate(dateString2);
-            fail("Exception expected");
-        } catch (Exception e) {
-
-        }
+        Date date2 = CommandHelper.convertStringToDate(dateString2);;
     }
 
     @Test
