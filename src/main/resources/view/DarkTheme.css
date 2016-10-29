@@ -302,14 +302,16 @@
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
+/* @@author A0140011L */
 .completed { -fx-background-color: #665f5e; -fx-fill: #665f5e; }
 .overdue { -fx-background-color: #ff3004; -fx-fill: #ff3004; }
 .deadline { -fx-background-color: #f7ff04; -fx-fill: #f7ff04; }
 .period { -fx-background-color: #04ecff; -fx-fill: #04ecff; }
 .recurring { -fx-background-color: #04ffd5; -fx-fill: #04ffd5; }
 
+/* @@author A0140011L-reused */
 /*
- * Have to be copied from JFxtras Agenda's original css, otherwise the selected
+ * Have to be copied from JFxtras Agenda's original css, otherwise the SELECTED
  * task would not have the correct color :/
  */
 .Agenda .Selected { 
@@ -318,4 +320,10 @@
 	-fx-background-insets: -1.4, 0, 1, 2;
 	-fx-background-radius: 6.4, 5, 4, 3;
 
+}
+
+/* @@author A0140011L */
+.Agenda {
+	-fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Semibold";
 }
