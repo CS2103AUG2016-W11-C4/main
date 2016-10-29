@@ -14,6 +14,7 @@ import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.events.storage.DataSavingExceptionEvent;
 import teamfour.tasc.commons.events.ui.ChangeCalendarViewRequestEvent;
 import teamfour.tasc.commons.events.ui.CollapseChangeEvent;
+import teamfour.tasc.commons.events.ui.JumpToCalendarDateRequestEvent;
 import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
 import teamfour.tasc.commons.events.ui.ShowHelpRequestEvent;
 import teamfour.tasc.commons.events.ui.TaskPanelListChangedEvent;
@@ -147,6 +148,15 @@ public class UiManager extends ComponentManager implements Ui {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.getCalendarPanel().changeView(event.getCalendarViewType());
         prefs.setCalendarView(event.getCalendarViewType());
+    }
+    
+    /**
+     * Handle the event when calendar is requested to jump to date.
+     */
+    @Subscribe
+    public void handleJumpToCalendarDateRequestEvent(JumpToCalendarDateRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getCalendarPanel().selectDate(event.getDate());
     }
 
     //@@author A0127014W
