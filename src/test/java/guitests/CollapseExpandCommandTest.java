@@ -10,7 +10,6 @@ public class CollapseExpandCommandTest extends AddressBookGuiTest{
     @Test
     public void collapse_alreadyCollapsed() {
         commandBox.runCommand("collapse");
-        assertResultMessage("Task view collapsed");
         commandBox.runCommand("collapse");
         assertResultMessage("Already in collapsed view, type \"expand\" to go into expanded view");
     }
@@ -22,11 +21,10 @@ public class CollapseExpandCommandTest extends AddressBookGuiTest{
         assertResultMessage("Task view collapsed");
     }
 
-    /*
+
     @Test
     public void expand_alreadyExpanded() {
         commandBox.runCommand("expand");
-        assertResultMessage("Task view expanded");
         commandBox.runCommand("expand");
         assertResultMessage("Already in expanded view, type \"collapse\" to go into collapsed view");
     }
@@ -37,5 +35,5 @@ public class CollapseExpandCommandTest extends AddressBookGuiTest{
         commandBox.runCommand("expand");
         assertResultMessage("Task view expanded");
     }
-    */
+
 }
