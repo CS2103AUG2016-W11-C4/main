@@ -114,7 +114,8 @@ public class Period {
         if (currentTime.before(startTime)) {
             return EventStatus.NOT_STARTED;
         }
-        else if (currentTime.after(endTime)) {
+        
+        if (currentTime.after(endTime)) {
             return EventStatus.ENDED;
         }
         
