@@ -524,7 +524,7 @@ We have two types of tests:
      (those code units are assumed to be working).<br>
       e.g. `teamfour.tasc.storage.StorageManagerTest`
    3. Hybrids of unit and integration tests. These tests check multiple code units as well as
-      how the are connected together.<br>
+      how they are connected together.<br>
       e.g. `teamfour.tasc.logic.LogicManagerTest`
 <br><br>
 
