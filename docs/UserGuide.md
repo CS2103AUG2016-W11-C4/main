@@ -140,10 +140,10 @@ you may choose to use tags as a way to prioritize or to classify tasks.
 In general, you may use this format to add tasks with various parameters.<br>
 `add NAME [by DEADLINE] [from START_TIME to END_TIME] [repeat PATTERN FREQUENCY] [tag TAG...]`
 
- * Words in lower case are the keywords for setting the task parameters (e.g. use "by" to set deadline for task)
- * Words in UPPER CASE are the parameters associated with the keyword. Replace the parameters with the information you want to set. (e.g. replace "DEADLINE" with "1 April" to set task deadline as 1 April)
- * Keywords and parameters surrounded by '[' and ']' are optional. (e.g. both "add project" and "add project by tomorrow" are valid commands)
- *Parameters followed by "..." can have multiple instances in one command. (e.g. "add project tag important tag work" will add a task with two tags, "important" and "work") 
+ * Words in lower case are the keywords for specifying what details you want to input for the task  (e.g. use `by` to set deadline for task)
+ * Words in UPPER CASE are the values associated with the keyword. Replace the placeholder (in capital letters) with the correct value that you want to set. (e.g. replace `DEADLINE` with `1 April` to set task deadline as 1 April)
+ * Keywords and values surrounded by `[` and `]` are optional. (e.g. both `add project` and `add project by tomorrow` are valid commands, as the deadline is optional)
+ * Keywords followed by `"..."` can appear multiple times in one command. (e.g. `add project tag important tag work` will add a task with two tags, `important` and `work`) 
 
 <br>
 
