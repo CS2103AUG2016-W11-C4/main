@@ -329,7 +329,8 @@ The `HistoryStack` class stores the most recent states of the implemented `Histo
 You can specify a maximum size for the stack, and older history states are discarded whenever new states are
 pushed and the size has exceeded the maximum size. History states stored in the stack are returned as type `T` objects when popped.
 
-> **Note:** The `undo` and `redo` command uses HistoryStack to store recent states of the TaskList.<br>
+> **Note:**<br>
+> The `undo` and `redo` command uses HistoryStack to store recent states of the TaskList.<br>
 > This design eliminates the need to implement an undo/redo method for every command.
 > This saves time and effort for implementing new commands, and also reduces complications and potential bugs.
 
@@ -339,7 +340,8 @@ pushed and the size has exceeded the maximum size. History states stored in the 
 
 The `UserPrefs` class stores the program settings.
 
-> **Note:** The program settings and user configuration settings are different.
+> **Note:**<br>
+> The program settings (related to application startup size and position) and user configuration settings (related to the user's task list) are different.
 
 <br>
 
