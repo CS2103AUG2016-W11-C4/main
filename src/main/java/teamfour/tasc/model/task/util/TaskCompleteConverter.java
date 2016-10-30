@@ -27,7 +27,9 @@ public class TaskCompleteConverter {
     
     /**
      * Constructor for converter.
-     * @throws IllegalValueException 
+     * @throws IllegalArgumentException if arguments are null
+     * @throws IllegalValueException if the task details are invalid
+     * @throws TaskAlreadyCompletedException if the task is already marked complete
      */
     public TaskCompleteConverter(ReadOnlyTask uncompletedTask, Date currentTime)
             throws IllegalArgumentException, TaskAlreadyCompletedException, IllegalValueException {

@@ -54,7 +54,7 @@ public interface ReadOnlyTask {
     }
     
     /** 
-     * Given the current time, determine whether the task is overdue.
+     * Given the current time, determines whether the task is overdue.
      * (Only make sense if task has a deadline).
      */
     default boolean isOverdue(Date currentTime) {

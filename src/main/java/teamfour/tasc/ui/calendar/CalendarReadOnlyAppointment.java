@@ -88,13 +88,14 @@ public class CalendarReadOnlyAppointment implements Appointment {
 
     @Override
     public AppointmentGroup getAppointmentGroup() {
+        Date currentTime = DateUtil.getInstance().getCurrentTime();
+        
         if (associatedTask.getComplete().isCompleted()) {
             return CalendarAppointmentGroups.COMPLETED;
         }
 
         if (associatedTask.getPeriod().hasPeriod()) {
-            if (associatedTask.getEventStatus(DateUtil.getInstance().getCurrentTime()) 
-                    == EventStatus.ENDED) {
+            if (associatedTask.getEventStatus(currentTime) == EventStatus.ENDED) {
                 return CalendarAppointmentGroups.COMPLETED;
             }
 
@@ -102,7 +103,7 @@ public class CalendarReadOnlyAppointment implements Appointment {
         }
 
         if (associatedTask.getDeadline().hasDeadline()) {
-            if (associatedTask.isOverdue(DateUtil.getInstance().getCurrentTime())) {
+            if (associatedTask.isOverdue(currentTime)) {
                 return CalendarAppointmentGroups.OVERDUE;
             }
 

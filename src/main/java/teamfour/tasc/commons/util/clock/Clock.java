@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public interface Clock {
     /**
-     * Get the current time provided by the clock.
+     * Gets the current time provided by the clock.
      */
     Date getCurrentTime();
 }

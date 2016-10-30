@@ -41,8 +41,9 @@ public class PeriodTest {
         assertEquals(validEndTime, validPeriod.getEndTime());
     }
     
-    @Test (expected = IllegalValueException.class)
-    public void constructor_startTimeLaterThanEndTime_throwsIllegalValueException() throws IllegalValueException {
+    @Test(expected = IllegalValueException.class)
+    public void constructor_startTimeLaterThanEndTime_throwsIllegalValueException()
+            throws IllegalValueException {
         Date earlierTime = new Date(5);
         Date laterTime = new Date(10);
         
