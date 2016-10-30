@@ -188,7 +188,7 @@ public class CommandHelper {
 
     //@@author A0140011L
     /**
-     * Convert the date object into a string that the pretty time parser
+     * Converts the date object into a string that the pretty time parser
      * can actually understand.
      *
      * @param date to convert to

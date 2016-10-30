@@ -36,7 +36,8 @@ public class DateUtil {
     }
     
     /**
-     * Get the current time.
+     * Get the current time with regards to the clock
+     * utilized by the DateUtil singleton.
      */
     public Date getCurrentTime() {
         return clock.getCurrentTime();

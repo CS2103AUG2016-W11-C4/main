@@ -15,7 +15,9 @@ public class TaskPanelListChangedEvent extends BaseEvent {
     private final List<ReadOnlyTask> newTaskList;
 
     /**
-     * Constructor for event
+     * Constructs a new event that signify
+     * that the task list has been updated with a new list.
+     * 
      * @param newTaskList contents
      */
     public TaskPanelListChangedEvent(List<ReadOnlyTask> newTaskList){
