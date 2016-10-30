@@ -96,7 +96,6 @@ public class CalendarPanel extends UiPart {
      * Free resources used by the calendar.
      */
     public void freeResources() {
-        // TODO Auto-generated method stub
         agendaView = null;
     }
     
