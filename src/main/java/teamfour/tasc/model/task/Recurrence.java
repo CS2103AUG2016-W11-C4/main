@@ -61,7 +61,8 @@ public class Recurrence {
     }
 
     /**
-     * Only positive frequency is valid.
+     * Checks whether the frequency is valid or not.
+     * (Frequency cannot be negative or zero)
      */
     private boolean isValidFrequency(int frequency) {
         return frequency > 0;

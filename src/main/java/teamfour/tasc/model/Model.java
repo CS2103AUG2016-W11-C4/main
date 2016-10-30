@@ -103,13 +103,22 @@ public interface Model {
     void updateFilteredTaskListByFilter();
 
     //@@author A0140011L
-    /** Updates the old task with new task details */
+    /**
+     * Updates the old task by replacing it with
+     * new task details.
+     * 
+     * @param oldTask to be replaced
+     * @param newTask details
+     * @throws TaskNotFoundException if the old task
+     * cannot be found.
+     */
     void updateTask(ReadOnlyTask oldTask, Task newTask) throws TaskNotFoundException;
 
     //@@author
     /**
      * Precondition: numToRedo must be > 0.
      * Redo the past undos.
+     * 
      * @return number of history states redone
      */
     int redoTaskListHistory(int numToRedo);
