@@ -90,7 +90,7 @@ public class UpdateCommand extends Command {
     private Task newTask;
 
     /**
-     * Constructor for update command, to update the task details of a task.
+     * Constructs a new command for updating the details of a task.
      * 
      * Note: Parameters can be null, to indicate that no changes were made to
      * that particular detail.
@@ -127,7 +127,7 @@ public class UpdateCommand extends Command {
 
         oldReadOnlyTask = lastShownList.get(targetIndex - 1);
         try {
-            newTask = updateOldTaskToNewTask(oldReadOnlyTask);
+            newTask = createUpdatedTaskFromOldTask(oldReadOnlyTask);
         } catch (IllegalValueException ive) {
             return new CommandResult(ive.getMessage());
         }
@@ -156,75 +156,125 @@ public class UpdateCommand extends Command {
     }
 
     /**
-     * Update the task details of the old task by creating a new task with the
-     * new details.
+     * Updates the task details of the old task by creating a new task with the
+     * new updated details.
      * 
      * @param oldTask to be updated
      * @return the updated task with the new details
      */
-    private Task updateOldTaskToNewTask(ReadOnlyTask oldTask) throws IllegalValueException {
-        Name newName = oldTask.getName();
-        Complete newComplete = oldTask.getComplete();
-        Deadline newDeadline = oldTask.getDeadline();
-        Period newPeriod = oldTask.getPeriod();
-        Recurrence newRecurrence = oldTask.getRecurrence();
-        UniqueTagList newTags = oldTask.getTags();
-
-        // adding new details
+    private Task createUpdatedTaskFromOldTask(ReadOnlyTask oldTask) throws IllegalValueException {
+        Name newName = getUpdatedTaskName(oldTask);
+        Complete newComplete = getUpdatedTaskCompleteStatus(oldTask);
+        Deadline newDeadline = getUpdatedTaskDeadline(oldTask);
+        Period newPeriod = getUpdatedTaskPeriod(oldTask);
+        Recurrence newRecurrence = getUpdatedTaskRecurrence(oldTask);
+        UniqueTagList newTags = getUpdatedTaskTags(oldTask);
+        
+        return new Task(newName, newComplete, newDeadline, newPeriod, newRecurrence, newTags);
+    }
+    
+    /**
+     * Gets the name of the updated task.
+     * 
+     * @param oldTask details before we executed the update command
+     * @return the new name if the user requested to update it, otherwise
+     * just return the old task's name.
+     * @throws IllegalValueException if the name is invalid
+     */
+    private Name getUpdatedTaskName(ReadOnlyTask oldTask) throws IllegalValueException {
         if (this.updatedName != null) {
-            newName = new Name(this.updatedName);
-        }
-        if (this.updatedBy != null) {
-            newDeadline = new Deadline(CommandHelper.convertStringToDate(this.updatedBy));
+            return new Name(this.updatedName);
         }
         
-        if (this.updatedStartTime != null || this.updatedEndTime != null) {
-            if (this.updatedStartTime == null && newPeriod.getStartTime() == null) {
-                throw new IllegalValueException(MESSAGE_PERIOD_NEED_BOTH_START_AND_END_TIME);
-            }
-            if (this.updatedEndTime == null && newPeriod.getEndTime() == null) {
-                throw new IllegalValueException(MESSAGE_PERIOD_NEED_BOTH_START_AND_END_TIME);
-            }
-            
-            // TODO magic string
-            // TODO SLAP
-            // TODO better test this!
-            String finalDateString = "";
-            int startDateIndex = 0;
-            int endDateIndex = 1;
-            
-            if (this.updatedStartTime != null && this.updatedEndTime != null) {
-                finalDateString = this.updatedStartTime + " and " + this.updatedEndTime;
-            }
-            else if (this.updatedStartTime != null) {
-                // must do it the other way round, otherwise Pretty Time will get confused
-                finalDateString = CommandHelper.convertDateToPrettyTimeParserFriendlyString(newPeriod.getEndTime()) +
-                        " and " + this.updatedStartTime;
-                startDateIndex = 1;
-                endDateIndex = 0;
-            }
-            else if (this.updatedEndTime != null) {
-                finalDateString = CommandHelper.convertDateToPrettyTimeParserFriendlyString(newPeriod.getStartTime()) +
-                        " and " + this.updatedEndTime;
-            }
-            
-            List<Date> finalOutput = CommandHelper.convertStringToMultipleDates(finalDateString);
-            
-            if (finalOutput.size() == 2) {                    
-                newPeriod = new Period(finalOutput.get(startDateIndex), finalOutput.get(endDateIndex));
-            } else {
-                throw new IllegalValueException(MESSAGE_PERIOD_NEED_BOTH_START_AND_END_TIME);
-            }
+        return oldTask.getName();        
+    }
+    
+    /**
+     * Gets the deadline of the updated task.
+     * 
+     * @param oldTask details before we executed the update command
+     * @return the new deadline if the user requested to update it, otherwise
+     * just return the old task's deadline.
+     * @throws IllegalValueException if the deadline is invalid
+     */
+    private Deadline getUpdatedTaskDeadline(ReadOnlyTask oldTask) throws IllegalValueException {
+        if (this.removeDeadline) {
+            return new Deadline();
+        }
+        
+        if (this.updatedBy != null) {
+            return new Deadline(CommandHelper.convertStringToDate(this.updatedBy));
+        }
+        
+        return oldTask.getDeadline();
+    }
+    
+    /**
+     * Gets the recurrence of the updated task.
+     * 
+     * @param oldTask details before we executed the update command
+     * @return the new recurrence if the user requested to update it, otherwise
+     * just return the old task's recurrence.
+     * @throws IllegalValueException if the recurrence is invalid
+     */
+    private Recurrence getUpdatedTaskRecurrence(ReadOnlyTask oldTask) throws IllegalValueException {
+        if (this.removeRecurrence) {
+            return new Recurrence();
         }
         
         if (this.updatedRecurrence != null) {
-            newRecurrence = CommandHelper.getRecurrence(this.updatedRecurrence);
+            return CommandHelper.getRecurrence(this.updatedRecurrence);
         }
         
+        return oldTask.getRecurrence();
+    }
+    
+    /**
+     * Gets the complete status of the updated task.
+     * 
+     * @param oldTask details before we executed the update command
+     * @return the same as the old task, complete status cannot be changed by this command.
+     * (Instead, must execute the complete command)
+     */
+    private Complete getUpdatedTaskCompleteStatus(ReadOnlyTask oldTask) {
+        return oldTask.getComplete();
+    }
+    
+    /**
+     * Gets the period of the updated task.
+     * 
+     * @param oldTask details before we executed the update command
+     * @return the new period if the user requested to update it, otherwise
+     * just return the old task's period.
+     * @throws IllegalValueException if the period is invalid
+     */
+    private Period getUpdatedTaskPeriod(ReadOnlyTask oldTask) throws IllegalValueException {
+        if (this.removePeriod) {
+            return new Period();
+        }
+        
+        if (this.updatedStartTime != null || this.updatedEndTime != null) {
+            return createNewPeriodFromCommandArguments(oldTask.getPeriod());
+        }
+        
+        return oldTask.getPeriod();
+    }
+
+    /**
+     * Gets the updated tags collection of the updated task.
+     * 
+     * @param oldTask details before we executed the update command
+     * @return the new tags collection after we finish adding new tags
+     * and removing old tags
+     * @throws IllegalValueException if the tag is invalid
+     */
+    private UniqueTagList getUpdatedTaskTags(ReadOnlyTask oldTask) throws IllegalValueException {
+        UniqueTagList result = oldTask.getTags();
+        
         if (this.tagsToAdd != null) {
-            for (String updatedTag : this.tagsToAdd) {
+            for (String newTag : this.tagsToAdd) {
                 try {
-                    newTags.add(new Tag(updatedTag));
+                    result.add(new Tag(newTag));
                 } catch (DuplicateTagException dte) {
                     // do nothing (it is fine for the user to accidentally add
                     // the same tag)
@@ -232,27 +282,68 @@ public class UpdateCommand extends Command {
             }
         }
 
-        // removing new details
-        if (this.removeDeadline) {
-            newDeadline = new Deadline();
-        }
-        if (this.removePeriod) {
-            newPeriod = new Period();
-        }
-        if (this.removeRecurrence) {
-            newRecurrence = new Recurrence();
-        }
         if (this.tagsToRemove != null) {
-            for (String tagToRemove : this.tagsToRemove) {
+            for (String redundantTag : this.tagsToRemove) {
                 try {
-                    newTags.remove(new Tag(tagToRemove));
+                    result.remove(new Tag(redundantTag));
                 } catch (TagNotFoundException tnfe) {
-                    // do nothing
-                    // TODO really do nothing?
+                    // do nothing (it is fine for the user to make a typo)
                 }
             }
         }
+        
+        return result;
+    }
+    
+    /**
+     * Creates a new period object given the supplied arguments.
+     * 
+     * Pre-condition: The arguments MUST be provided. If the user
+     * did not provide the arguments (i.e. did not intend to update
+     * the period), do NOT call this method (see warning).
+     * 
+     * Warning: Methods other than {@link #getUpdatedTaskPeriod(ReadOnlyTask)}
+     * should* NOT call this method directly. Call 
+     * {@link #getUpdatedTaskPeriod(ReadOnlyTask)} instead to handle
+     * cases where arguments may not be supplied,  or user requested
+     * for period removal.
+     * 
+     * @param oldTaskPeriod
+     * @return the updated period
+     * @throws IllegalValueException if the command arguments are invalid
+     */
+    private Period createNewPeriodFromCommandArguments(Period oldTaskPeriod) throws IllegalValueException {
+        if (this.updatedStartTime == null && oldTaskPeriod.getStartTime() == null) {
+            throw new IllegalValueException(MESSAGE_PERIOD_NEED_BOTH_START_AND_END_TIME);
+        }
+        if (this.updatedEndTime == null && oldTaskPeriod.getEndTime() == null) {
+            throw new IllegalValueException(MESSAGE_PERIOD_NEED_BOTH_START_AND_END_TIME);
+        }
+        
+        String prettyTimeDatesString = "";
+        int startDateIndex = 0;
+        int endDateIndex = 1;
+        
+        if (this.updatedStartTime != null && this.updatedEndTime != null) {
+            prettyTimeDatesString = this.updatedStartTime + " and " + this.updatedEndTime;
+        }
+        else if (this.updatedStartTime != null) {
+            // must do it the other way round, otherwise Pretty Time will get confused :(
+            prettyTimeDatesString = CommandHelper.convertDateToPrettyTimeParserFriendlyString(oldTaskPeriod.getEndTime()) +
+                    " and " + this.updatedStartTime;            
+            startDateIndex = 1;
+            endDateIndex = 0;
+        }
+        else if (this.updatedEndTime != null) {
+            prettyTimeDatesString = CommandHelper.convertDateToPrettyTimeParserFriendlyString(oldTaskPeriod.getStartTime()) +
+                    " and " + this.updatedEndTime;
+        }
 
-        return new Task(newName, newComplete, newDeadline, newPeriod, newRecurrence, newTags);
+        List<Date> finalDateOutput = CommandHelper.convertStringToMultipleDates(prettyTimeDatesString);
+        if (finalDateOutput.size() == 2) {
+            return new Period(finalDateOutput.get(startDateIndex), finalDateOutput.get(endDateIndex));
+        } else {
+            throw new IllegalValueException(MESSAGE_PERIOD_NEED_BOTH_START_AND_END_TIME);
+        }
     }
 }
