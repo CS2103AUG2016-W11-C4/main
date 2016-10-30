@@ -13,9 +13,6 @@ public class Complete {
     
     private final boolean isCompleted;
     
-    /**
-     * Constructor for complete status.
-     */
     public Complete(boolean isCompleted) {
         this.isCompleted = isCompleted;
     }

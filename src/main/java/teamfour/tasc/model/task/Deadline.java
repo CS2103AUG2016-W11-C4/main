@@ -58,7 +58,7 @@ public class Deadline {
         Deadline otherDeadline = (Deadline)other;
         
         return ObjectUtil.isEquivalentOrBothNull(this.hasDeadline(), otherDeadline.hasDeadline()) &&
-                ObjectUtil.isEquivalentOrBothNull(this.getDeadline(), otherDeadline.getDeadline()); // state checkk
+                ObjectUtil.isEquivalentOrBothNull(this.getDeadline(), otherDeadline.getDeadline()); // state check
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Deadline {
     }
     
     /** 
-     * Given the current time, determine whether the task is overdue.
+     * Given the current time, determines whether the task is overdue.
      * (Only make sense if task has a deadline).
      */
     public boolean isOverdue(Date currentTime) {
