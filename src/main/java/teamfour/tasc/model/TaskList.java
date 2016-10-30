@@ -46,11 +46,13 @@ public class TaskList implements ReadOnlyTaskList, HistoryItem<TaskList> {
         return new TaskList();
     }
     
+    //@@author A0148096W
     @Override
     public TaskList createStateAsDeepCopy() {
         return new TaskList(this);
     }
 
+    //@@author
 //// list overwrite operations
 
     public ObservableList<Task> getTasks() {

@@ -284,21 +284,12 @@ In general, you may use this format to hide various tasks from the tasks listed.
 ### Finding tasks/events which match keywords: `find`
 
 You don't have to remember every details of the tasks you added, just use the `find`
-command which returns the list of tasks which partially match by their names, dates, types or tags.
+command which returns the list of tasks which partially match by their names or tags.
 
 To show tasks with names such as "Up**grad**e myself", or tags such as
 "**Grad**ed":
 
-`find grad`
-
-To show your task named "**V0.0 Deliverables**" in **Sep**tember:
-
-`find "V0.0 Deliverables" sep`
-
-> **Note:**<br>
-> Words enclosed in quotation marks `" "` use exact match and are case-sensitive.<br>
-> The task list results are shown in an order which prioritizes the closest match, followed by completion status and date.
-<br>
+`find grad`<br>
 
 In general, you may use this format to find tasks using keywords.<br>
 `find KEYWORD...`
@@ -378,7 +369,7 @@ last 5 actions taken:
 
 In general, you may use this format to undo various number of changes.<br>
 `undo [LAST STEPS]`
- * LAST STEPS refer to the number of steps to undo, starting from the lastest step. 
+ * LAST STEPS refer to the number of steps to undo, starting from the latest step. 
 
 If you simply type:
 `undo`
@@ -404,7 +395,7 @@ last 4 actions taken:
 
 In general, you may use this format to redo various number of changes.<br>
 `redo [LAST STEPS]`
- * LAST STEPS refer to the number of steps to redo, starting from the lastest step. 
+ * LAST STEPS refer to the number of steps to redo, starting from the latest step. 
 
 If you simply type:
 `redo`
@@ -504,10 +495,13 @@ Or perhaps you prefer to see an overview of many tasks at one glance at the task
 `collapse`
 
 This will change the view from something like this: <br>
-//TODO Attach screenshot
+<img src="images/Ui-collapse1.png" width="600"><br>
+*Figure 6: The expanded view*
+<br><br>
 
 To this:<br>
-//Todo Attach screenshot
+<img src="images/Ui-collapse2.png" width="600"><br>
+*Figure 7: The collapsed view*
 
 If you want to see all the details of your tasks agains, type:
 
@@ -558,7 +552,7 @@ and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword.
 <!-- @@author -->
 ### Saving the Data
 TaSc saves automatically after every command that changes the data.
-Don't worry about your data getting lost.
+Don't worry about losing your data
 
 <br>
 

@@ -79,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateTaskListChanged() {
         raise(new TaskListChangedEvent(taskList));
     }
-    
+
     //@@author A0148096W
     @Override
     public void saveTaskListHistory() {
@@ -136,7 +136,7 @@ public class ModelManager extends ComponentManager implements Model {
         redoTaskListHistory = new HistoryStack<TaskList>();
     }
     //@@author
-    
+
 
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
@@ -332,27 +332,33 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author A0127014W
     private class NameQualifier implements Qualifier {
         private Set<String> nameKeyWords;
 
         NameQualifier(Set<String> nameKeyWords) {
             this.nameKeyWords = nameKeyWords;
         }
-        //@@author A0127014W
         @Override
         public boolean run(ReadOnlyTask task) {
+            boolean tagFound = false;
+            for (String keyword : nameKeyWords) {
+                tagFound = task.getTags().getInternalList().stream()
+                        .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny()
+                        .isPresent() || tagFound;
+            }
+
             return nameKeyWords.stream()
                     .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                    .findAny()
-                    .isPresent();
+                    .findAny().isPresent() || tagFound;
         }
-        //@@author A0127014W
         @Override
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
         }
     }
 
+    //@@author A0148096W
     private class TypeQualifier implements Qualifier {
         private String type;
 

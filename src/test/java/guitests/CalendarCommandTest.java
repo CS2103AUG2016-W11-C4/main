@@ -27,7 +27,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
      */
     
     @Test
-    public void calendar_day_weekChangedToDayView(){
+    public void calendar_day_successWeekChangedToDayView(){
         String calendarView = "day";
         commandBox.runCommand("calendar week");
         assertCalendarResult("calendar " + calendarView, 
@@ -35,7 +35,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_day_alreadyInView(){
+    public void calendar_day_failureAlreadyInView(){
         String calendarView = "day";
         commandBox.runCommand("calendar day");
         assertCalendarResult("calendar " + calendarView, 
@@ -43,7 +43,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_week_dayChangedToWeekView(){
+    public void calendar_week_successDayChangedToWeekView(){
         String calendarView = "week";
         commandBox.runCommand("calendar day");
         assertCalendarResult("calendar " + calendarView, 
@@ -62,7 +62,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_randomArguments_invalidCommandFormat(){
+    public void calendar_randomArguments_failureInvalidCommandFormat(){
         String calendarView = "random";
         commandBox.runCommand("calendar week");
         assertCalendarResult("calendar " + calendarView, 
@@ -70,7 +70,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_emptyStringArgument_invalidCommandFormat(){
+    public void calendar_emptyStringArgument_failureInvalidCommandFormat(){
         String calendarView = "";
         commandBox.runCommand("calendar week");
         assertCalendarResult("calendar " + calendarView, 
