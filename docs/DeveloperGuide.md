@@ -92,7 +92,7 @@ d. **Buildship Gradle Integration** plugin from the Eclipse Marketplace
 
 **Problem: Eclipse reports some required libraries missing**
 * **Reason:** Required libraries may have not been downloaded during the project import.
-* **Solution:** [Run tests using Gardle](UsingGradle.md) once (to refresh the libraries).
+* **Solution:** [Run tests using Gradle](UsingGradle.md) once (to refresh the libraries).
 
 <br>
 
