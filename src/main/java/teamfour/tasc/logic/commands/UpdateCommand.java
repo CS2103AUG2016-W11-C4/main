@@ -326,15 +326,15 @@ public class UpdateCommand extends Command {
         
         if (this.updatedStartTime != null && this.updatedEndTime != null) {
             prettyTimeDatesString = this.updatedStartTime + " and " + this.updatedEndTime;
-        }
-        else if (this.updatedStartTime != null) {
+            
+        } else if (this.updatedStartTime != null) {
             // must do it the other way round, otherwise Pretty Time will get confused :(
             prettyTimeDatesString = CommandHelper.convertDateToPrettyTimeParserFriendlyString(oldTaskPeriod.getEndTime()) +
                     " and " + this.updatedStartTime;            
             startDateIndex = 1;
             endDateIndex = 0;
-        }
-        else if (this.updatedEndTime != null) {
+            
+        } else if (this.updatedEndTime != null) {
             prettyTimeDatesString = CommandHelper.convertDateToPrettyTimeParserFriendlyString(oldTaskPeriod.getStartTime()) +
                     " and " + this.updatedEndTime;
         }
