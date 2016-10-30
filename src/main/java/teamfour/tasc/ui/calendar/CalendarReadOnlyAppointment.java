@@ -2,7 +2,6 @@
 package teamfour.tasc.ui.calendar;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.temporal.Temporal;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,16 +10,20 @@ import jfxtras.scene.control.agenda.Agenda.Appointment;
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
 import teamfour.tasc.commons.util.DateUtil;
 import teamfour.tasc.model.task.ReadOnlyTask;
+import teamfour.tasc.model.task.status.EventStatus;
 
 /**
- * An implementation of the jfxtra's appointment class to
- * display a task in our agendar calendar control.
+ * An implementation of the jfxtra's appointment class to display a task in our
+ * agendar calendar control.
  */
 public class CalendarReadOnlyAppointment implements Appointment {
 
     protected ReadOnlyTask associatedTask;
     private int associatedIndex;
     
+    private static int DEADLINE_FAKE_START_TIME_MAX_ALLOWED_HOUR = 23;
+    private static int DEADLINE_FAKE_DURATION_IN_HOURS = 1;
+
     public CalendarReadOnlyAppointment(ReadOnlyTask associatedTask, int associatedIndex) {
         this.associatedTask = associatedTask;
         this.associatedIndex = associatedIndex;
@@ -88,19 +91,24 @@ public class CalendarReadOnlyAppointment implements Appointment {
         if (associatedTask.getComplete().isCompleted()) {
             return CalendarAppointmentGroups.COMPLETED;
         }
-        
+
         if (associatedTask.getPeriod().hasPeriod()) {
+            if (associatedTask.getEventStatus(DateUtil.getInstance().getCurrentTime()) 
+                    == EventStatus.ENDED) {
+                return CalendarAppointmentGroups.COMPLETED;
+            }
+
             return CalendarAppointmentGroups.PERIOD;
         }
-        
+
         if (associatedTask.getDeadline().hasDeadline()) {
-            if (associatedTask.isOverdue(DateUtil.getCurrentTime())) {
+            if (associatedTask.isOverdue(DateUtil.getInstance().getCurrentTime())) {
                 return CalendarAppointmentGroups.OVERDUE;
             }
-            
+
             return CalendarAppointmentGroups.DEADLINE;
         }
-        
+
         return null;
     }
 
@@ -156,11 +164,11 @@ public class CalendarReadOnlyAppointment implements Appointment {
     @Override
     public LocalDateTime getStartLocalDateTime() {
         if (associatedTask.getDeadline().hasDeadline()) {
-            return convertToLocalDateTime(associatedTask.getDeadline().getDeadline());
+            return getProperDeadlineStartTime(associatedTask.getDeadline().getDeadline());
         }
-        
+
         if (associatedTask.getPeriod().hasPeriod()) {
-            return convertToLocalDateTime(associatedTask.getPeriod().getStartTime());
+            return DateUtil.convertToLocalDateTime(associatedTask.getPeriod().getStartTime());
         }
 
         return null;
@@ -174,11 +182,11 @@ public class CalendarReadOnlyAppointment implements Appointment {
     @Override
     public LocalDateTime getEndLocalDateTime() {
         if (associatedTask.getDeadline().hasDeadline()) {
-            return convertToLocalDateTime(associatedTask.getDeadline().getDeadline()).plusHours(1);
+            return getProperDeadlineEndTime(associatedTask.getDeadline().getDeadline());
         }
-        
+
         if (associatedTask.getPeriod().hasPeriod()) {
-            return convertToLocalDateTime(associatedTask.getPeriod().getEndTime());
+            return DateUtil.convertToLocalDateTime(associatedTask.getPeriod().getEndTime());
         }
 
         return null;
@@ -188,11 +196,44 @@ public class CalendarReadOnlyAppointment implements Appointment {
     public void setEndLocalDateTime(LocalDateTime v) {
         // do nothing (read-only)
     }
-
+    
     /**
-     * Convert a java.util.Date to a java.time.LocalDateTime
+     * Get the "start time" of a deadline.
+     * 
+     * Since the calendar does not allow start time = end time, 
+     * we must invent a start time and end time (one hour later)
+     * for it to show up on the calendar.
+     * 
+     * Also, deadline that falls on 2300 or later are going to disappear
+     * since our end time is 1 hour later, so handle that.
+     * 
+     * @param deadline of the task
+     * @return a proper start time for deadline
      */
-    protected LocalDateTime convertToLocalDateTime(Date date) {
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    protected static LocalDateTime getProperDeadlineStartTime(Date deadline) {
+        LocalDateTime result = DateUtil.convertToLocalDateTime(deadline);
+        
+        result = DateUtil.clampDateTimeWithMaxAllowedHour(result,
+                DEADLINE_FAKE_START_TIME_MAX_ALLOWED_HOUR);
+        
+        return result;
+    }
+    
+    /**
+     * Get the "end time" of a deadline.
+     * 
+     * Since the calendar does not allow start time = end time, 
+     * we must invent a start time and end time (one hour later)
+     * for it to show up on the calendar.
+     * 
+     * Also, deadline that falls on 2300 or later are going to disappear
+     * since our end time is 1 hour later, so handle that.
+     * 
+     * @param deadline of the task
+     * @return a proper end time for deadline
+     */  
+    protected static LocalDateTime getProperDeadlineEndTime(Date deadline) {
+        LocalDateTime result = getProperDeadlineStartTime(deadline);
+        return result.plusHours(DEADLINE_FAKE_DURATION_IN_HOURS);
     }
 }

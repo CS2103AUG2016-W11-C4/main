@@ -41,21 +41,20 @@ public class CommandBox extends UiPart {
     @FXML
     private TextField commandTextField;
     
-    @FXML
-    private ListView<String> wordList = new ListView<String>();
-    
+    private ListView<String> wordList;
     private CommandResult mostRecentResult;
 
     public static CommandBox load(Stage primaryStage, AnchorPane commandBoxPlaceholder,
-            ResultDisplay resultDisplay, Logic logic) {
+            ResultDisplay resultDisplay, ListView<String> wordList, Logic logic) {
         CommandBox commandBox = UiPartLoader.loadUiPart(primaryStage, commandBoxPlaceholder, new CommandBox());
-        commandBox.configure(resultDisplay, logic);
+        commandBox.configure(resultDisplay, wordList, logic);
         commandBox.addToPlaceholder();
         return commandBox;
     }
 
-    public void configure(ResultDisplay resultDisplay, Logic logic) {
+    public void configure(ResultDisplay resultDisplay, ListView<String> wordList, Logic logic) {
         this.resultDisplay = resultDisplay;
+        this.wordList = wordList;
         this.logic = logic;
         registerAsAnEventHandler(this);
     }
@@ -64,8 +63,8 @@ public class CommandBox extends UiPart {
     private void addToPlaceholder() {
         SplitPane.setResizableWithParent(placeHolderPane, false);
         placeHolderPane.getChildren().add(commandTextField);
-        placeHolderPane.getChildren().add(wordList);
         wordList.setTranslateX(22);
+        wordList.setTranslateY(3);
         commandTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             checkCurrentWord(newValue);
         });
@@ -128,6 +127,7 @@ public class CommandBox extends UiPart {
         new Scene(new Group(text));
         text.applyCss(); 
         wordList.setTranslateX(text.getLayoutBounds().getWidth()*5/4 + 22);
+        wordList.setTranslateY(3);
         String[] words = command.split(" ");
         String lastWord = words[words.length-1];
         setWordChoices(lastWord);
@@ -187,6 +187,7 @@ public class CommandBox extends UiPart {
      */
     private void restoreCommandText() {
         commandTextField.setText(previousCommandTest);
+        commandTextField.positionCaret(previousCommandTest.length());
     }
 
     /**

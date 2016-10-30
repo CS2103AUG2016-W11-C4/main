@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import teamfour.tasc.commons.exceptions.IllegalValueException;
-import teamfour.tasc.model.keyword.ByKeyword;
-import teamfour.tasc.model.keyword.FromKeyword;
-import teamfour.tasc.model.keyword.OnKeyword;
-import teamfour.tasc.model.keyword.ShowCommandKeyword;
-import teamfour.tasc.model.keyword.TagKeyword;
-import teamfour.tasc.model.keyword.ToKeyword;
+import teamfour.tasc.logic.keyword.ByKeyword;
+import teamfour.tasc.logic.keyword.FromKeyword;
+import teamfour.tasc.logic.keyword.OnKeyword;
+import teamfour.tasc.logic.keyword.ShowCommandKeyword;
+import teamfour.tasc.logic.keyword.TagKeyword;
+import teamfour.tasc.logic.keyword.ToKeyword;
 
 /**
  * Shows results from current listing results to the user that match the filters.
@@ -61,7 +61,7 @@ public class ShowCommand extends Command {
             this.endTime = CommandHelper.tryConvertStringToDateOrReturnNull(endTime);
         }
         
-        this.tags = new HashSet<>();
+        this.tags = new HashSet<String>();
         for (String tagName : tags) {
             this.tags.add(tagName);
         }
@@ -75,20 +75,26 @@ public class ShowCommand extends Command {
      */
     private void addCommandFiltersToModel() {
         assert model != null;
-        if (type != null)
+        
+        if (type != null) {
             model.addTaskListFilterByType(type, false);
-        if (deadline != null)
+        }
+        if (deadline != null) {
             model.addTaskListFilterByDeadline(deadline, false);
+        }
         if (hasDate) {
             model.addTaskListFilterByStartToEndTime(startTime, endTime, false);
         } else {
-            if (startTime != null)
+            if (startTime != null) {
                 model.addTaskListFilterByStartTime(startTime, false);
-            if (endTime != null)
+            }
+            if (endTime != null) {
                 model.addTaskListFilterByEndTime(endTime, false);
+            }
         }
-        if (!tags.isEmpty())
+        if (!tags.isEmpty()) {
             model.addTaskListFilterByTags(tags, false);
+        }
     }
 
     @Override

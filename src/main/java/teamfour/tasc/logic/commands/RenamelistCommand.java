@@ -3,7 +3,7 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.storage.RequestTaskListRenameEvent;
-import teamfour.tasc.model.keyword.RenameListCommandKeyword;
+import teamfour.tasc.logic.keyword.RenameListCommandKeyword;
 
 /**
  * Renames the current tasklist.

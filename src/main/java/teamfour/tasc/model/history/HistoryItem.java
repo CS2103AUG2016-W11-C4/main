@@ -3,7 +3,7 @@
 package teamfour.tasc.model.history;
 
 /**
- * An object that can be reverted to past states.
+ * Objects of each class which implements this interface can be reverted to past states.
  * Must be able to be create deep copies of itself.
  * 
  * @param <T> The class of the item

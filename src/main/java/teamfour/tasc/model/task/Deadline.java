@@ -73,4 +73,16 @@ public class Deadline {
     public Date getDeadline() {
         return deadline;
     }
+    
+    /** 
+     * Given the current time, determine whether the task is overdue.
+     * (Only make sense if task has a deadline).
+     */
+    public boolean isOverdue(Date currentTime) {
+        if (!hasDeadline) {
+            return false;
+        }
+
+        return currentTime.after(deadline);
+    }
 }

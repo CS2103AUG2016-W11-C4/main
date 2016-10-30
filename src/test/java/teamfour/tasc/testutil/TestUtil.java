@@ -344,10 +344,10 @@ public class TestUtil {
             int targetIndexInOneIndexedFormat)
             throws IllegalArgumentException, TaskAlreadyCompletedException, IllegalValueException {
 
-        List<TestTask> taskList = Arrays.asList(tasks);
+        List<TestTask> taskList = new ArrayList<TestTask>(Arrays.asList(tasks));
 
         TaskCompleteConverter converter = new TaskCompleteConverter(
-                tasks[targetIndexInOneIndexedFormat - 1], new Date(0));
+                tasks[targetIndexInOneIndexedFormat - 1], DateUtil.getInstance().getCurrentTime());
         taskList.set(targetIndexInOneIndexedFormat - 1, new TestTask(converter.getCompletedTask()));
 
         if (converter.getUncompletedRemainingRecurringTask() != null) {

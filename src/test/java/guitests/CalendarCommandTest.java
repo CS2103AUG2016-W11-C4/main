@@ -19,13 +19,15 @@ public class CalendarCommandTest extends AddressBookGuiTest {
      * calendar week
      *     - Day changed to week view
      *     - Already in week view
+     * calendar today
+     *     - Calendar shows current time and success message
      * calendar (all other arguments)
      * calendar (empty string) = no arguments
      *     - Wrong command format message
      */
     
     @Test
-    public void calendar_day_weekChangedToDayView(){
+    public void calendar_day_successWeekChangedToDayView(){
         String calendarView = "day";
         commandBox.runCommand("calendar week");
         assertCalendarResult("calendar " + calendarView, 
@@ -33,7 +35,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_day_alreadyInView(){
+    public void calendar_day_failureAlreadyInView(){
         String calendarView = "day";
         commandBox.runCommand("calendar day");
         assertCalendarResult("calendar " + calendarView, 
@@ -41,7 +43,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_week_dayChangedToWeekView(){
+    public void calendar_week_successDayChangedToWeekView(){
         String calendarView = "week";
         commandBox.runCommand("calendar day");
         assertCalendarResult("calendar " + calendarView, 
@@ -49,7 +51,18 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_randomArguments_invalidCommandFormat(){
+    public void calendar_today_messageSuccess(){
+        commandBox.runCommand("calendar week");
+        assertCalendarResult("calendar today", 
+                CalendarCommand.MESSAGE_SUCCESS_SELECTED_TODAY, "week");
+        
+        commandBox.runCommand("calendar day");
+        assertCalendarResult("calendar today", 
+                CalendarCommand.MESSAGE_SUCCESS_SELECTED_TODAY, "day");
+    }
+    
+    @Test
+    public void calendar_randomArguments_failureInvalidCommandFormat(){
         String calendarView = "random";
         commandBox.runCommand("calendar week");
         assertCalendarResult("calendar " + calendarView, 
@@ -57,7 +70,7 @@ public class CalendarCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void calendar_emptyStringArgument_invalidCommandFormat(){
+    public void calendar_emptyStringArgument_failureInvalidCommandFormat(){
         String calendarView = "";
         commandBox.runCommand("calendar week");
         assertCalendarResult("calendar " + calendarView, 

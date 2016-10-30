@@ -199,25 +199,39 @@ public class Parser {
 
     //@@author A0148096W
     /**
-     * Takes in a string and return null if it is empty,
-     * or otherwise returns the string itself.
+     * Returns null if string is null or empty,
+     * else returns the string.
      */
     private String setToNullIfIsEmptyString(String string) {
-        if (string == null || string.equals("")) {
+        if (string == null || string.isEmpty()) {
             return null;
         }
         return string;
     }
 
     /**
+     * Returns empty string if argument is null,
+     * otherwise returns the formatted string of tags for proper parsing properly.
+     */
+    private String formatTagString(String tags) {
+        String tagStringResult;
+        if(tags == null){
+            tagStringResult = "";
+        } else {
+            tagStringResult = removeFullStopsAndCommas(tags);
+        }
+        return tagStringResult;
+    }
+    
+    /**
      * Precondition: argument is not null.
      * Takes in a string and remove all occurrences of full stops and commas.
      */
     private String removeFullStopsAndCommas(String string) {
         assert string != null;
-        string = string.replace(",", "");
-        string = string.replace(".", "");
-        return string;
+        String resultString = string.replace(",", "");
+        resultString = resultString.replace(".", "");
+        return resultString;
     }
 
     /**
@@ -231,7 +245,7 @@ public class Parser {
         assert args != null;
 
         // No arguments, use default 'list' command
-        if (args.trim().equals("")) {
+        if (args.trim().isEmpty()) {
             try {
                 return new ListCommand();
             } catch (IllegalValueException ive) {
@@ -248,12 +262,7 @@ public class Parser {
         String tags = setToNullIfIsEmptyString(parsed.get(ListCommand.KEYWORD_TAG));
         String sortingOrder = setToNullIfIsEmptyString(parsed.get(ListCommand.KEYWORD_SORT));
 
-        if(tags == null){
-            tags = "";
-        } else {
-            tags = removeFullStopsAndCommas(tags);
-        }
-
+        tags = formatTagString(tags);
         if (sortingOrder != null) {
             sortingOrder = removeFullStopsAndCommas(sortingOrder);
         }
@@ -282,7 +291,7 @@ public class Parser {
     private Command prepareShow(String args){
         assert args != null;
 
-        if (args.trim().equals("")) {
+        if (args.trim().isEmpty()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
         }
 
@@ -294,12 +303,8 @@ public class Parser {
         String startTime = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_PERIOD_START_TIME));
         String endTime = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_PERIOD_END_TIME));
         String tags = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_TAG));
-
-        if(tags == null){
-            tags = "";
-        } else {
-            tags = removeFullStopsAndCommas(tags);
-        }
+        
+        tags = formatTagString(tags);
 
         try {
             return new ShowCommand(
@@ -325,7 +330,7 @@ public class Parser {
     private Command prepareHide(String args){
         assert args != null;
 
-        if (args.trim().equals("")) {
+        if (args.trim().isEmpty()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HideCommand.MESSAGE_USAGE));
         }
 
@@ -337,12 +342,8 @@ public class Parser {
         String startTime = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_PERIOD_START_TIME));
         String endTime = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_PERIOD_END_TIME));
         String tags = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_TAG));
-
-        if(tags == null){
-            tags = "";
-        } else {
-            tags = removeFullStopsAndCommas(tags);
-        }
+        
+        tags = formatTagString(tags);
 
         try {
             return new HideCommand(
@@ -386,7 +387,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareCalendar(String args) {
-        if (args.equals("")) {
+        if (args.trim().isEmpty()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarCommand.MESSAGE_USAGE));
         }
         try {
@@ -455,7 +456,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareUndo(String args) {
-        if (args.equals("")) {
+        if (args.trim().isEmpty()) {
             try {
                 return new UndoCommand();
             } catch (IllegalValueException ive) {

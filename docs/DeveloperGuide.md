@@ -191,13 +191,13 @@ The **`UI`** component
 
 **`TaskListPanel` Class:**
 
-The `TaskListPanel` shows a list of `TaskCard` object, where each `TaskCard` contains the details of a task shown to the user. 
+The `TaskListPanel` shows a list of `TaskCard` object, where each `TaskCard` contains the details of a task shown to the user.
 The `TaskCard` is also assigned a unique index in increasing order, which is used in other commands to identify a task, e.g. `delete 3` deletes the third item in the list.
 <br><br>
 
 **`CalendarPanel` Class:**
 
-The `CalendarPanel` encapsulates the `Agenda` control from [`JFXtras`](http://jfxtras.org/doc/8.0/jfxtras-agenda/) library. 
+The `CalendarPanel` encapsulates the `Agenda` control from [`JFXtras`](http://jfxtras.org/doc/8.0/jfxtras-agenda/) library.
 The `CalendarPanel` handles the display and selection of tasks on the calendar, and also handles the switching between *Day* and *Week* view of the calendar.
 <br><br>
 
@@ -326,7 +326,7 @@ deadline for the task (usually, you would use `Deadline(Date date)` if the task 
 **`HistoryStack` and `HistoryItem<T>` Classes:**
 
 The `HistoryStack` class stores the most recent states of the implemented `HistoryItem<T>` objects.
-You can specify a maximum size for the stack, and older history states are discarded whenever new states are 
+You can specify a maximum size for the stack, and older history states are discarded whenever new states are
 pushed and the size has exceeded the maximum size. History states stored in the stack are returned as type `T` objects when popped.
 
 > **Note:** The `undo` and `redo` command uses HistoryStack to store recent states of the TaskList.<br>
@@ -358,6 +358,16 @@ Deadline(Date date) | The deadline for the task is `date`<br>*(Omit `date` for n
 Period(Date startTime, Date endTime) | The time slot for the task is `startTime` to `endTime`<br>*(Omit `startTime` and `endTime` for no period)*
 Recurrence(Pattern type, int frequency) | The task repeats for `frequency` times, in a daily, weekly or monthly fashion<br>*(Omit `type` and `frequency` for no deadline)*
 Tag(String name) | One of the tags for this task
+<br>
+
+**`TaskCompleteConverter` Class:**
+
+The `TaskCompleteConverter` class allows us to convert a task from uncompleted to completed. Depending on the type of task given, it may function differently:
+
+Type | `completedTask` | `uncompletedRemainingRecurringTask`
+---- | --------------- | -----------------------------------
+Floating/No Recurrence Task | Same as original task (but marked as completed). | `null`
+Recurring Task | First instance of the recurrence of the task. | The rest of the recurrences of the task.
 <br>
 
 **`UniqueTagList` Class:**

@@ -7,6 +7,7 @@ import java.util.Objects;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.commons.util.CollectionUtil;
 import teamfour.tasc.commons.util.ObjectUtil;
+import teamfour.tasc.model.task.status.EventStatus;
 
 /**
  * Represents a task's period in the task list.
@@ -100,5 +101,23 @@ public class Period {
 
     public Date getEndTime() {
         return endTime;
+    }
+    
+    /**
+     * Get whether the event has started or not.
+     */
+    public EventStatus getEventStatus(Date currentTime) {
+        if (!hasPeriod) {
+            return EventStatus.NOT_AN_EVENT;
+        }
+        
+        if (currentTime.before(startTime)) {
+            return EventStatus.NOT_STARTED;
+        }
+        else if (currentTime.after(endTime)) {
+            return EventStatus.ENDED;
+        }
+        
+        return EventStatus.IN_PROGRESS;
     }
 }

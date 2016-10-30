@@ -3,7 +3,7 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.ui.CollapseChangeEvent;
-import teamfour.tasc.model.keyword.ExpandCommandKeyword;
+import teamfour.tasc.logic.keyword.ExpandCommandKeyword;
 
 /**
  * Expands the task list panel view
@@ -16,9 +16,9 @@ public class ExpandCommand extends Command {
     public static final String MESSAGE_FAILURE_ALREADY_EXPANDED = "Already in expanded view, "
             + "type \"collapse\" to go into collapsed view";
 
-    public CommandResult execute(){
+    public CommandResult execute() {
         assert model!= null;
-        if(CollapseChangeEvent.getCollapsed()){
+        if(CollapseChangeEvent.getCollapsed()) {
             EventsCenter.getInstance().post(new CollapseChangeEvent(false));
             model.updateFilteredTaskListByFilter(); //refresh the list view
             return new CommandResult(MESSAGE_SUCCESS);

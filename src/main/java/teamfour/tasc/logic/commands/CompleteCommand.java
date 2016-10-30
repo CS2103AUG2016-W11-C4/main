@@ -5,7 +5,7 @@ import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.commons.util.DateUtil;
-import teamfour.tasc.model.keyword.CompleteCommandKeyword;
+import teamfour.tasc.logic.keyword.CompleteCommandKeyword;
 import teamfour.tasc.model.task.Complete;
 import teamfour.tasc.model.task.ReadOnlyTask;
 import teamfour.tasc.model.task.Task;
@@ -51,7 +51,7 @@ public class CompleteCommand extends Command {
         oldReadOnlyTask = lastShownList.get(targetIndex - 1);
 
         try {
-            newTasks = new TaskCompleteConverter(oldReadOnlyTask, DateUtil.getCurrentTime());
+            newTasks = new TaskCompleteConverter(oldReadOnlyTask, DateUtil.getInstance().getCurrentTime());
         } catch (TaskAlreadyCompletedException | IllegalValueException e) {
             return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_ALREADY_COMPLETED,
                     oldReadOnlyTask));

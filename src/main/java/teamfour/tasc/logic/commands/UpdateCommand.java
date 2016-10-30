@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
+import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.commons.util.CollectionUtil;
 import teamfour.tasc.logic.LogicManager;
-import teamfour.tasc.model.keyword.UpdateCommandKeyword;
+import teamfour.tasc.logic.keyword.UpdateCommandKeyword;
 import teamfour.tasc.model.tag.Tag;
 import teamfour.tasc.model.tag.UniqueTagList;
 import teamfour.tasc.model.tag.UniqueTagList.DuplicateTagException;
@@ -136,7 +138,16 @@ public class UpdateCommand extends Command {
             assert false : "The target task cannot be missing";
         }
 
+        taskListSelectTask(targetIndex - 1);
         return new CommandResult(String.format(MESSAGE_UPDATE_TASK_SUCCESS, newTask));
+    }
+    
+    /**
+     * Simulates select command on the task in the task list
+     */
+    private void taskListSelectTask(int index) {
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        model.updateFilteredTaskListByFilter(); // refresh to expand selected TaskCard
     }
 
     @Override

@@ -8,6 +8,7 @@ import teamfour.tasc.commons.util.DateUtil;
 import teamfour.tasc.model.task.Deadline;
 import teamfour.tasc.model.task.Period;
 import teamfour.tasc.model.task.ReadOnlyTask;
+import teamfour.tasc.model.task.status.EventStatus;
 
 public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppointment {
 
@@ -25,23 +26,29 @@ public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppoint
     
     @Override
     public AppointmentGroup getAppointmentGroup() {
-        if (associatedTask.getDeadline().hasDeadline()) {
-            if (associatedTask.isOverdue(DateUtil.getCurrentTime())) {
+        if (deadlineForOccurrence.hasDeadline()) {
+            if (deadlineForOccurrence.isOverdue(DateUtil.getInstance().getCurrentTime())) {
                 return CalendarAppointmentGroups.OVERDUE;
             }
         }
-        
+
+        if (periodForOccurence.hasPeriod()) {
+            if (periodForOccurence.getEventStatus(DateUtil.getInstance().getCurrentTime()) 
+                    == EventStatus.ENDED) {
+                return CalendarAppointmentGroups.COMPLETED;
+            }
+        }
         return CalendarAppointmentGroups.RECURRING;
     }
 
     @Override
     public LocalDateTime getStartLocalDateTime() {
         if (deadlineForOccurrence.hasDeadline()) {
-            return convertToLocalDateTime(deadlineForOccurrence.getDeadline());
+            return getProperDeadlineStartTime(deadlineForOccurrence.getDeadline());
         }
-        
+
         if (periodForOccurence.hasPeriod()) {
-            return convertToLocalDateTime(periodForOccurence.getStartTime());
+            return DateUtil.convertToLocalDateTime(periodForOccurence.getStartTime());
         }
 
         return null;
@@ -50,11 +57,11 @@ public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppoint
     @Override
     public LocalDateTime getEndLocalDateTime() {
         if (deadlineForOccurrence.hasDeadline()) {
-            return convertToLocalDateTime(deadlineForOccurrence.getDeadline()).plusHours(1);
+            return getProperDeadlineEndTime(deadlineForOccurrence.getDeadline());
         }
-        
+
         if (periodForOccurence.hasPeriod()) {
-            return convertToLocalDateTime(periodForOccurence.getEndTime());
+            return DateUtil.convertToLocalDateTime(periodForOccurence.getEndTime());
         }
 
         return null;

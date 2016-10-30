@@ -187,38 +187,38 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addTaskListFilterByType(String type, boolean negated) {
         assert type != null;
-        taskListFilter.and(new PredicateExpression(new TypeQualifier(type), negated));
+        taskListFilter.addNext(new PredicateExpression(new TypeQualifier(type), negated));
     }
 
     @Override
     public void addTaskListFilterByDeadline(Date deadline, boolean negated) {
         assert deadline != null;
-        taskListFilter.and(new PredicateExpression(new DeadlineQualifier(deadline), negated));
+        taskListFilter.addNext(new PredicateExpression(new DeadlineQualifier(deadline), negated));
     }
 
     @Override
     public void addTaskListFilterByStartTime(Date startTime, boolean negated) {
         assert startTime != null;
-        taskListFilter.and(new PredicateExpression(new StartTimeQualifier(startTime), negated));
+        taskListFilter.addNext(new PredicateExpression(new StartTimeQualifier(startTime), negated));
     }
 
     @Override
     public void addTaskListFilterByEndTime(Date endTime, boolean negated) {
         assert endTime != null;
-        taskListFilter.and(new PredicateExpression(new EndTimeQualifier(endTime), negated));
+        taskListFilter.addNext(new PredicateExpression(new EndTimeQualifier(endTime), negated));
     }
 
     @Override
     public void addTaskListFilterByStartToEndTime(Date startTime, Date endTime, boolean negated) {
         assert startTime != null;
         assert endTime != null;
-        taskListFilter.and(new PredicateExpression(new StartToEndTimeQualifier(startTime, endTime), negated));
+        taskListFilter.addNext(new PredicateExpression(new StartToEndTimeQualifier(startTime, endTime), negated));
     }
 
     @Override
     public void addTaskListFilterByTags(Set<String> tags, boolean negated) {
         assert tags != null;
-        taskListFilter.and(new PredicateExpression(new TagQualifier(tags), negated));
+        taskListFilter.addNext(new PredicateExpression(new TagQualifier(tags), negated));
     }
 
     @Override
@@ -265,7 +265,7 @@ public class ModelManager extends ComponentManager implements Model {
     private class PredicateExpression implements Expression {
 
         private final Qualifier qualifier;
-        private PredicateExpression and;
+        private PredicateExpression next;
         private boolean isNegated;
 
         PredicateExpression(Qualifier qualifier) {
@@ -274,20 +274,20 @@ public class ModelManager extends ComponentManager implements Model {
 
         PredicateExpression(Qualifier qualifier, boolean negated) {
             this.qualifier = qualifier;
-            this.and = null;
+            this.next = null;
             this.isNegated = negated;
         }
 
         /**
          * Chains the predicate using logical AND of this predicate and another.
-         * @param and The other predicate
+         * @param other The other predicate
          */
-        public void and(PredicateExpression other) {
+        public void addNext(PredicateExpression other) {
             PredicateExpression tail = this;
-            while (tail.and != null) {
-                tail = tail.and;
+            while (tail.next != null) {
+                tail = tail.next;
             }
-            tail.and = other;
+            tail.next = other;
         }
 
         @Override
@@ -302,7 +302,7 @@ public class ModelManager extends ComponentManager implements Model {
                 if (it.qualifier.run(task) == it.isNegated) {
                     return false;
                 }
-                it = it.and;
+                it = it.next;
             }
             return true;
         }
@@ -332,13 +332,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author A0127014W
     private class NameQualifier implements Qualifier {
         private Set<String> nameKeyWords;
 
         NameQualifier(Set<String> nameKeyWords) {
             this.nameKeyWords = nameKeyWords;
         }
-        //@@author A0127014W
         @Override
         public boolean run(ReadOnlyTask task) {
             boolean tagFound = false;
@@ -352,13 +352,13 @@ public class ModelManager extends ComponentManager implements Model {
                     .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
                     .findAny().isPresent() || tagFound;
         }
-        //@@author
         @Override
         public String toString() {
             return "name=" + String.join(", ", nameKeyWords);
         }
     }
 
+    //@@author A0148096W
     private class TypeQualifier implements Qualifier {
         private String type;
 
@@ -510,16 +510,18 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public int compare(ReadOnlyTask a, ReadOnlyTask b) {
             int timeA = 0;
-            if (a.getDeadline().hasDeadline())
+            if (a.getDeadline().hasDeadline()) {
                 timeA = (int)(a.getDeadline().getDeadline().getTime() / 1000);
-            else if (a.getPeriod().hasPeriod())
+            } else if (a.getPeriod().hasPeriod()) {
                 timeA = (int)(a.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             int timeB = 0;
-            if (b.getDeadline().hasDeadline())
+            if (b.getDeadline().hasDeadline()) {
                 timeB = (int)(b.getDeadline().getDeadline().getTime() / 1000);
-            else if (b.getPeriod().hasPeriod())
+            } else if (b.getPeriod().hasPeriod()) {
                 timeB = (int)(b.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             return timeA - timeB;
         }
@@ -529,16 +531,18 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public int compare(ReadOnlyTask a, ReadOnlyTask b) {
             int timeA = 0;
-            if (a.getDeadline().hasDeadline())
+            if (a.getDeadline().hasDeadline()) {
                 timeA = (int)(a.getDeadline().getDeadline().getTime() / 1000);
-            else if (a.getPeriod().hasPeriod())
+            } else if (a.getPeriod().hasPeriod()) {
                 timeA = (int)(a.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             int timeB = 0;
-            if (b.getDeadline().hasDeadline())
+            if (b.getDeadline().hasDeadline()) {
                 timeB = (int)(b.getDeadline().getDeadline().getTime() / 1000);
-            else if (b.getPeriod().hasPeriod())
+            } else if (b.getPeriod().hasPeriod()) {
                 timeB = (int)(b.getPeriod().getStartTime().getTime() / 1000);
+            }
 
             return timeB - timeA;
         }
