@@ -7,7 +7,6 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Categories.ExcludeCategory;
 
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.model.task.Period;

@@ -1,5 +1,7 @@
 package teamfour.tasc.ui;
 
+import java.util.logging.Logger;
+
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -15,10 +17,6 @@ import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.events.ui.TaskPanelListChangedEvent;
 import teamfour.tasc.commons.events.ui.TaskPanelSelectionChangedEvent;
 import teamfour.tasc.model.task.ReadOnlyTask;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Panel containing the list of tasks.

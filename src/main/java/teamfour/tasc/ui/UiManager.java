@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import teamfour.tasc.MainApp;
 import teamfour.tasc.commons.core.ComponentManager;
 import teamfour.tasc.commons.core.Config;
-import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.events.storage.DataSavingExceptionEvent;
 import teamfour.tasc.commons.events.ui.ChangeCalendarViewRequestEvent;
@@ -22,7 +21,6 @@ import teamfour.tasc.commons.events.ui.TaskPanelSelectionChangedEvent;
 import teamfour.tasc.commons.util.StringUtil;
 import teamfour.tasc.logic.Logic;
 import teamfour.tasc.model.UserPrefs;
-import teamfour.tasc.model.task.ReadOnlyTask;
 
 import java.util.logging.Logger;
 

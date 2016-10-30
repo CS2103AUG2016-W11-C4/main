@@ -2,7 +2,6 @@ package teamfour.tasc.testutil;
 
 import java.util.Date;
 
-import teamfour.tasc.model.task.*;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.model.tag.Tag;
 import teamfour.tasc.model.task.Complete;

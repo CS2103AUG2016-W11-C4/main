@@ -1,8 +1,6 @@
 //@@author A0127014W
 package guitests;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class CollapseExpandCommandTest extends AddressBookGuiTest{
