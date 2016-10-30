@@ -134,7 +134,7 @@ public class CalendarPanel extends UiPart {
     
     //@@author A0140011L
     /** 
-     * Refresh the calendar using the new task list given.
+     * Refreshes the calendar using the new task list given.
      */
     @Subscribe
     public void refreshTasks(List<ReadOnlyTask> taskList) {
@@ -147,7 +147,7 @@ public class CalendarPanel extends UiPart {
             
             if (isDisplayableInCalendar(task)) {
                 try {
-                    agendaView.appointments().addAll(generateAppointmentsForTask(task, index));
+                    agendaView.appointments().addAll(generateAllAppointmentsForTask(task, index));
                 } catch (IllegalValueException ive) {
                     logger.warning("Fail to generate calendar UI for task " + index);
                 }
@@ -156,48 +156,109 @@ public class CalendarPanel extends UiPart {
     }
 
     /**
-     * Generate an appointment(s) given a task, taking into
+     * Generates all appointments given a task, taking into
      * consideration any possible recurring.
      * 
      * Pre-condition: The task must be displayable in calendar.
-     * @param task
-     * @throws IllegalValueException 
+     * 
+     * @param task to generate the calendar UI appointment object
+     * @throws IllegalValueException if task has an invalid task detail
      */
-    private List<Appointment> generateAppointmentsForTask(ReadOnlyTask task, int index)
+    private List<Appointment> generateAllAppointmentsForTask(ReadOnlyTask task, int index)
             throws IllegalValueException {
         assert isDisplayableInCalendar(task);
-        
-        List<Appointment> allAppointments = new ArrayList<Appointment>();
-        allAppointments.add(new CalendarReadOnlyAppointment(task, index));
-        
-        Recurrence taskRecurrence = task.getRecurrence();
-        
-        if (taskRecurrence.hasRecurrence()) {
-            Recurrence remainingRecurrence = task.getRecurrence();
-            Deadline currentDeadline = task.getDeadline();
-            Period currentPeriod = task.getPeriod();
+                
+        if (!task.getRecurrence().hasRecurrence()) {
             
-            while (remainingRecurrence.hasRecurrence()) {
-                if (currentDeadline.hasDeadline()) {
-                    currentDeadline = new Deadline(remainingRecurrence
-                            .getNextDateAfterRecurrence(currentDeadline.getDeadline()));
-                }
+            List<Appointment> results = new ArrayList<Appointment>();            
+            results.add(getFirstAppointment(task, index));
+            return results;
+            
+        } else {
+            return getRecurringAppointments(task, index);
+        }
+    }
 
-                if (currentPeriod.hasPeriod()) {
-                    currentPeriod = new Period(
-                            remainingRecurrence
-                                    .getNextDateAfterRecurrence(currentPeriod.getStartTime()),
-                            remainingRecurrence
-                                    .getNextDateAfterRecurrence(currentPeriod.getEndTime()));
-                }
-                
-                remainingRecurrence = remainingRecurrence.getRecurrenceWithOneFrequencyLess();
-                
-                allAppointments.add(new CalendarReadOnlyRecurredAppointment(task, index, currentDeadline, currentPeriod));
-            }
+    /**
+     * Gets the first appointment for this task.
+     * 
+     * If the task is recurring, only the first instance of the
+     * recurrence will be returned as an appointment
+     * 
+     * If the task is non-recurring, the same task will be 
+     * returned as an appointment.
+     * 
+     * Pre-condition: The task must be displayable in calendar.
+     * 
+     * @param task to generate the calendar UI appointment object
+     * @throws IllegalValueException if task has an invalid task detail
+     */
+    private CalendarReadOnlyAppointment getFirstAppointment(ReadOnlyTask task, int index) {
+        return new CalendarReadOnlyAppointment(task, index);
+    }
+    
+    /**
+     * Gets all recurring appointments for this task.
+     * 
+     * Pre-condition: The task must be displayable in calendar, and 
+     * the task must have recurrence.
+     * 
+     * @param task to generate the calendar UI appointment object
+     * @throws IllegalValueException if task has an invalid task detail
+     */
+    private List<Appointment> getRecurringAppointments(ReadOnlyTask task, int index)
+            throws IllegalValueException {    
+        assert isDisplayableInCalendar(task);   
+        assert task.getRecurrence().hasRecurrence();
+
+        List<Appointment> results = new ArrayList<Appointment>();
+        
+        results.add(getFirstAppointment(task, index));
+        
+        Recurrence remainingRecurrence = task.getRecurrence();
+        Deadline currentDeadline = task.getDeadline();
+        Period currentPeriod = task.getPeriod();
+        
+        while (remainingRecurrence.hasRecurrence()) {
+            currentDeadline = getNextRecurringDeadline(remainingRecurrence, currentDeadline);
+            currentPeriod = getNextRecurringPeriod(remainingRecurrence, currentPeriod);            
+            remainingRecurrence = remainingRecurrence.getRecurrenceWithOneFrequencyLess();
+            
+            results.add(new CalendarReadOnlyRecurredAppointment(task, index, currentDeadline, currentPeriod));
         }
         
-        return allAppointments;
+        return results;
+    }
+
+    /**
+     * Gets the next period following right after the given period,
+     * with reference to the recurring pattern given.
+
+     * @throws IllegalValueException if the new period time is not valid.
+     */
+    private Period getNextRecurringPeriod(Recurrence recurrence, Period period)
+            throws IllegalValueException {
+
+        if (period.hasPeriod()) {
+            Date newStartTime = recurrence.getNextDateAfterRecurrence(period.getStartTime());
+            Date newEndTime = recurrence.getNextDateAfterRecurrence(period.getEndTime());
+            return new Period(newStartTime, newEndTime);
+        }
+
+        return period;
+    }
+
+    /**
+     * Gets the next deadline following right after the given deadline,
+     * with reference to the recurring pattern given.
+     */
+    private Deadline getNextRecurringDeadline(Recurrence recurrence, Deadline deadline) {
+
+        if (deadline.hasDeadline()) {
+            return new Deadline(recurrence.getNextDateAfterRecurrence(deadline.getDeadline()));
+        }
+
+        return deadline;
     }
 
     /**
