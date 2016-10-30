@@ -2,6 +2,7 @@
 package teamfour.tasc.ui.calendar;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import jfxtras.scene.control.agenda.Agenda.AppointmentGroup;
 import teamfour.tasc.commons.util.DateUtil;
@@ -26,17 +27,15 @@ public class CalendarReadOnlyRecurredAppointment extends CalendarReadOnlyAppoint
     
     @Override
     public AppointmentGroup getAppointmentGroup() {
-        if (deadlineForOccurrence.hasDeadline()) {
-            if (deadlineForOccurrence.isOverdue(DateUtil.getInstance().getCurrentTime())) {
-                return CalendarAppointmentGroups.OVERDUE;
-            }
+        Date currentTime = DateUtil.getInstance().getCurrentTime();
+        
+        if (deadlineForOccurrence.hasDeadline() && deadlineForOccurrence.isOverdue(currentTime)) {
+            return CalendarAppointmentGroups.OVERDUE;
         }
 
-        if (periodForOccurence.hasPeriod()) {
-            if (periodForOccurence.getEventStatus(DateUtil.getInstance().getCurrentTime()) 
-                    == EventStatus.ENDED) {
-                return CalendarAppointmentGroups.COMPLETED;
-            }
+        if (periodForOccurence.hasPeriod()
+                && (periodForOccurence.getEventStatus(currentTime) == EventStatus.ENDED)) {
+            return CalendarAppointmentGroups.COMPLETED;
         }
         return CalendarAppointmentGroups.RECURRING;
     }
