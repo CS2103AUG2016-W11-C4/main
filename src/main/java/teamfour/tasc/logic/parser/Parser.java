@@ -117,7 +117,7 @@ public class Parser {
 
         case SwitchlistCommand.COMMAND_WORD:
             return prepareSwitchlist(arguments);
-            
+
         case RenamelistCommand.COMMAND_WORD:
             return prepareRenamelist(arguments);
 
@@ -146,32 +146,25 @@ public class Parser {
         final KeywordParser parser = new KeywordParser("add", "by", "from", "to", "repeat", "tag");
         HashMap<String, String> parsed = parser.parseKeywordsWithoutFixedOrder(args);
         String name = parsed.get("add");
-        String by = parsed.get("by");
+        String deadlineTime = parsed.get("by");
         String startTime = parsed.get("from");
         String endTime = parsed.get("to");
         String recurrence = parsed.get("repeat");
         String tags = parsed.get("tag");
 
-        if(name == null){
+        if(name == null || name.equals("")){
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
         if(tags == null){
             tags = "";
         }
         try {
-            return new AddCommand(
-                    name,
-                    by,
-                    startTime,
-                    endTime,
-                    recurrence,
-                    getTagsFromArgs(tags)
-            );
+            return new AddCommand(name, deadlineTime, startTime, endTime, recurrence, getTagsFromArgs(tags));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-    
+
     //@@author A0147971U
     /**
      * Parses arguments in the context of the switch list command.
@@ -187,12 +180,12 @@ public class Parser {
         }
         return new SwitchlistCommand(args.trim());
     }
-    
+
     //@@author A0147971U
     /**
      * Parses arguments in the context of the rename list command.
      *
-     * @param args the file name of list that user wish to rename to. 
+     * @param args the file name of list that user wish to rename to.
      * @return the prepared command
      */
     public Command prepareRenamelist(String args) {
@@ -385,7 +378,7 @@ public class Parser {
 
         return new RelocateCommand(args.trim());
     }
-    
+
     //@@author A0148096W
     /**
      * Parses arguments in the context of the change calendar view command.
@@ -482,7 +475,7 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         }
     }
-    
+
     //@@author A0147971U
     /**
      * Parses arguments in the context of the redo command.
@@ -573,7 +566,7 @@ public class Parser {
         return new UpdateCommand(targetIndex.get(), name, by, startTime, endTime, recurrence,
                 tagsToAdd, removeDeadline, removePeriod, removeRecurrence, tagsToRemove);
     }
-    
+
     //@@author
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.

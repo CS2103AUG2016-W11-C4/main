@@ -13,13 +13,10 @@ public class CollapseCommand extends Command {
 
     public static final String COMMAND_WORD = CollapseCommandKeyword.keyword;
     public static final String MESSAGE_SUCCESS = "Task view collapsed";
-    public static final String MESSAGE_FAILURE_ALREADY_COLLAPSED = "Already in collapsed view, type \"expand\" to go into expanded view";
+    public static final String MESSAGE_FAILURE_ALREADY_COLLAPSED = "Already in collapsed view, "
+            + "type \"expand\" to go into expanded view";
 
-    public CollapseCommand() {
-
-    }
-    
-    public CommandResult execute() {
+    public CommandResult execute(){
         assert model != null;
         if(CollapseChangeEvent.getCollapsed()) {
             return new CommandResult(MESSAGE_FAILURE_ALREADY_COLLAPSED);

@@ -79,7 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateTaskListChanged() {
         raise(new TaskListChangedEvent(taskList));
     }
-    
+
     //@@author A0148096W
     @Override
     public void saveTaskListHistory() {
@@ -136,7 +136,7 @@ public class ModelManager extends ComponentManager implements Model {
         redoTaskListHistory = new HistoryStack<TaskList>();
     }
     //@@author
-    
+
 
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
@@ -341,10 +341,16 @@ public class ModelManager extends ComponentManager implements Model {
         }
         @Override
         public boolean run(ReadOnlyTask task) {
+            boolean tagFound = false;
+            for (String keyword : nameKeyWords) {
+                tagFound = task.getTags().getInternalList().stream()
+                        .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny()
+                        .isPresent() || tagFound;
+            }
+
             return nameKeyWords.stream()
                     .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                    .findAny()
-                    .isPresent();
+                    .findAny().isPresent() || tagFound;
         }
         @Override
         public String toString() {
