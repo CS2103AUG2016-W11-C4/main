@@ -149,7 +149,7 @@ public class CalendarPanel extends UiPart {
                 try {
                     agendaView.appointments().addAll(generateAppointmentsForTask(task, index));
                 } catch (IllegalValueException ive) {
-                    assert false: "Not possible";
+                    logger.warning("Fail to generate calendar UI for task " + index);
                 }
             }
         }
