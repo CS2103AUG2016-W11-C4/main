@@ -47,6 +47,7 @@ import teamfour.tasc.model.task.Task;
 import teamfour.tasc.model.task.util.TaskCompleteConverter;
 import teamfour.tasc.storage.StorageManager;
 import teamfour.tasc.testutil.TaskBuilder;
+import teamfour.tasc.testutil.TestClock;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -994,6 +995,12 @@ public class LogicManagerTest {
 
     @Test
     public void execute_complete_removesCorrectTask() throws Exception {
+        // must set up fake clock, otherwise test becomes time-sensitive and may fail
+        // due to one millisecond difference
+        TestClock testClock = new TestClock(new Date(0));
+        DateUtil.getInstance().setClock(testClock);
+        
+        // actual test as follows
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTasksList(3);
 
