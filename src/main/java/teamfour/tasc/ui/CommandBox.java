@@ -187,6 +187,7 @@ public class CommandBox extends UiPart {
      */
     private void restoreCommandText() {
         commandTextField.setText(previousCommandTest);
+        commandTextField.positionCaret(previousCommandTest.length());
     }
 
     /**

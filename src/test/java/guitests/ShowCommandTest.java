@@ -13,9 +13,6 @@ import static teamfour.tasc.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 public class ShowCommandTest extends AddressBookGuiTest {
 
     /*
-     * All exceptions for invalid arguments are handled 
-     * so that the program does not crash for the user.
-     * 
      * - The test methods test one argument type at a time.
      * - Then tests combined arguments and continuous executions of show command.
      */
@@ -23,83 +20,83 @@ public class ShowCommandTest extends AddressBookGuiTest {
     //---------------- Tests individual arguments ----------------------
     
     @Test
-    public void show_invalidCommand_showUsageMessage() {
+    public void show_invalidCommand_showsUsageMessage() {
         commandBox.runCommand("show");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void show_emptyList_noResults(){
+    public void show_emptyList_showsEmptyList(){
         commandBox.runCommand("clear");
         assertListResult("show tasks"); //no results
     }
     
     @Test
-    public void list_type_overdue() {
+    public void show_type_overdue_showsNonEmptyList() {
         assertListResult("show overdue", td.submitProgressReport);
     }
     
     @Test
-    public void list_type_recurring() {
+    public void show_type_recurring_showsNonEmptyList() {
         assertListResult("show recurring", td.developerMeeting,
                 td.learnVim);
     }
 
     @Test
-    public void show_type_uncompleted() {
+    public void show_type_uncompleted_showsNonEmptyList() {
         assertListResult("show uncompleted", td.submitPrototype, 
                 td.submitProgressReport, td.developerMeeting,
                 td.learnVim, td.buyBirthdayGift, td.signUpForYoga);
     }
     
     @Test
-    public void show_type_completed() {
+    public void show_type_completed_showsNonEmptyList() {
         assertListResult("show completed", td.researchWhales);
     }
     
     @Test
-    public void show_type_tasks() {
+    public void show_type_tasks_showsNonEmptyList() {
         assertListResult("show tasks", td.submitPrototype, 
                 td.submitProgressReport, td.developerMeeting,
                 td.buyBirthdayGift);
     }
     
     @Test
-    public void show_type_events() {
+    public void show_type_events_showsNonEmptyList() {
         assertListResult("show events", td.researchWhales,
                 td.learnVim, td.signUpForYoga);
     }
     
     @Test
-    public void show_type_completedEvents() {
+    public void show_type_completedEvents_showsNonEmptyList() {
         assertListResult("show completed events", td.researchWhales);
     }
     
     @Test
-    public void show_type_uncompletedEvents() {
+    public void show_type_uncompletedEvents_showsNonEmptyList() {
         assertListResult("show events uncompleted", td.learnVim, 
                 td.signUpForYoga);
     }
     
     @Test
-    public void show_date_on1Jan2022() {
+    public void show_date_on1Jan2022_showsNonEmptyList() {
         assertListResult("show on 1 jan 2022", td.researchWhales);
     }
     
     @Test
-    public void show_deadline_byYear2020() {
+    public void show_deadline_by12Dec2020_showsNonEmptyList() {
         assertListResult("show by 12 dec 2020", td.submitProgressReport,
                 td.buyBirthdayGift);
     }
     
     @Test
-    public void show_startTime_fromYear2022() {
+    public void show_startTime_from1Jan2022_showsNonEmptyList() {
         assertListResult("show from 1 jan 2022", td.submitPrototype, 
                 td.researchWhales);
     }
     
     @Test
-    public void show_endTime_toYear2021() {
+    public void show_endTime_to30Dec2021_showsNonEmptyList() {
         assertListResult("show to 30 dec 2021", td.submitPrototype,
                 td.submitProgressReport, td.developerMeeting,
                 td.researchWhales, td.learnVim,
@@ -107,13 +104,13 @@ public class ShowCommandTest extends AddressBookGuiTest {
     }
     
     @Test
-    public void show_tags_withMatches() {
+    public void show_tags_withMatches_showsNonEmptyList() {
         assertListResult("show tag urgent", td.submitPrototype, 
                 td.submitProgressReport);
     }
     
     @Test
-    public void show_tags_noMatches() {
+    public void show_tags_noMatches_showsEmptyList() {
         assertListResult("show tag thistagdoesnotexist");
     }
     
@@ -121,14 +118,14 @@ public class ShowCommandTest extends AddressBookGuiTest {
     //---------------- Tests combined arguments ----------------------
     
     @Test
-    public void show_combinedArgs() {
+    public void show_combinedArgs_showsNonEmptyList() {
         assertListResult("show uncomplete tasks from 1 jan 1998"
                 + " to 1 jan 2024, tag urgent", td.submitPrototype,
                 td.submitProgressReport);
     }
     
     @Test
-    public void show_continuously_narrowsList() {
+    public void show_continuously_narrowsList_showsNonEmptyListAtStart_showsEmptyListAtEnd() {
         assertListResult("show to 30 dec 2021", td.submitPrototype,
                 td.submitProgressReport, td.developerMeeting,
                 td.researchWhales, td.learnVim,
