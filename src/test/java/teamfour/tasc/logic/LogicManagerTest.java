@@ -1006,7 +1006,8 @@ public class LogicManagerTest {
 
         TaskList expectedTL = helper.generateTaskList(threeTasks);
         Task targetedTask = threeTasks.get(1);
-        Task completedTask = new TaskCompleteConverter(targetedTask, DateUtil.getInstance().getCurrentTime()).getCompletedTask();
+        Task completedTask = new TaskCompleteConverter(targetedTask,
+                DateUtil.getInstance().getCurrentTime()).getCompletedTask();
         expectedTL.updateTask(targetedTask, completedTask);
         helper.addToModel(model, threeTasks);
 

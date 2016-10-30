@@ -62,7 +62,7 @@ public class CompleteCommandTest extends AddressBookGuiTest {
      *            complete).
      */
     private void assertCompleteSuccess(int targetIndexOneIndexed, final TestTask[] currentList)
-            throws Exception {        
+            throws Exception {    
         TestTask[] expectedNewList = TestUtil.markTaskInListAsComplete(currentList, targetIndexOneIndexed);
 
         commandBox.runCommand("complete " + targetIndexOneIndexed);
@@ -72,7 +72,8 @@ public class CompleteCommandTest extends AddressBookGuiTest {
         assertTrue(taskListPanel.isListMatching(expectedNewList));
 
         // confirm the result message is correct
-        assertResultMessage(String.format(MESSAGE_COMPLETE_TASK_SUCCESS, expectedNewList[targetIndexOneIndexed - 1]));
+        assertResultMessage(String.format(MESSAGE_COMPLETE_TASK_SUCCESS,
+                expectedNewList[targetIndexOneIndexed - 1]));
     }
 
     /**
