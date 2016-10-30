@@ -29,6 +29,8 @@ public class CompleteCommand extends Command {
     public static final String MESSAGE_COMPLETE_TASK_SUCCESS = "Completed Task: %1$s";
     public static final String MESSAGE_COMPLETE_TASK_UNDO_SUCCESS = "Marked task as uncompleted: %1$s";
     public static final String MESSAGE_COMPLETE_TASK_ALREADY_COMPLETED = "Task is already completed: %1$s";
+    
+    public static final String MESSAGE_COMPLETE_TASK_CANNOT_BE_FOUND = "Task cannot be found: %1$s";
 
     public final int targetIndex;
 
@@ -53,8 +55,8 @@ public class CompleteCommand extends Command {
         try {
             newTasks = new TaskCompleteConverter(oldReadOnlyTask, DateUtil.getInstance().getCurrentTime());
         } catch (TaskAlreadyCompletedException | IllegalValueException e) {
-            return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_ALREADY_COMPLETED,
-                    oldReadOnlyTask));
+            return new CommandResult(
+                    String.format(MESSAGE_COMPLETE_TASK_ALREADY_COMPLETED, oldReadOnlyTask));
         }
 
         try {
@@ -64,7 +66,8 @@ public class CompleteCommand extends Command {
                 model.addTask(newTasks.getUncompletedRemainingRecurringTask());
             }
         } catch (TaskNotFoundException pnfe) {
-            assert false : "The target task cannot be missing";
+            return new CommandResult(
+                    String.format(MESSAGE_COMPLETE_TASK_CANNOT_BE_FOUND, oldReadOnlyTask));
         } catch (DuplicateTaskException dte) {
             assert false : "Not possible";
         }
