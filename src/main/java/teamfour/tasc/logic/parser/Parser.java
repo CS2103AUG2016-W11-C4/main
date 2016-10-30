@@ -532,17 +532,16 @@ public class Parser {
         }
 
         String name = parsed.get(UpdateCommand.KEYWORD_NAME);
-        String by = parsed.get(UpdateCommand.KEYWORD_DEADLINE);
+        String deadline = parsed.get(UpdateCommand.KEYWORD_DEADLINE);
         String startTime = parsed.get(UpdateCommand.KEYWORD_PERIOD_START_TIME);
         String endTime = parsed.get(UpdateCommand.KEYWORD_PERIOD_END_TIME);
         String recurrence = parsed.get(UpdateCommand.KEYWORD_RECURRENCE);
         String addTagsArgs = parsed.get(UpdateCommand.KEYWORD_TAG);
 
-        boolean removeDeadline = (parsed.get(UpdateCommand.KEYWORD_REMOVE_DEADLINE) != null);
-        boolean removePeriod = (parsed.get(UpdateCommand.KEYWORD_REMOVE_START_TIME) != null
-                || parsed.get(UpdateCommand.KEYWORD_REMOVE_END_TIME) != null);
-        boolean removeRecurrence = (parsed
-                .get(UpdateCommand.KEYWORD_REMOVE_RECURRENCE) != null);
+        boolean removeDeadline = parsed.get(UpdateCommand.KEYWORD_REMOVE_DEADLINE) != null;
+        boolean removePeriod = (parsed.get(UpdateCommand.KEYWORD_REMOVE_START_TIME) != null)
+                || (parsed.get(UpdateCommand.KEYWORD_REMOVE_END_TIME) != null);
+        boolean removeRecurrence = parsed.get(UpdateCommand.KEYWORD_REMOVE_RECURRENCE) != null;
         String removeTagsArgs = parsed.get(UpdateCommand.KEYWORD_REMOVE_TAG);
 
         Set<String> tagsToAdd = null;
@@ -563,7 +562,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
 
-        return new UpdateCommand(targetIndex.get(), name, by, startTime, endTime, recurrence,
+        return new UpdateCommand(targetIndex.get(), name, deadline, startTime, endTime, recurrence,
                 tagsToAdd, removeDeadline, removePeriod, removeRecurrence, tagsToRemove);
     }
 
