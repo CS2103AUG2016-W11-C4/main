@@ -20,6 +20,8 @@ public class RecurrenceTest {
     private Date firstDayOfJanuaryNextYear;
     private Date firstDayOfDecemberNextYear;
     
+    private Recurrence noRecurrence;
+    
     @Before
     public void setUp() throws Exception {
         Calendar calendar = Calendar.getInstance();
@@ -38,6 +40,8 @@ public class RecurrenceTest {
         
         calendar.set(2001, 11, 1, 0, 0, 0);        
         firstDayOfDecemberNextYear = calendar.getTime();
+        
+        noRecurrence = new Recurrence();
     }
 
     @Test
@@ -66,33 +70,29 @@ public class RecurrenceTest {
     
     @Test
     public void constructor_validPatternFrequency_returnsCorrectRecurrence() throws IllegalValueException {
-        Recurrence.Pattern pattern = Recurrence.Pattern.WEEKLY;
+        Recurrence.Pattern validPattern = Recurrence.Pattern.WEEKLY;
         int frequency = 1;
         
-        Recurrence recurrence = new Recurrence(pattern, frequency);
-        assertTrue(recurrence.hasRecurrence());
-        assertEquals(pattern, recurrence.getPattern());
-        assertEquals(frequency, recurrence.getFrequency());
+        Recurrence validRecurrence = new Recurrence(validPattern, frequency);
+        assertTrue(validRecurrence.hasRecurrence());
+        assertEquals(validPattern, validRecurrence.getPattern());
+        assertEquals(frequency, validRecurrence.getFrequency());
     }
     
     @Test
     public void toString_noRecurrence_returnsNoRecurrence() throws IllegalValueException {
-        Recurrence noRecurrence = new Recurrence();
-        
         assertEquals(Recurrence.TO_STRING_NO_RECURRENCE, noRecurrence.toString());
     }
     
     @Test
     public void toString_recurrence_returnsCorrectValues() throws IllegalValueException {
-        Recurrence recurrence = new Recurrence(Recurrence.Pattern.WEEKLY, 5);
+        Recurrence fiveTimesWeeklyRecurrence = new Recurrence(Recurrence.Pattern.WEEKLY, 5);
         
-        assertEquals("WEEKLY [5 time(s)]", recurrence.toString());
+        assertEquals("WEEKLY [5 time(s)]", fiveTimesWeeklyRecurrence.toString());
     }
     
     @Test
     public void equals_nonRecurrenceObject_returnsFalse() throws IllegalValueException {
-        Recurrence noRecurrence = new Recurrence();
-        
         assertFalse(noRecurrence.equals("String"));
     }
     
@@ -115,8 +115,6 @@ public class RecurrenceTest {
     // 1
     @Test
     public void getNextDateAfterRecurrence_noRecurrence_returnsNull() throws IllegalValueException {
-        Recurrence noRecurrence = new Recurrence();
-
         assertEquals(null, noRecurrence.getNextDateAfterRecurrence(new Date(0)));
     }
 
@@ -170,8 +168,6 @@ public class RecurrenceTest {
     // 1
     @Test
     public void getRecurrenceWithOneFrequencyLess_noRecurrence_returnsNull() throws IllegalValueException {
-        Recurrence noRecurrence = new Recurrence();
-        
         assertEquals(null, noRecurrence.getRecurrenceWithOneFrequencyLess());
     }
     
@@ -187,39 +183,39 @@ public class RecurrenceTest {
     // 3
     @Test
     public void getRecurrenceWithOneFrequencyLess_dailyMoreThanOneRecurrence_returnsOneLeft() throws IllegalValueException {
-        Recurrence twoRecurrence = new Recurrence(Recurrence.Pattern.DAILY, 2);
+        Recurrence twiceDailyRecurrence = new Recurrence(Recurrence.Pattern.DAILY, 2);
         Recurrence expected = new Recurrence(Recurrence.Pattern.DAILY, 1);
         
-        assertEquals(expected, twoRecurrence.getRecurrenceWithOneFrequencyLess());
+        assertEquals(expected, twiceDailyRecurrence.getRecurrenceWithOneFrequencyLess());
     }
 
 
     // 4
     @Test
     public void getRecurrenceWithOneFrequencyLess_weeklyMoreThanOneRecurrence_returnsOneLeft() throws IllegalValueException {
-        Recurrence twoRecurrence = new Recurrence(Recurrence.Pattern.WEEKLY, 2);
+        Recurrence twiceWeeklyRecurrence = new Recurrence(Recurrence.Pattern.WEEKLY, 2);
         Recurrence expected = new Recurrence(Recurrence.Pattern.WEEKLY, 1);
         
-        assertEquals(expected, twoRecurrence.getRecurrenceWithOneFrequencyLess());
+        assertEquals(expected, twiceWeeklyRecurrence.getRecurrenceWithOneFrequencyLess());
     }
 
 
     // 5
     @Test
     public void getRecurrenceWithOneFrequencyLess_monthlyMoreThanOneRecurrence_returnsOneLeft() throws IllegalValueException {
-        Recurrence twoRecurrence = new Recurrence(Recurrence.Pattern.MONTHLY, 2);
+        Recurrence twiceMonthlyRecurrence = new Recurrence(Recurrence.Pattern.MONTHLY, 2);
         Recurrence expected = new Recurrence(Recurrence.Pattern.MONTHLY, 1);
         
-        assertEquals(expected, twoRecurrence.getRecurrenceWithOneFrequencyLess());
+        assertEquals(expected, twiceMonthlyRecurrence.getRecurrenceWithOneFrequencyLess());
     }
 
 
     // 6
     @Test
     public void getRecurrenceWithOneFrequencyLess_yearlyMoreThanOneRecurrence_returnsOneLeft() throws IllegalValueException {
-        Recurrence twoRecurrence = new Recurrence(Recurrence.Pattern.YEARLY, 2);
+        Recurrence twiceYearlyRecurrence = new Recurrence(Recurrence.Pattern.YEARLY, 2);
         Recurrence expected = new Recurrence(Recurrence.Pattern.YEARLY, 1);
         
-        assertEquals(expected, twoRecurrence.getRecurrenceWithOneFrequencyLess());
+        assertEquals(expected, twiceYearlyRecurrence.getRecurrenceWithOneFrequencyLess());
     }
 }

@@ -2,7 +2,8 @@
 package teamfour.tasc.model.task.exceptions;
 
 /**
- * If the task is already completed, but we try to mark it as complete again.
+ * Represents an error whereby we try to mark a completed task
+ * as complete again (which is an unnecessary action).
  */
 public class TaskAlreadyCompletedException extends Exception {
 

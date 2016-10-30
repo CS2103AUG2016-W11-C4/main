@@ -181,7 +181,11 @@ public class TaskCompleteConverterTest {
     }
 
     /**
-     * Check that task1 has the same content as task2.
+     * Checks that task1 has the same content as task2.
+     * 
+     * NOTE TO TAs: Cannot use assertEquals() (which internally uses Objects.equal())
+     * because interfaces such as ReadOnlyTask cannot override equals(), therefore
+     * we must call isSameStateAs() ourselves. Hence the existence of this method.
      */
     private void assertSameTask(ReadOnlyTask task1, ReadOnlyTask task2) {
         if (task1 == null && task2 == null) {

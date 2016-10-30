@@ -49,9 +49,6 @@ public interface ReadOnlyTask {
     }
     
     //@@author A0140011L
-    /**
-     * Is it a floating task?
-     */
     default boolean isFloatingTask() {
         return !getDeadline().hasDeadline() && !getPeriod().hasPeriod();
     }
@@ -65,7 +62,7 @@ public interface ReadOnlyTask {
     }
     
     /**
-     * Get whether the event has started or not.
+     * Returns the event status: not started, started, or is over.
      */
     default EventStatus getEventStatus(Date currentTime) {
         return getPeriod().getEventStatus(currentTime);

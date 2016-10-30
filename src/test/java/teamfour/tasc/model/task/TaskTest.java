@@ -25,18 +25,18 @@ public class TaskTest {
 
     @Test
     public void isOverdue_deadlineEarlierThanCurrentTime_returnsTrue() throws IllegalValueException {
-        Date currentTime = new Date(1);
+        Date timeAfterDeadline = new Date(1);
         TestTask lateTask = new TaskBuilder().withDeadline(new Date(0)).build();
 
-        assertTrue(lateTask.isOverdue(currentTime));
+        assertTrue(lateTask.isOverdue(timeAfterDeadline));
     }
 
     @Test
     public void isOverdue_deadlineLaterThanCurrentTime_returnsFalse() throws IllegalValueException {
-        Date currentTime = new Date(1);
+        Date timeBeforeDeadline = new Date(1);
         TestTask notLateTask = new TaskBuilder().withDeadline(new Date(2)).build();
 
-        assertFalse(notLateTask.isOverdue(currentTime));
+        assertFalse(notLateTask.isOverdue(timeBeforeDeadline));
     }
 
     @Test
@@ -48,26 +48,26 @@ public class TaskTest {
 
     @Test
     public void getEventStatus_eventNotStartedYet_returnsNotStarted() throws IllegalValueException {
-        Date currentTime = new Date(10);
+        Date timeBeforeEvent = new Date(10);
         TestTask futureEvent = new TaskBuilder().withPeriod(new Date(20), new Date(30)).build();
         
-        assertEquals(EventStatus.NOT_STARTED, futureEvent.getEventStatus(currentTime));
+        assertEquals(EventStatus.NOT_STARTED, futureEvent.getEventStatus(timeBeforeEvent));
     }
     
     @Test
     public void getEventStatus_eventHappeningNow_returnsInProgress() throws IllegalValueException {
-        Date currentTime = new Date(10);
+        Date timeBetweenEvent = new Date(10);
         TestTask happeningNow = new TaskBuilder().withPeriod(new Date(5), new Date(15)).build();
         
-        assertEquals(EventStatus.IN_PROGRESS, happeningNow.getEventStatus(currentTime));
+        assertEquals(EventStatus.IN_PROGRESS, happeningNow.getEventStatus(timeBetweenEvent));
     }
 
     @Test
     public void getEventStatus_eventIsOver_returnsEnded() throws IllegalValueException {
-        Date currentTime = new Date(10);
+        Date timeAfterEvent = new Date(10);
         TestTask eventEnded = new TaskBuilder().withPeriod(new Date(2), new Date(7)).build();
 
-        assertEquals(EventStatus.ENDED, eventEnded.getEventStatus(currentTime));
+        assertEquals(EventStatus.ENDED, eventEnded.getEventStatus(timeAfterEvent));
     }
 
     @Test
