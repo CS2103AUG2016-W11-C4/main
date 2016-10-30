@@ -1,10 +1,9 @@
 package teamfour.tasc.storage;
 
-import teamfour.tasc.commons.exceptions.IllegalValueException;
-import teamfour.tasc.commons.util.CollectionUtil;
-import teamfour.tasc.model.tag.Tag;
-
 import javax.xml.bind.annotation.XmlValue;
+
+import teamfour.tasc.commons.exceptions.IllegalValueException;
+import teamfour.tasc.model.tag.Tag;
 
 /**
  * JAXB-friendly adapted version of the Tag.

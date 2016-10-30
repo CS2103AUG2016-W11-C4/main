@@ -3,7 +3,6 @@ package teamfour.tasc.testutil;
 import java.util.Iterator;
 import java.util.Set;
 
-import teamfour.tasc.model.task.*;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.model.tag.UniqueTagList;
 import teamfour.tasc.model.task.Complete;

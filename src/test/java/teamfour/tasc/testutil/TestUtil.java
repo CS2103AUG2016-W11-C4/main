@@ -1,6 +1,21 @@
 package teamfour.tasc.testutil;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
+
+import org.loadui.testfx.GuiTest;
+import org.testfx.api.FxToolkit;
+
 import com.google.common.io.Files;
+
 import guitests.guihandles.TaskCardHandle;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -10,10 +25,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import junit.framework.AssertionFailedError;
-import org.loadui.testfx.GuiTest;
-import org.testfx.api.FxToolkit;
-
-import teamfour.tasc.model.task.*;
 import teamfour.tasc.TestApp;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.commons.util.DateUtil;
@@ -33,18 +44,6 @@ import teamfour.tasc.model.task.UniqueTaskList;
 import teamfour.tasc.model.task.exceptions.TaskAlreadyCompletedException;
 import teamfour.tasc.model.task.util.TaskCompleteConverter;
 import teamfour.tasc.storage.XmlSerializableTaskList;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeoutException;
-import java.util.stream.Collectors;
 
 /**
  * A utility class for test cases.

@@ -1,7 +1,6 @@
 //@@author A0147971U
 package teamfour.tasc.storage;
 
-import teamfour.tasc.model.task.*;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.model.tag.Tag;
 import teamfour.tasc.model.tag.UniqueTagList;

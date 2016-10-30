@@ -4,7 +4,6 @@ package teamfour.tasc.commons.events.ui;
 import java.util.List;
 
 import teamfour.tasc.commons.events.BaseEvent;
-import teamfour.tasc.model.ReadOnlyTaskList;
 import teamfour.tasc.model.task.ReadOnlyTask;
 
 /**

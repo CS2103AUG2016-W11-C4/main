@@ -1,9 +1,7 @@
 package teamfour.tasc.logic.parser;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class KeywordParser {
     //@@author A0127014W

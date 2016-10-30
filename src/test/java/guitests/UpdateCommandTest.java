@@ -7,13 +7,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.TaskCardHandle;
 import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.commons.exceptions.IllegalValueException;
-import teamfour.tasc.logic.commands.AddCommand;
 import teamfour.tasc.model.task.Deadline;
 import teamfour.tasc.model.task.Name;
 import teamfour.tasc.testutil.TestTask;

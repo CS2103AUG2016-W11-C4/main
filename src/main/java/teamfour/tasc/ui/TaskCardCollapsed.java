@@ -1,15 +1,10 @@
 //@@author A0127014W
 package teamfour.tasc.ui;
 
-import java.sql.Date;
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import teamfour.tasc.model.task.Complete;
 import teamfour.tasc.model.task.ReadOnlyTask;
 
 /**

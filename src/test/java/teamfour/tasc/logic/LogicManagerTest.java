@@ -7,10 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import teamfour.tasc.logic.commands.*;
-import teamfour.tasc.model.task.*;
 import teamfour.tasc.commons.core.EventsCenter;
-import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.events.model.TaskListChangedEvent;
 import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
 import teamfour.tasc.commons.events.ui.ShowHelpRequestEvent;
@@ -46,20 +43,14 @@ import teamfour.tasc.model.task.Recurrence;
 import teamfour.tasc.model.task.Task;
 import teamfour.tasc.model.task.util.TaskCompleteConverter;
 import teamfour.tasc.storage.StorageManager;
-import teamfour.tasc.testutil.TaskBuilder;
 import teamfour.tasc.testutil.TestClock;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.swing.text.DateFormatter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
