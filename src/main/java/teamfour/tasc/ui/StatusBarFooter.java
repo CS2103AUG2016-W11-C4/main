@@ -10,6 +10,7 @@ import org.controlsfx.control.StatusBar;
 
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.events.model.TaskListChangedEvent;
+import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
 import teamfour.tasc.commons.util.FxViewUtil;
 
 import java.util.Date;
@@ -91,9 +92,18 @@ public class StatusBarFooter extends UiPart {
     }
 
     @Subscribe
-    public void handleAddressBookChangedEvent(TaskListChangedEvent abce) {
+    public void handleTaskListChangedEvent(TaskListChangedEvent abce) {
         String lastUpdated = (new Date()).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
     }
+    
+    //@@author A0148096W
+    @Subscribe
+    public void handleTaskListRenamedEvent(TaskListRenamedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setSaveLocation("./" + event.getNewPath());
+    }
+    
+    //@@author
 }

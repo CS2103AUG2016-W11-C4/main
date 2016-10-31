@@ -223,7 +223,6 @@ public class MainApp extends Application {
     public void handleRequestTaskListRenameEvent(RequestTaskListRenameEvent event) throws IOException, TaskListFileExistException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.renameCurrentTaskList(event.getNewFilename());
-        this.stop();
     }
   //@@author
     
