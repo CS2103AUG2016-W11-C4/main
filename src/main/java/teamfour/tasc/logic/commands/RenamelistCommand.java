@@ -2,7 +2,7 @@
 package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
-import teamfour.tasc.commons.events.storage.RequestTaskListRenameEvent;
+import teamfour.tasc.commons.events.storage.TaskListRenamedEvent;
 import teamfour.tasc.logic.keyword.RenameListCommandKeyword;
 
 /**
@@ -36,7 +36,7 @@ public class RenamelistCommand extends Command {
     @Override
     public CommandResult execute() {
         assert model != null;
-        EventsCenter.getInstance().post(new RequestTaskListRenameEvent(this.newFilename));
+        EventsCenter.getInstance().post(new TaskListRenamedEvent(this.newFilename));
         return new CommandResult(String.format(MESSAGE_SUCCESS, newFilename));
     }
 

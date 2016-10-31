@@ -4,7 +4,7 @@ package teamfour.tasc.commons.events.storage;
 import teamfour.tasc.commons.events.BaseEvent;
 
 /** Indicates the Task List in the model has been switched to another.*/
-public class RequestTaskListSwitchEvent extends BaseEvent {
+public class TaskListSwitchedEvent extends BaseEvent {
 
     private final String filename;
     
@@ -12,7 +12,7 @@ public class RequestTaskListSwitchEvent extends BaseEvent {
         return filename;
     }
 
-    public RequestTaskListSwitchEvent(String filename){
+    public TaskListSwitchedEvent(String filename){
         this.filename = filename;
     }
 

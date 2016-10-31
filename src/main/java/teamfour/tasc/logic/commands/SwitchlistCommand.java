@@ -1,7 +1,7 @@
 //@@author A0147971U
 package teamfour.tasc.logic.commands;
 
-import teamfour.tasc.commons.events.storage.RequestTaskListSwitchEvent;
+import teamfour.tasc.commons.events.storage.TaskListSwitchedEvent;
 import teamfour.tasc.logic.keyword.SwitchListCommandKeyword;
 import teamfour.tasc.commons.core.EventsCenter;
 
@@ -36,7 +36,7 @@ public class SwitchlistCommand extends Command {
     @Override
     public CommandResult execute() {
         assert model != null;
-        EventsCenter.getInstance().post(new RequestTaskListSwitchEvent(this.filename));
+        EventsCenter.getInstance().post(new TaskListSwitchedEvent(this.filename));
         return new CommandResult(String.format(MESSAGE_SUCCESS, filename));
     }
 

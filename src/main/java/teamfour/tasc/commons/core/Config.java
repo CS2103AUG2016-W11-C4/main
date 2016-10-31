@@ -123,7 +123,7 @@ public class Config {
     }
     
     /**
-     * Modify config file for switchlist command execution.
+     * Modifies config file for switchlist command execution.
      * */
     public void switchToNewTaskList(String tasklistFileName) throws IOException {
         addNameToTasklists(tasklistFileName);
@@ -136,7 +136,7 @@ public class Config {
     }
     
     /**
-     * Replace the old file name with the new one 
+     * Replaces the old file name with the new one 
      * in the current file name list. 
      * @throws TaskListFileExistException 
      * @throws JsonProcessingException 
@@ -156,7 +156,7 @@ public class Config {
     }
     
     /**
-     * Modify config file for renamelist command execution.
+     * Modifies config file for renamelist command execution.
      * @throws TaskListFileExistException 
      * @throws IOException 
      * */
