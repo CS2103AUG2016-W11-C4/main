@@ -213,8 +213,7 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleRequestTaskListSwitchEvent(RequestTaskListSwitchEvent event) 
-            throws Exception {
+    public void handleRequestTaskListSwitchEvent(RequestTaskListSwitchEvent event) throws IOException, DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.switchToNewTaskList(event.getFilename());
         storage.changeTaskListStorage(config.getTaskListFilePathAndName());
