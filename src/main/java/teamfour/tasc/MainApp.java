@@ -213,18 +213,20 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleTaskListSwitchedEvent(TaskListSwitchedEvent event) throws IOException {
+    public void handleTaskListSwitchedEvent(TaskListSwitchedEvent event) throws IOException, DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.switchToNewTaskList(event.getFilename());
-        this.stop();
+        storage.changeTaskListStorage(config.getTaskListFilePathAndName());
+        ReadOnlyTaskList initialData = storage.readTaskList().orElse(new TaskList());
+        model.resetData(initialData);
     }
     
     @Subscribe
     public void handleTaskListRenamedEvent(TaskListRenamedEvent event)
-            throws IOException, TaskListFileExistException {
+            throws IOException, TaskListFileExistException, DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.renameCurrentTaskList(event.getNewFilename());
-        this.stop();
+        storage.changeTaskListStorage(config.getTaskListFilePathAndName());
     }
   //@@author
     

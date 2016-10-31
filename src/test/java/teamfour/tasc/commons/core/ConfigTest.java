@@ -10,6 +10,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+
 public class ConfigTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -19,10 +21,10 @@ public class ConfigTest {
         String defaultConfigAsString = "App title : TaSc\n" +
                 "Current log level : INFO\n" +
                 "Preference file Location : preferences.json\n" +
-                "Local data file location : data/tasklist.xml\n" +
+                "Local data file location : data" + File.separator + "tasklist.xml\n" +
                 "TaskList name : MyTaskList";
-
-        assertEquals(defaultConfigAsString, new Config().toString());
+        String test =  new Config().toString();
+        assertEquals(defaultConfigAsString, test);
     }
 
     @Test
