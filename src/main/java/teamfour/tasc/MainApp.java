@@ -10,8 +10,8 @@ import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.core.Version;
 import teamfour.tasc.commons.events.storage.FileRelocateEvent;
-import teamfour.tasc.commons.events.storage.RequestTaskListRenameEvent;
-import teamfour.tasc.commons.events.storage.RequestTaskListSwitchEvent;
+import teamfour.tasc.commons.events.storage.TaskListRenamedEvent;
+import teamfour.tasc.commons.events.storage.TaskListSwitchedEvent;
 import teamfour.tasc.commons.events.ui.ExitAppRequestEvent;
 import teamfour.tasc.commons.exceptions.DataConversionException;
 import teamfour.tasc.commons.exceptions.TaskListFileExistException;
@@ -213,14 +213,14 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleRequestTaskListSwitchEvent(RequestTaskListSwitchEvent event) throws IOException {
+    public void handleRequestTaskListSwitchEvent(TaskListSwitchedEvent event) throws IOException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.switchToNewTaskList(event.getFilename());
         this.stop();
     }
     
     @Subscribe
-    public void handleRequestTaskListRenameEvent(RequestTaskListRenameEvent event) throws IOException, TaskListFileExistException {
+    public void handleRequestTaskListRenameEvent(TaskListRenamedEvent event) throws IOException, TaskListFileExistException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.renameCurrentTaskList(event.getNewFilename());
         this.stop();
