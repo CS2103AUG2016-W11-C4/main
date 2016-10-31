@@ -13,6 +13,7 @@ public class DeleteCommandTest extends AddressBookGuiTest {
     @Test
     public void delete() {
 
+    	//234
         //delete the first in the list
         TestTask[] currentList = td.getTypicalTasks();
         int targetIndex = 1;
