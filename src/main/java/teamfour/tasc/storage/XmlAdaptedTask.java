@@ -81,7 +81,7 @@ public class XmlAdaptedTask {
         recurrencePattern = recurrence.getPattern().name();
         recurrenceFrequency = recurrence.getFrequency();
                 
-        tagged = new ArrayList<>();
+        tagged = new ArrayList<XmlAdaptedTag>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }

@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * A class to access TaskList data stored as an xml file on the hard disk.
+ * Accesses TaskList data stored as an xml file on the hard disk.
  */
 public class XmlTaskListStorage implements TaskListStorage {
 

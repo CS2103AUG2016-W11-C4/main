@@ -213,14 +213,15 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleRequestTaskListSwitchEvent(TaskListSwitchedEvent event) throws IOException {
+    public void handleTaskListSwitchedEvent(TaskListSwitchedEvent event) throws IOException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.switchToNewTaskList(event.getFilename());
         this.stop();
     }
     
     @Subscribe
-    public void handleRequestTaskListRenameEvent(TaskListRenamedEvent event) throws IOException, TaskListFileExistException {
+    public void handleTaskListRenamedEvent(TaskListRenamedEvent event)
+            throws IOException, TaskListFileExistException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.renameCurrentTaskList(event.getNewFilename());
         this.stop();

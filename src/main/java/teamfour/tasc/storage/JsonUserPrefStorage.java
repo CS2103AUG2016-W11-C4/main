@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * A class to access UserPrefs stored in the hard disk as a json file
+ * Accesses UserPrefs stored in the hard disk as a json file
  */
 public class JsonUserPrefStorage implements UserPrefsStorage{
 
