@@ -13,7 +13,6 @@ import org.ocpsoft.prettytime.shade.org.apache.commons.lang.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import teamfour.tasc.commons.events.storage.RequestTaskListSwitchEvent;
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
 import teamfour.tasc.commons.exceptions.TaskListFileExistException;
 import teamfour.tasc.commons.util.JsonUtil;
