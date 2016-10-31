@@ -132,6 +132,7 @@ public class Config {
         PrintWriter newConfigFileWriter = new PrintWriter(DEFAULT_CONFIG_FILE);
         newConfigFileWriter.write(newConfig);
         newConfigFileWriter.close();
+        EventsCenter.getInstance().post(new TaskListRenamedEvent(getTaskListFilePathAndName()));
     }
     
     /**
