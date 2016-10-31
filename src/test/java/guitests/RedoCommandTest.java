@@ -38,14 +38,18 @@ public class RedoCommandTest extends AddressBookGuiTest {
      */
     
     //---------------- redo (no argument) ----------------------
-    
-    @Test
-    public void redo_noArg_hasThreeHistory_redoOne() {
-        commandBox.runCommand("delete 1");
+
+    private void setupRedoPreparation() {
         commandBox.runCommand("delete 1");
         commandBox.runCommand("delete 1");
         commandBox.runCommand("delete 1");
         commandBox.runCommand("undo 3");
+    }
+    
+    @Test
+    public void redo_noArg_hasThreeHistory_redoOne() {
+        commandBox.runCommand("delete 1");
+        setupRedoPreparation();
         assertRedoResult("redo", createRedoSuccessResultMessage(1), 
                 td.developerMeeting,
                 td.researchWhales, td.learnVim, 
@@ -76,10 +80,7 @@ public class RedoCommandTest extends AddressBookGuiTest {
     
     @Test
     public void redo_four_hasThreeHistory_redoAll() {
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("undo 3");
+        setupRedoPreparation();
         assertRedoResult("redo 4", createRedoSuccessResultMessage(3), 
                 td.researchWhales, td.learnVim, 
                 td.buyBirthdayGift, td.signUpForYoga);
@@ -87,10 +88,7 @@ public class RedoCommandTest extends AddressBookGuiTest {
     
     @Test
     public void redo_three_hasThreeHistory_redoThree() {
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("undo 3");
+        setupRedoPreparation();
         assertRedoResult("redo 3", createRedoSuccessResultMessage(3), 
                 td.researchWhales, td.learnVim, 
                 td.buyBirthdayGift, td.signUpForYoga);
@@ -98,10 +96,7 @@ public class RedoCommandTest extends AddressBookGuiTest {
     
     @Test
     public void redo_three_hasThreeHistory_redoOneByOneUntilOriginal() {
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("undo 3");
+        setupRedoPreparation();
         assertRedoResult("redo 1", createRedoSuccessResultMessage(1), 
                 td.submitProgressReport, td.developerMeeting,
                 td.researchWhales, td.learnVim, 
@@ -131,10 +126,7 @@ public class RedoCommandTest extends AddressBookGuiTest {
     
     @Test
     public void redo_nonpositiveInteger_hasThreeHistory_remainsUnchanged_errorMessageShown() {
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("undo 3");
+        setupRedoPreparation();
         assertRedoResult("redo -3", "Invalid command format! \n" 
                                     + RedoCommand.MESSAGE_USAGE,
                                     td.submitPrototype, 
@@ -145,10 +137,7 @@ public class RedoCommandTest extends AddressBookGuiTest {
     
     @Test
     public void redo_notAnInteger_hasThreeHistory_remainsUnchanged_errorMessageShown() {
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("delete 1");
-        commandBox.runCommand("undo 3");
+        setupRedoPreparation();
         assertRedoResult("redo string", "Invalid command format! \n" 
                                         + RedoCommand.MESSAGE_USAGE,
                                         td.submitPrototype, 

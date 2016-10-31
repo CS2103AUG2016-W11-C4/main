@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * An Immutable TaskList that is serializable to XML format
+ * Immutable TaskList that is serializable to XML format
  */
 @XmlRootElement(name = "tasklist")
 public class XmlSerializableTaskList implements ReadOnlyTaskList {
