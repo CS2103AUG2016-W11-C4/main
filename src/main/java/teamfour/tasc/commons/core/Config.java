@@ -33,7 +33,7 @@ public class Config {
     private String taskListFileName = "tasklist.xml";
     private String taskListName = "MyTaskList";
     private String taskListFileNames = "tasklist";
-
+    
     public Config() {
     }
 
@@ -63,7 +63,7 @@ public class Config {
 
     //@@author A0147971U
     public String getTaskListFilePathAndName() {
-        return taskListFilePath + "/" + taskListFileName;
+        return taskListFilePath + File.separator + taskListFileName;
     }
     
     public String getTaskListFilePath() {
@@ -75,10 +75,10 @@ public class Config {
     }
 
     public void setTaskListFilePathAndName(String newTaskListFilePathAndName) {
-        String[] pathName = newTaskListFilePathAndName.split("/");
+        String[] pathName = newTaskListFilePathAndName.split("\\" + File.separator);
         this.taskListFilePath = "";
         for (int i=0; i<pathName.length-2; i++) {
-            this.taskListFilePath += pathName[i] + "/";
+            this.taskListFilePath += pathName[i] + File.separator;
         }
         this.taskListFilePath += pathName[pathName.length-2];
         this.taskListFileName = pathName[pathName.length-1];
@@ -96,12 +96,12 @@ public class Config {
     }
     
     public void moveFile(String newTaskListFilePath, String fileName) throws IOException, JAXBException {
-        File oldFile = new File(taskListFilePath + "/" + fileName);
+        File oldFile = new File(taskListFilePath + File.separator + fileName);
         XmlSerializableTaskList data = XmlUtil.getDataFromFile(oldFile, XmlSerializableTaskList.class);
         oldFile.delete();
         File newFilePath = new File(newTaskListFilePath);
         newFilePath.mkdirs();
-        File newFile = new File(newTaskListFilePath + "/" + fileName);
+        File newFile = new File(newTaskListFilePath + File.separator + fileName);
         newFile.createNewFile();
         XmlUtil.saveDataToFile(newFile, data);
     }
@@ -160,8 +160,8 @@ public class Config {
      * */
     public void renameCurrentTaskList(String newTasklistFileName) throws TaskListFileExistException, IOException {
         replaceWithNewNameInNameList(newTasklistFileName);
-        File newFile = new File(taskListFilePath + "/" + newTasklistFileName + ".xml");
-        File oldFile = new File(taskListFilePath + "/" + this.taskListFileName);
+        File newFile = new File(taskListFilePath + File.separator + newTasklistFileName + ".xml");
+        File oldFile = new File(taskListFilePath + File.separator + this.taskListFileName);
         oldFile.renameTo(newFile);
         this.taskListFileName = newTasklistFileName + ".xml";
         String newConfig = JsonUtil.toJsonString(this);
@@ -225,7 +225,7 @@ public class Config {
         sb.append("App title : " + appTitle);
         sb.append("\nCurrent log level : " + logLevel);
         sb.append("\nPreference file Location : " + userPrefsFilePath);
-        sb.append("\nLocal data file location : " + taskListFilePath + "/" + taskListFileName);
+        sb.append("\nLocal data file location : " + taskListFilePath + File.separator + taskListFileName);
         sb.append("\nTaskList name : " + taskListName);
         return sb.toString();
     }
