@@ -47,7 +47,7 @@ public class StatusBarFooter extends UiPart {
         addSyncStatus();
         setSyncStatus("Not updated yet in this session");
         addSaveLocation();
-        setSaveLocation("./" + saveLocation);
+        setSaveLocation(".\\" + saveLocation);
         registerAsAnEventHandler(this);
     }
 
@@ -102,7 +102,7 @@ public class StatusBarFooter extends UiPart {
     @Subscribe
     public void handleTaskListRenamedEvent(TaskListRenamedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setSaveLocation("./" + event.getNewPath());
+        setSaveLocation(".\\" + event.getNewPath());
     }
     
     //@@author
