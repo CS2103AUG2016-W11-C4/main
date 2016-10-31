@@ -13,6 +13,7 @@ import teamfour.tasc.commons.events.storage.FileRelocateEvent;
 import teamfour.tasc.commons.events.storage.RequestTaskListRenameEvent;
 import teamfour.tasc.commons.events.storage.RequestTaskListSwitchEvent;
 import teamfour.tasc.commons.events.ui.ExitAppRequestEvent;
+import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
 import teamfour.tasc.commons.exceptions.DataConversionException;
 import teamfour.tasc.commons.exceptions.TaskListFileExistException;
 import teamfour.tasc.commons.util.ConfigUtil;
@@ -199,6 +200,7 @@ public class MainApp extends Application {
         newTaskListFilePath = newPath;
         config.changeTaskListFilePath(newTaskListFilePath);
         storage.changeTaskListStorage(config.getTaskListFilePathAndName());
+        EventsCenter.getInstance().post(new TaskListRenamedEvent(config.getTaskListFilePathAndName()));
     }
     
     public static String getDataStorageFilePath() {
