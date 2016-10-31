@@ -213,10 +213,13 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleRequestTaskListSwitchEvent(RequestTaskListSwitchEvent event) throws IOException {
+    public void handleRequestTaskListSwitchEvent(RequestTaskListSwitchEvent event) 
+            throws Exception {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.switchToNewTaskList(event.getFilename());
-        this.stop();
+        storage.changeTaskListStorage(config.getTaskListFilePathAndName());
+        ReadOnlyTaskList initialData = storage.readTaskList().orElse(new TaskList());
+        model.resetData(initialData);
     }
     
     @Subscribe
