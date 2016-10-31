@@ -220,9 +220,11 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleRequestTaskListRenameEvent(RequestTaskListRenameEvent event) throws IOException, TaskListFileExistException {
+    public void handleRequestTaskListRenameEvent(RequestTaskListRenameEvent event) 
+            throws IOException, TaskListFileExistException, DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.renameCurrentTaskList(event.getNewFilename());
+        storage.changeTaskListStorage(config.getTaskListFilePathAndName());
     }
   //@@author
     
