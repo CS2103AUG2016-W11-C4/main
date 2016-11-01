@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+        }
+        
+        table th {
+            background-color: #9999ff;
+        }
+        
+        table tr:nth-child(even) {
+            background-color: #cccccc;
+        }
+        
+        table tr:nth-child(odd) {
+            background-color: #eeeeee;
+        }
+        
+        code {
+            font-weight: bold;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>List of Commands Available</h1>
+        <p>
+            <i>For a more comprehensive guide, visit <a href="https://github.com/CS2103AUG2016-W11-C4/main/blob/master/docs/UserGuide.md">our main website.</a></i>
+        </p>
+        
+        <table>
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+                <th>Format</th>
+            </tr>
+            
+            <tr>
+                <td>Add</td>
+                <td>Creates a new task and add it to our list.</td>
+                <td><code>add NAME [by DEADLINE] [from START_TIME to END_TIME] [repeat PATTERN FREQUENCY] [tag TAG...]</code></td>
+            </tr>
+            <tr>
+                <td>List</td> 
+                <td>Lists out only certain tasks that fulfill criterias/filters.</td>
+                <td><code>list [TYPE...] [by DEADLINE] [from START_TIME] [to END_TIME] [tag TAG...] [sort SORTING_ORDER]</code></td>
+            </tr>
+            <tr>
+                <td>Show</td> 
+                <td>Further filters the listed tasks by criterias/filters.</td>
+                <td><code>show [TYPE...] [on DATE] [by DEADLINE] [from START_TIME] [to END_TIME]  [tag TAG...]</code></td>
+            </tr>
+            <tr>
+                <td>Hide</td> 
+                <td>Excludes certain tasks that met the criterias/filters.</td>
+                <td><code>hide [TYPE...] [on DATE] [by DEADLINE] [from START_TIME] [to END_TIME] [tag TAG...]</code></td>
+            </tr>
+            <tr>
+                <td>Find</td> 
+                <td>Searches tasks with given certain name (this will work even if you do not know the entire full name).</td>
+                <td><code>find KEYWORD...</code></td>
+            </tr>
+            <tr>
+                <td>Update</td> 
+                <td>Changes details pertaining to a task.
+                <td><code>update INDEX [name NAME] [by DEADLINE] [from START_TIME to END_TIME] [repeat PATTERN FREQUENCY] [tag TAG...]</code></td>
+            </tr>
+            <tr>
+                <td>Complete</td> 
+                <td>Marks a task as done.</td>
+                <td><code>complete INDEX</code></td>
+            </tr>
+            <tr>
+                <td>Delete</td>
+                <td>Removes a task from the list.</td>
+                <td><code>delete INDEX</code></td>
+            </tr>
+            <tr>
+                <td>Undo</td>
+                <td>Reverses the action(s) made by you.</td>
+                <td><code>undo [last STEPS]</code></td>
+            </tr>
+            <tr>
+                <td>Redo</td>
+                <td>To "reverse" the undo.</td>
+                <td><code>redo [last STEPS]</code></td>
+            </tr>
+            <tr>
+                <td>Clear</td> 
+                <td>Removes all tasks from the list.</td>
+                <td><code>clear</code></td>
+            </tr>
+            <tr>
+                <td>Switch List</td> 
+                <td>Opens another task list (if it does not exist, a new task list will be created).</td>
+                <td><code>switchlist FILENAME</code></td>
+            </tr>
+            <tr>
+                <td>Rename List</td> 
+                <td>Renames the current task list.</td>
+                <td><code>renamelist FILENAME</code></td>
+            </tr>
+            <tr>
+                <td>Relocate</td> 
+                <td>Moves all task lists to a different folder/directory.</td>
+                <td><code>relocate PATH</code></td>
+            </tr>
+            <tr>
+                <td>Collapse</td>
+                <td>Shrinks all tasks into a single row, only showing the name of the tasks.</td>
+                <td><code>collapse</code></td>
+            </tr>
+            <tr>
+                <td>Expand</td> 
+                <td>Reveals the details for all the tasks.</td>
+                <td><code>expand</code></td>
+            </tr>
+            <tr>
+                <td>Calendar</td>
+                <td>Changes the view of the calendar on the right side of the UI.</td>
+                <td><code>calendar day|week|today</code></td>
+            </tr>
+            <tr>
+                <td>Help</td> 
+                <td>Displays this screen.</td>
+                <td><code>help</code></td>
+            </tr>
+        </table>
+    </body>
+</html>
