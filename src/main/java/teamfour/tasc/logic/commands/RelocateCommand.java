@@ -28,9 +28,8 @@ public class RelocateCommand extends Command {
             "Error occured while transfering data. ";
     
     private final String destination;
-    private final String originalDestination = MainApp.getDataStorageFilePath();
     
-    private boolean undoable = false;
+    private boolean isUndoable = false;
 
     /**
      * Relocate Command for changing storage path to new directory.
@@ -50,12 +49,12 @@ public class RelocateCommand extends Command {
     public CommandResult execute() {
         assert model != null;
         EventsCenter.getInstance().post(new FileRelocateEvent(destination));
-        undoable = true;
+        isUndoable = true;
         return new CommandResult(String.format(MESSAGE_SUCCESS, destination));
     }
 
     @Override
     public boolean canUndo() {
-        return undoable;
+        return isUndoable;
     }
 }
