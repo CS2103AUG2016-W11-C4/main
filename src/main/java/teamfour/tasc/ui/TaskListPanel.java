@@ -108,7 +108,7 @@ public class TaskListPanel extends UiPart {
         rebuildTaskCards();
     }
     
-    /** Used to fix incorrect scroll position caused by JavaFX behavior. */
+    /** Fixes incorrect scroll position caused by JavaFX behavior. */
     private void realignScrollPosition(int index) {
         Platform.runLater(() -> {
             taskListView.scrollTo(index);
