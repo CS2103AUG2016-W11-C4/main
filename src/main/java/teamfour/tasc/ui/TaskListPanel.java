@@ -105,6 +105,8 @@ public class TaskListPanel extends UiPart {
                 taskListView.scrollTo(index);
             });
         });
+        taskListView.scrollTo(0);
+        taskListView.getSelectionModel().clearAndSelect(0);
         selectedIndex = index;
         taskListView.setCellFactory(listView -> new TaskListViewCell());
     }
