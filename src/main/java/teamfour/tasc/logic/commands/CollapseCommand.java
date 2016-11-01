@@ -22,7 +22,6 @@ public class CollapseCommand extends Command {
             return new CommandResult(MESSAGE_FAILURE_ALREADY_COLLAPSED);
         }
         EventsCenter.getInstance().post(new CollapseChangeEvent(true));
-        model.updateFilteredTaskListByFilter(); //refresh the list view
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
