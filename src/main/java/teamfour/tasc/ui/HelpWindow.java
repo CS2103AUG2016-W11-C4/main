@@ -20,7 +20,7 @@ public class HelpWindow extends UiPart {
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
     private static final String USERGUIDE_URL =
-            "https://github.com/CS2103AUG2016-W11-C4/main/blob/master/docs/UserGuide.md";
+            "/offline-help/offline-help.html";
 
     private AnchorPane mainPane;
 
@@ -51,7 +51,8 @@ public class HelpWindow extends UiPart {
         setIcon(dialogStage, ICON);
 
         WebView browser = new WebView();
-        browser.getEngine().load(USERGUIDE_URL);
+        String offlineUrl = getClass().getResource(USERGUIDE_URL).toString();
+        browser.getEngine().load(offlineUrl);
         FxViewUtil.applyAnchorBoundaryParameters(browser, 0.0, 0.0, 0.0, 0.0);
         mainPane.getChildren().add(browser);
     }
