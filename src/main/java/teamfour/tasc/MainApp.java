@@ -10,7 +10,7 @@ import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.core.Version;
 import teamfour.tasc.commons.events.storage.FileRelocateEvent;
-import teamfour.tasc.commons.events.storage.TaskListRenamedEvent;
+import teamfour.tasc.commons.events.storage.TaskListRenameRequestEvent;
 import teamfour.tasc.commons.events.storage.TaskListSwitchedEvent;
 import teamfour.tasc.commons.events.ui.ExitAppRequestEvent;
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
@@ -199,7 +199,7 @@ public class MainApp extends Application {
     public void setDataStorageFilePath(String newPath) throws IOException, JAXBException, DataConversionException {
         newTaskListFilePath = newPath;
         config.changeTaskListFilePath(newTaskListFilePath);
-        storage.changeTaskListStorage(config.getTaskListFilePathAndName());
+        storage.changeTaskListStorage(newTaskListFilePath);
         EventsCenter.getInstance().post(new TaskListRenamedEvent(config.getTaskListFilePathAndName()));
     }
     
@@ -224,7 +224,7 @@ public class MainApp extends Application {
     }
     
     @Subscribe
-    public void handleTaskListRenamedEvent(TaskListRenamedEvent event)
+    public void handleTaskListRenameRequestEvent(TaskListRenameRequestEvent event)
             throws IOException, TaskListFileExistException, DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.renameCurrentTaskList(event.getNewFilename());
