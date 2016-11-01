@@ -4,6 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <GridPane HBox.hgrow="ALWAYS" >
@@ -30,10 +32,44 @@
                                 </HBox>
                             </children>
                         </HBox>
-                        <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline" />
-                        <Label fx:id="period" styleClass="cell_small_label" text="\$period" />
-                        <Label fx:id="recurrence" styleClass="cell_small_label" text="\$recurrence" />
-                        <Label fx:id="tags" styleClass="cell_small_label" text="\$tags" />
+                        <!-- @@author A0140011L -->
+                        <Label fx:id="deadline" styleClass="cell_small_label" text="\$deadline">
+                        	<graphic>
+                        		<ImageView fitWidth="16.0" fitHeight="16.0">
+                        			<image>
+                        				<Image url="images/task_deadline.png"/>
+                        			</image>
+                        		</ImageView>
+                        	</graphic>
+                        </Label>
+                        <Label fx:id="period" styleClass="cell_small_label" text="\$period">                        
+                        	<graphic>
+                        		<ImageView fitWidth="16.0" fitHeight="16.0">
+                        			<image>
+                        				<Image url="images/task_period.png"/>
+                        			</image>
+                        		</ImageView>
+                        	</graphic>
+                        </Label>
+                        <Label fx:id="recurrence" styleClass="cell_small_label" text="\$recurrence">                        
+                        	<graphic>
+                        		<ImageView fitWidth="16.0" fitHeight="16.0">
+                        			<image>
+                        				<Image url="images/task_recurrence.png"/>
+                        			</image>
+                        		</ImageView>
+                        	</graphic>
+                        </Label>
+                        <Label fx:id="tags" styleClass="cell_small_label" text="\$tags">
+                        	<graphic>
+                        		<ImageView fitWidth="16.0" fitHeight="16.0">
+                        			<image>
+                        				<Image url="images/task_tags.png"/>
+                        			</image>
+                        		</ImageView>
+                        	</graphic>
+                        </Label>                        
+                        <!-- @@author -->
                         <Label fx:id="completeStatus" styleClass="complete_status"></Label>
                     </children>
                 </VBox>
