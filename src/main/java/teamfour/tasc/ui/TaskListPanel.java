@@ -101,13 +101,18 @@ public class TaskListPanel extends UiPart {
         Platform.runLater(() -> {
             taskListView.scrollTo(index);
             taskListView.getSelectionModel().clearAndSelect(index);
+            Platform.runLater(() -> {
+                taskListView.scrollTo(index);
+            });
         });
         selectedIndex = index;
+        taskListView.setCellFactory(listView -> new TaskListViewCell());
     }
 
     //@@author A0127014W
     public void setCollapsed(boolean collapse){
         this.isCollapsed = collapse;
+        scrollTo(selectedIndex);
     }
 
     class TaskListViewCell extends ListCell<ReadOnlyTask> {
@@ -128,7 +133,6 @@ public class TaskListPanel extends UiPart {
                 }
                 else if(getIndex() == selectedIndex){
                     setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
-                    selectedIndex = -1;
                 }
                 else{
                     setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
