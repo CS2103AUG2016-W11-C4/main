@@ -13,6 +13,7 @@ import teamfour.tasc.commons.events.model.TaskListChangedEvent;
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
 import teamfour.tasc.commons.util.FxViewUtil;
 
+import java.io.File;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -47,7 +48,7 @@ public class StatusBarFooter extends UiPart {
         addSyncStatus();
         setSyncStatus("Not updated yet in this session");
         addSaveLocation();
-        setSaveLocation(".\\" + saveLocation);
+        setSaveLocation("." + File.separator + saveLocation);
         registerAsAnEventHandler(this);
     }
 
@@ -102,7 +103,7 @@ public class StatusBarFooter extends UiPart {
     @Subscribe
     public void handleTaskListRenamedEvent(TaskListRenamedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setSaveLocation(".\\" + event.getNewPath());
+        setSaveLocation("." + File.separator + event.getNewPath());
     }
     
     //@@author
