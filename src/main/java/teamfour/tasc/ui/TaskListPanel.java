@@ -101,13 +101,26 @@ public class TaskListPanel extends UiPart {
         Platform.runLater(() -> {
             taskListView.scrollTo(index);
             taskListView.getSelectionModel().clearAndSelect(index);
-            Platform.runLater(() -> {
-                taskListView.scrollTo(index);
-            });
+            realignScrollPosition(index);
         });
+        selectedIndex = index;
+        resetScrollPosition();
+        rebuildTaskCards();
+    }
+    
+    /** Used to fix incorrect scroll position caused by JavaFX behavior. */
+    private void realignScrollPosition(int index) {
+        Platform.runLater(() -> {
+            taskListView.scrollTo(index);
+        });
+    }
+    
+    private void resetScrollPosition() {
         taskListView.scrollTo(0);
         taskListView.getSelectionModel().clearAndSelect(0);
-        selectedIndex = index;
+    }
+    
+    private void rebuildTaskCards() {
         taskListView.setCellFactory(listView -> new TaskListViewCell());
     }
 
