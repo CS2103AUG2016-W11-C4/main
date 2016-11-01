@@ -145,7 +145,6 @@ public class UpdateCommand extends Command {
      */
     private void taskListSelectTask(int index) {
         EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
-        model.updateFilteredTaskListByFilter(); // refresh to expand selected TaskCard
     }
 
     @Override

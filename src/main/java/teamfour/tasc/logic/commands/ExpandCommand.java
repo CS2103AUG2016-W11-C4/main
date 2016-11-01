@@ -20,7 +20,6 @@ public class ExpandCommand extends Command {
         assert model!= null;
         if(CollapseChangeEvent.getCollapsed()) {
             EventsCenter.getInstance().post(new CollapseChangeEvent(false));
-            model.updateFilteredTaskListByFilter(); //refresh the list view
             return new CommandResult(MESSAGE_SUCCESS);
         }
         return new CommandResult(MESSAGE_FAILURE_ALREADY_EXPANDED);

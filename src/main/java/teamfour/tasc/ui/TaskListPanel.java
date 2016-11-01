@@ -101,13 +101,33 @@ public class TaskListPanel extends UiPart {
         Platform.runLater(() -> {
             taskListView.scrollTo(index);
             taskListView.getSelectionModel().clearAndSelect(index);
+            realignScrollPosition(index);
         });
         selectedIndex = index;
+        resetScrollPosition();
+        rebuildTaskCards();
+    }
+    
+    /** Fixes incorrect scroll position caused by JavaFX behavior. */
+    private void realignScrollPosition(int index) {
+        Platform.runLater(() -> {
+            taskListView.scrollTo(index);
+        });
+    }
+    
+    private void resetScrollPosition() {
+        taskListView.scrollTo(0);
+        taskListView.getSelectionModel().clearAndSelect(0);
+    }
+    
+    private void rebuildTaskCards() {
+        taskListView.setCellFactory(listView -> new TaskListViewCell());
     }
 
     //@@author A0127014W
     public void setCollapsed(boolean collapse){
         this.isCollapsed = collapse;
+        scrollTo(selectedIndex);
     }
 
     class TaskListViewCell extends ListCell<ReadOnlyTask> {
@@ -128,7 +148,6 @@ public class TaskListPanel extends UiPart {
                 }
                 else if(getIndex() == selectedIndex){
                     setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
-                    selectedIndex = -1;
                 }
                 else{
                     setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());

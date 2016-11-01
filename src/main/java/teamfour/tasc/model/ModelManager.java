@@ -147,7 +147,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         taskList.addTask(task);
-        updateFilteredTaskToShowAll();
         indicateTaskListChanged();
     }
 
@@ -155,7 +154,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void updateTask(ReadOnlyTask oldTask, Task newTask) throws TaskNotFoundException {
         taskList.updateTask(oldTask, newTask);
-        updateFilteredTaskToShowAll();
         indicateTaskListChanged();
     }
 

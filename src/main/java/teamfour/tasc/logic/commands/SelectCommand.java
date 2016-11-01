@@ -40,7 +40,6 @@ public class SelectCommand extends Command {
                 return new CommandResult(MESSAGE_SELECT_EMPTY_LIST);
             }
             EventsCenter.getInstance().post(new JumpToListRequestEvent(listSize - 1));
-            model.updateFilteredTaskListByFilter(); //refresh the list view
             return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, listSize));
         }
 
@@ -57,7 +56,6 @@ public class SelectCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
-        model.updateFilteredTaskListByFilter(); //refresh the list view
         return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex));
 
     }
