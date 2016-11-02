@@ -1,5 +1,6 @@
 package teamfour.tasc.ui;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 
 import javafx.fxml.FXML;
@@ -47,11 +48,12 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy, HH:mm");
         name.setText(task.getName().getName());
         id.setText(displayedIndex + ". ");
         if (task.getDeadline().hasDeadline()) {
             deadline.setVisible(true);
-            deadline.setText("Deadline: " + task.getDeadline().toString());
+            deadline.setText("Deadline: " + sdf.format(task.getDeadline().getDeadline()));
         } else {
             deadline.setVisible(false);
         }
@@ -64,9 +66,8 @@ public class TaskCard extends UiPart{
         if (task.getPeriod().hasPeriod()) {
             periodFrom.setVisible(true);
             periodTo.setVisible(true);
-            String[] period = task.getPeriod().toString().split(" - ");
-            periodFrom.setText("From : " + period[0]);
-            periodTo.setText("      To : " + period[1]);
+            periodFrom.setText("From : " + sdf.format(task.getPeriod().getStartTime()));
+            periodTo.setText("      To : " + sdf.format(task.getPeriod().getEndTime()));
         } else {
             periodFrom.setVisible(false);
             periodTo.setVisible(false);
