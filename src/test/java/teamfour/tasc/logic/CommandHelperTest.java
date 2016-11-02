@@ -258,6 +258,15 @@ public class CommandHelperTest {
         } catch (IllegalValueException e) {
             fail();
         }
+
+        String repeatParameter3 = "yearly 5";
+        Recurrence recurrence3;
+        try {
+            recurrence3 = CommandHelper.getRecurrence(repeatParameter3);
+            assertEquals("YEARLY [5 time(s)]", recurrence3.toString());
+        } catch (IllegalValueException e) {
+            fail();
+        }
     }
 
     @Test(expected = IllegalValueException.class)
