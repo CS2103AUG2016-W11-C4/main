@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.logic.commands.AddCommand;
+import teamfour.tasc.logic.commands.CommandResult;
 import teamfour.tasc.testutil.TestTask;
 import teamfour.tasc.testutil.TestUtil;
 
@@ -37,6 +38,21 @@ public class AddCommandTest extends AddressBookGuiTest {
         //invalid command
         commandBox.runCommand("adds Johnny");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    @Test
+    public void add_taskWithInvalidDates_failure(){
+        String inputCommand = "add validTask from invalidDate to invalidDate";
+        commandBox.runCommand(inputCommand);
+        assertResultMessage(AddCommand.MESSAGE_INVALID_DATES);
+
+        inputCommand = "add validTask from invalidDate by today";
+        commandBox.runCommand(inputCommand);
+        assertResultMessage(AddCommand.MESSAGE_INVALID_DATES);
+
+        inputCommand = "add validTask by invalidDate";
+        commandBox.runCommand(inputCommand);
+        assertResultMessage("Invalid date");
     }
 
     private void assertAddSuccess(TestTask taskToAdd, TestTask... currentList) {

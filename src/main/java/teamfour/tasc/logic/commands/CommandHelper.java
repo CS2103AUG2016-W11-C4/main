@@ -17,7 +17,7 @@ import teamfour.tasc.model.task.Recurrence;
 public class CommandHelper {
     private static final Logger logger = LogsCenter.getLogger(CommandHelper.class);
 
-    private static final String MESSAGE_INVALID_DATES = "Invalid dates";
+    private static final String MESSAGE_INVALID_DATES = "Invalid date";
     public static String MESSAGE_REPEAT_PARAMETERS_INVALID = "Invalid repeat parameters";
 
     //@@author A0148096W
