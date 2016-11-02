@@ -49,17 +49,34 @@ public class TaskCard extends UiPart{
     public void initialize() {
         name.setText(task.getName().getName());
         id.setText(displayedIndex + ". ");
-        deadline.setText("Deadline: " + task.getDeadline().toString());
-        recurrence.setText("Repeat: " + task.getRecurrence().toString());
-        String[] period = task.getPeriod().toString().split(" - ");
-        if (period.length == 2) {
-            periodFrom.setText("From : " + period[0]);
-            periodTo.setText("      To : " + period[1]);        
+        if (task.getDeadline().hasDeadline()) {
+            deadline.setVisible(true);
+            deadline.setText("Deadline: " + task.getDeadline().toString());
         } else {
-            periodFrom.setText("");
-            periodTo.setText("");
+            deadline.setVisible(false);
         }
-        tags.setText(task.tagsString().equals("") ? "" : "Tags: " + task.tagsString());
+        if (task.getRecurrence().hasRecurrence()) {
+            recurrence.setVisible(true);
+            recurrence.setText("Repeat: " + task.getRecurrence().toString());
+        } else {
+            recurrence.setVisible(false);
+        }
+        if (task.getPeriod().hasPeriod()) {
+            periodFrom.setVisible(true);
+            periodTo.setVisible(true);
+            String[] period = task.getPeriod().toString().split(" - ");
+            periodFrom.setText("From : " + period[0]);
+            periodTo.setText("      To : " + period[1]);
+        } else {
+            periodFrom.setVisible(false);
+            periodTo.setVisible(false);
+        }
+        if (task.tagsString().equals("")) {
+            tags.setVisible(false);
+        } else {
+            tags.setVisible(true);
+            tags.setText("Tags: " + task.tagsString());
+        }
         completeStatus.setText(task.getComplete().toString());
         if (task.getComplete().isCompleted()) {
             completeStatus.setStyle("-fx-text-fill: #008600;");
