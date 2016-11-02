@@ -49,6 +49,12 @@ public class Parser {
 
     private static final Pattern RELATIVE_PATH_FORMAT =
             Pattern.compile("^((?!-)[a-zA-Z0-9-]+(?<!-)|(..))(/((?!-)[a-zA-Z0-9-]+(?<!-)|(..)))*$");
+    
+    private static final Pattern WIN_FULL_PATH_FORMAT = 
+            Pattern.compile("^[a-zA-Z]:\\(((?![<>:\"/\\|?*]).)+((?<![ .])\\)?)*$");
+    
+    private static final Pattern MAC_FULL_PATH_FORMAT = 
+            Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
 
     private static final Pattern FILE_NAME_ONLY_FORMAT = Pattern.compile("^[\\w,\\s-]+$");
 
