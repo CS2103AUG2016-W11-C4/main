@@ -37,7 +37,7 @@ public class RelocateCommand extends Command {
     /**
      * Relocate Command for changing storage path to new directory.
      */
-    public RelocateCommand(String destination) {
+    public RelocateCommand(String destination, boolean isFullPath) {
         this.destination = "data"  + File.separator + destination;
     }
     
