@@ -33,6 +33,15 @@ public class SelectCommandTest extends AddressBookGuiTest {
         assertListSize(0);
         assertSelectionInvalid(1); //invalid index
     }
+
+    @Test
+    public void selectTask_selectLast_emptyList_fails(){
+        commandBox.runCommand("clear");
+        assertListSize(0);
+        commandBox.runCommand("select last");
+        assertResultMessage("Can't select from an empty list");
+    }
+
     //@@author A0127014W
     private void assertSelectionInvalid(int index) {
         commandBox.runCommand("select " + index);
