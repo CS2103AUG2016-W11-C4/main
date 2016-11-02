@@ -35,7 +35,14 @@ public class SelectCommandTest extends AddressBookGuiTest {
     }
 
     @Test
-    public void selectTask_selectLast_emptyList_fails(){
+    public void selectTask_selectLast_nonEmptyList_success(){
+        int index = td.getTypicalTasks().length;
+        commandBox.runCommand("select last");
+        assertResultMessage("Selected Task: "+ index);
+    }
+
+    @Test
+    public void selectTask_selectLast_emptyList_failure(){
         commandBox.runCommand("clear");
         assertListSize(0);
         commandBox.runCommand("select last");
