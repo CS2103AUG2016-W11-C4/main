@@ -10,7 +10,24 @@ import teamfour.tasc.logic.commands.SwitchlistCommand;
 public class SwitchlistCommandTest extends AddressBookGuiTest{
 
     @Test
-    public void renamelist_invalidInput_failure() {
+    public void switchlist_validInput_success() {
+
+        String testFilename = "validName";
+        commandBox.runCommand("switchlist " + testFilename);
+        assertResultMessage(String.format(SwitchlistCommand.MESSAGE_SUCCESS, testFilename));
+
+        testFilename = "validNameWithNumbers123";
+        commandBox.runCommand("switchlist " + testFilename);
+        assertResultMessage(String.format(SwitchlistCommand.MESSAGE_SUCCESS, testFilename));
+
+        testFilename = "valid name with spaces and numbers123";
+        commandBox.runCommand("switchlist " + testFilename);
+        assertResultMessage(String.format(SwitchlistCommand.MESSAGE_SUCCESS, testFilename));
+
+    }
+
+    @Test
+    public void switchlist_invalidInput_failure() {
 
         String testFilename = "invalidNameWithSymbols@#$";
         commandBox.runCommand("switchlist " + testFilename);

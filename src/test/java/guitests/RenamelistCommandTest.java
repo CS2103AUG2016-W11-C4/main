@@ -21,7 +21,7 @@ public class RenamelistCommandTest extends AddressBookGuiTest{
         commandBox.runCommand("renamelist " + testFilename);
         assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
 
-        testFilename = "valid name with spaces and numbers";
+        testFilename = "valid name with spaces and numbers123";
         commandBox.runCommand("renamelist " + testFilename);
         assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
 
