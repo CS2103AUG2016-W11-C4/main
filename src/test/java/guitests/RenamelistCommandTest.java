@@ -53,7 +53,6 @@ public class RenamelistCommandTest extends AddressBookGuiTest{
         commandBox.runCommand("renamelist " + testFilename);
         assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
 
-        //empty name
         commandBox.runCommand("undo");
         assertResultMessage(UndoCommand.MESSAGE_NO_PAST_COMMAND_TO_UNDO);
 
