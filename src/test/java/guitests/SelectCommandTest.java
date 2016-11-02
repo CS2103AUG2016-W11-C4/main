@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 public class SelectCommandTest extends AddressBookGuiTest {
 
-
     @Test
     public void selectTask_nonEmptyList() {
 
@@ -33,7 +32,7 @@ public class SelectCommandTest extends AddressBookGuiTest {
         assertListSize(0);
         assertSelectionInvalid(1); //invalid index
     }
-
+    //@@author A0127014W
     @Test
     public void selectTask_selectLast_nonEmptyList_success(){
         int index = td.getTypicalTasks().length;
@@ -49,14 +48,13 @@ public class SelectCommandTest extends AddressBookGuiTest {
         assertResultMessage("Can't select from an empty list");
     }
 
-    //@@author A0127014W
     private void assertSelectionInvalid(int index) {
         commandBox.runCommand("select " + index);
-        if(taskListPanel.getNumberOfTasks() < 1){
+        if (taskListPanel.getNumberOfTasks() < 1) {
             assertResultMessage("The task index provided is invalid" + "\n" + "Can't select from an empty list");
-        }
-        else{
-            assertResultMessage("The task index provided is invalid" + "\n" + "Valid index range: 1 to " + taskListPanel.getNumberOfTasks());
+        } else {
+            assertResultMessage("The task index provided is invalid" + "\n" + "Valid index range: 1 to "
+                    + taskListPanel.getNumberOfTasks());
         }
     }
     //@@author

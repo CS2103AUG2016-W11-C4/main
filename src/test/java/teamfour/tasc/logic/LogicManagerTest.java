@@ -180,7 +180,7 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "add tag validTag", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         assertCommandBehavior(
-                "add validName by invalidDate", "Invalid dates");
+                "add validName by invalidDate", "Invalid date");
 
     }
 
@@ -212,9 +212,7 @@ public class LogicManagerTest {
         CommandResult result = logic.execute(inputCommand);
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded), result.feedbackToUser);
     }
-
     //@@author
-
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
@@ -1143,7 +1141,7 @@ public class LogicManagerTest {
         }
 
         Task taskWithDeadlineNoPeriod() throws Exception {
-            Name name = new Name("Recurring");
+            Name name = new Name("DeadlineTask");
 
             Complete complete = new Complete(false);
             Calendar c = Calendar.getInstance();
@@ -1160,7 +1158,7 @@ public class LogicManagerTest {
         }
 
         Task taskWithPeriodNoDeadline() throws Exception {
-            Name name = new Name("Recurring");
+            Name name = new Name("Event");
 
             Complete complete = new Complete(false);
             Calendar c = Calendar.getInstance();
@@ -1179,7 +1177,7 @@ public class LogicManagerTest {
         }
 
         Task taskWithRecurrence() throws Exception {
-            Name name = new Name("Recurring");
+            Name name = new Name("RecurringTask");
 
             Complete complete = new Complete(false);
             Calendar c = Calendar.getInstance();

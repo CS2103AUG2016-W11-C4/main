@@ -226,11 +226,10 @@ public class CommandHelperTest {
         Date date;
         try {
             date = CommandHelper.convertStringToDate(dateString);
-            if(new Date().after(testDate) || (new Date().equals(testDate))){
+            if (new Date().after(testDate) || (new Date().equals(testDate))) {
                 assertTrue(date.getHours() == 23);
                 assertTrue(date.getMinutes() == 59);
-            }
-            else{
+            } else {
                 assertTrue(date.getHours() == 19);
                 assertTrue(date.getMinutes() == 0);
             }
