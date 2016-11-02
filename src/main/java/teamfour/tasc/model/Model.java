@@ -129,4 +129,8 @@ public interface Model {
      * this will be run.
      * */
     void clearRedoTaskListHistory();
+
+    boolean checkIfTasklistExist(String tasklist);
+
+    void resetTasklistNames(String[] newTasklistNames);
 }

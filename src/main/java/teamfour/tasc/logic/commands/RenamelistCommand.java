@@ -1,6 +1,5 @@
 //@@author A0147971U
 package teamfour.tasc.logic.commands;
-
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.storage.TaskListRenameRequestEvent;
 import teamfour.tasc.logic.keyword.RenameListCommandKeyword;
@@ -23,6 +22,8 @@ public class RenamelistCommand extends Command {
             "Successfully renamed to: %1$s ";
     public static final String MESSAGE_FILE_OPERATION_FAILURE = 
             "Error occured while operating data. ";
+    public static final String MESSAGE_FILE_EXIST = 
+            "%1$s already exists. ";
     
     private final String newFilename;
 
@@ -36,6 +37,9 @@ public class RenamelistCommand extends Command {
     @Override
     public CommandResult execute() {
         assert model != null;
+        if (model.checkIfTasklistExist(newFilename)) {
+            return new CommandResult(String.format(MESSAGE_FILE_EXIST, newFilename));
+        }
         EventsCenter.getInstance().post(new TaskListRenameRequestEvent(this.newFilename));
         return new CommandResult(String.format(MESSAGE_SUCCESS, newFilename));
     }
