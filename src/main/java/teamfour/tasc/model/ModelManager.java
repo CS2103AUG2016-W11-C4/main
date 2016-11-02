@@ -32,17 +32,17 @@ public class ModelManager extends ComponentManager implements Model {
     private HistoryStack<TaskList> redoTaskListHistory;
 
     /**
-     * Initializes a ModelManager with the given TaskList
-     * TaskLIst and its variables should not be null
+     * Initializes a ModelManager with the given ReadOnlyTaskList
+     * ReadOnlyTaskList and its variables should not be null
      */
-    public ModelManager(TaskList src, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyTaskList initialData, UserPrefs userPrefs) {
         super();
-        assert src != null;
+        assert initialData != null;
         assert userPrefs != null;
 
-        logger.fine("Initializing with task list: " + src + " and user prefs " + userPrefs);
+        logger.fine("Initializing with task list: " + initialData + " and user prefs " + userPrefs);
 
-        taskList = new TaskList(src);
+        taskList = new TaskList(initialData);
         filteredTasks = new FilteredList<>(taskList.getTasks());
         taskListFilter = new PredicateExpression(new AllQualifier());
         taskListHistory = new HistoryStack<TaskList>();
@@ -51,14 +51,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     public ModelManager() {
         this(new TaskList(), new UserPrefs());
-    }
-
-    public ModelManager(ReadOnlyTaskList initialData, UserPrefs userPrefs) {
-        taskList = new TaskList(initialData);
-        filteredTasks = new FilteredList<>(taskList.getTasks());
-        taskListFilter = new PredicateExpression(new AllQualifier());
-        taskListHistory = new HistoryStack<TaskList>();
-        redoTaskListHistory = new HistoryStack<TaskList>();
     }
 
     @Override
