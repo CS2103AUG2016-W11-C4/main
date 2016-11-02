@@ -72,7 +72,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public boolean checkIfTasklistExist(String tasklist) {
+    public boolean tasklistExists(String tasklist) {
         for (String name : this.tasklistNames) {
             if (name.equals(tasklist)) {
                 return true;

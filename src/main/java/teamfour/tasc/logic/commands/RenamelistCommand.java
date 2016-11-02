@@ -37,7 +37,8 @@ public class RenamelistCommand extends Command {
     @Override
     public CommandResult execute() {
         assert model != null;
-        if (model.checkIfTasklistExist(newFilename)) {
+        if (model.tasklistExists(newFilename)) {
+            indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(String.format(MESSAGE_FILE_EXIST, newFilename));
         }
         EventsCenter.getInstance().post(new TaskListRenameRequestEvent(this.newFilename));
