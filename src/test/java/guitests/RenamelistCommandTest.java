@@ -11,23 +11,6 @@ import teamfour.tasc.logic.commands.UndoCommand;
 public class RenamelistCommandTest extends AddressBookGuiTest{
 
     @Test
-    public void renamelist_validInput_success() {
-
-        String testFilename = "validName";
-        commandBox.runCommand("renamelist " + testFilename);
-        assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
-
-        testFilename = "validNameWithNumbers123";
-        commandBox.runCommand("renamelist " + testFilename);
-        assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
-
-        testFilename = "valid name with spaces and numbers123";
-        commandBox.runCommand("renamelist " + testFilename);
-        assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
-
-    }
-
-    @Test
     public void renamelist_invalidInput_failure() {
 
         String testFilename = "invalidNameWithSymbols@#$";
@@ -46,15 +29,4 @@ public class RenamelistCommandTest extends AddressBookGuiTest{
 
     }
 
-    @Test
-    public void renamelist_attemptToUndo_failure() {
-
-        String testFilename = "validName";
-        commandBox.runCommand("renamelist " + testFilename);
-        assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
-
-        commandBox.runCommand("undo");
-        assertResultMessage(UndoCommand.MESSAGE_NO_PAST_COMMAND_TO_UNDO);
-
-    }
 }
