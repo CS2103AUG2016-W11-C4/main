@@ -187,21 +187,31 @@ public class LogicManagerTest {
     public void execute_add_validTaskWithDeadline_success() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.taskWithDeadlineNoPeriod();
-        CommandResult result = logic.execute(helper.generateAddCommand(toBeAdded));
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded), result.feedbackToUser);
+        String inputCommand = helper.generateAddCommand(toBeAdded);
+        assertAddCommandCorrectResult(toBeAdded, inputCommand);
     }
 
     @Test
     public void execute_add_validTaskWithStartAndEndTime_success() throws Exception {
-
-
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.taskWithDeadlineNoPeriod();
+        String inputCommand = helper.generateAddCommand(toBeAdded);
+        assertAddCommandCorrectResult(toBeAdded, inputCommand);
     }
 
     @Test
     public void execute_add_validTaskWithRecurrence_success() throws Exception {
-
-
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.taskWithPeriodNoDeadline();
+        String inputCommand = helper.generateAddCommand(toBeAdded);
+        assertAddCommandCorrectResult(toBeAdded, inputCommand);
     }
+
+    private void assertAddCommandCorrectResult(Task toBeAdded, String inputCommand) {
+        CommandResult result = logic.execute(inputCommand);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded), result.feedbackToUser);
+    }
+
     //@@author
 
     @Test
@@ -1148,6 +1158,25 @@ public class LogicManagerTest {
             return new Task(name, complete, deadline, period, recurrence, tags);
         }
 
+        Task taskWithPeriodNoDeadline() throws Exception {
+            Name name = new Name("Recurring");
+
+            Complete complete = new Complete(false);
+            Calendar c = Calendar.getInstance();
+            c.set(2006, 12, 27, 12, 0, 0);
+            Date d1 = c.getTime();
+            c.set(2006, 12, 30, 12, 0, 0);
+            Date d2 = c.getTime();
+            Deadline deadline = new Deadline();
+            Period period = new Period(d1, d2);
+            Recurrence recurrence = new Recurrence();
+
+            Tag tag1 = new Tag("tag2");
+            Tag tag2 = new Tag("tag3");
+            UniqueTagList tags = new UniqueTagList(tag1, tag2);
+            return new Task(name, complete, deadline, period, recurrence, tags);
+        }
+
         Task taskWithRecurrence() throws Exception {
             Name name = new Name("Recurring");
 
@@ -1175,7 +1204,6 @@ public class LogicManagerTest {
          * @param seed used to generate the Task data field values
          */
         Task generateTask(int seed) throws Exception {
-            // TODO update test case
             return new Task(
                     new Name("Task " + seed),
                     new Complete(false),
@@ -1195,15 +1223,16 @@ public class LogicManagerTest {
             cmd.append( "\"" + p.getName().toString() + "\" ");
 
             if(p.getDeadline().hasDeadline()){
-                String[] deadlineString = p.getDeadline().toString().split(" ");
-                cmd.append("by " + deadlineString[1] + " " + deadlineString[2] + " " + deadlineString[5] + " " + deadlineString[3] + " ");
+                String deadlineString = generateParserFriendlyDateStringFromDate(p.getDeadline().getDeadline());
+                cmd.append("by " + deadlineString);
             }
             if(p.getPeriod().hasPeriod()){
-                String[] periodString = p.getPeriod().toString().split("-");
-                cmd.append("from " + periodString[0] + " to " + periodString[1] + " ");
+                String startString = generateParserFriendlyDateStringFromDate(p.getPeriod().getStartTime());
+                String endString = generateParserFriendlyDateStringFromDate(p.getPeriod().getEndTime());
+                cmd.append("from " + startString + "to " + endString);
             }
             if(p.getRecurrence().hasRecurrence()){
-                cmd.append("repeat " + p.getRecurrence().toString() + " ");
+                cmd.append("repeat " + p.getRecurrence().getPattern().toString() + " " + p.getRecurrence().getFrequency() + " ");
             }
 
             UniqueTagList tags = p.getTags();
@@ -1213,6 +1242,12 @@ public class LogicManagerTest {
             }
 
             return cmd.toString();
+        }
+
+        String generateParserFriendlyDateStringFromDate(Date date){
+            String[] stringFromDate = date.toString().split(" ");
+            String returnString = stringFromDate[1] + " " + stringFromDate[2] + " " + stringFromDate[5] + " " + stringFromDate[3] + " ";
+            return returnString;
         }
         //@@author
         /**
