@@ -16,11 +16,15 @@ public class RelocateCommand extends Command {
     public static final String COMMAND_WORD = RelocateCommandKeyword.keyword;
 
     public static final String MESSAGE_USAGE = 
-            COMMAND_WORD + ": Designates a new data storage location (relative to current location). \n"
-            + "Parameters: [RELATIVE_PATH] (Enter no parameter for relocating to original path)\n"
+            COMMAND_WORD + ": Designates a new data storage location. \n"
+            + "Parameters: [PATH] (Enter no parameter for relocating to original path)\n"
             + "Example: " + COMMAND_WORD
-            + " .." + File.separator + ".." + File.separator + "relative" + File.separator + "path" 
-            + File.separator + "to" + File.separator + "storage" + File.separator + "location";
+            + "Relative: .." + File.separator + ".." + File.separator + "relative" + File.separator + "path" 
+            + File.separator + "to" + File.separator + "storage" + File.separator + "location\n" 
+            + "Windows full path: C:" + File.separator + "full" + File.separator + "path" + File.separator
+            + "to" + File.separator + "destination\n" 
+            + "Mac full path: " + File.separator + "Users" + File.separator + "path" + File.separator
+            + "to" + File.separator + "destination";
 
     
     public static final String MESSAGE_SUCCESS = 
@@ -38,7 +42,11 @@ public class RelocateCommand extends Command {
      * Relocate Command for changing storage path to new directory.
      */
     public RelocateCommand(String destination, boolean isFullPath) {
-        this.destination = "data"  + File.separator + destination;
+        if (isFullPath) {
+            this.destination = destination;
+        } else {
+            this.destination = "data"  + File.separator + destination;            
+        }
     }
     
     /**
