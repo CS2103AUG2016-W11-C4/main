@@ -17,7 +17,7 @@ import teamfour.tasc.model.task.Recurrence;
 public class CommandHelper {
     private static final Logger logger = LogsCenter.getLogger(CommandHelper.class);
 
-    private static final String MESSAGE_INVALID_DATES = "Invalid date";
+    private static final String MESSAGE_INVALID_DATE = "Invalid date";
     public static String MESSAGE_REPEAT_PARAMETERS_INVALID = "Invalid repeat parameters";
 
     //@@author A0148096W
@@ -106,7 +106,7 @@ public class CommandHelper {
         dateInString = convertStringIfTodayAndNoValidTime(dateInString);
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
         if(dates.size() != 1){
-            throw new IllegalValueException(MESSAGE_INVALID_DATES);
+            throw new IllegalValueException(MESSAGE_INVALID_DATE);
         }
         return dates.get(0);
     }
@@ -123,7 +123,7 @@ public class CommandHelper {
         if(dateInString.toLowerCase().contains("today")){
             List<Date> dates = new PrettyTimeParser().parse(dateInString);
             if(dates.size() != 1){
-                throw new IllegalValueException(MESSAGE_INVALID_DATES);
+                throw new IllegalValueException(MESSAGE_INVALID_DATE);
             }
             Date today = new Date();
             Date parsedDate = dates.get(0);
