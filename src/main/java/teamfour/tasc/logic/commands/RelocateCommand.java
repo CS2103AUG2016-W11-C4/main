@@ -18,13 +18,11 @@ public class RelocateCommand extends Command {
     public static final String MESSAGE_USAGE = 
             COMMAND_WORD + ": Designates a new data storage location. \n"
             + "Parameters: [PATH] (Enter no parameter for relocating to original path)\n"
-            + "Example: " + COMMAND_WORD
-            + "Relative: .." + File.separator + ".." + File.separator + "relative" + File.separator + "path" 
+            + "Example: \n"
+            + "Relative: " + COMMAND_WORD + " .." + File.separator + "relative" + File.separator + "path" 
             + File.separator + "to" + File.separator + "storage" + File.separator + "location\n" 
-            + "Windows full path: C:" + File.separator + "full" + File.separator + "path" + File.separator
-            + "to" + File.separator + "destination\n" 
-            + "Mac full path: " + File.separator + "Users" + File.separator + "path" + File.separator
-            + "to" + File.separator + "destination";
+            + "Windows full path: " + COMMAND_WORD + " C:\\full\\path\\to\\destination\n" 
+            + "Mac full path: " + COMMAND_WORD + " /Users/your_username/path/to/destination";
 
     
     public static final String MESSAGE_SUCCESS = 
