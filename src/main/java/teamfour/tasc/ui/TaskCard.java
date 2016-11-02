@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import teamfour.tasc.model.task.Complete;
 import teamfour.tasc.model.task.ReadOnlyTask;
 
 public class TaskCard extends UiPart{
@@ -51,23 +52,12 @@ public class TaskCard extends UiPart{
         recurrence.setText("Repeat: " + task.getRecurrence().toString());
         period.setText("Period : " + task.getPeriod().toString());
         tags.setText(task.tagsString().equals("") ? "" : "Tags: " + task.tagsString());
-        completeStatus.setText(task.getComplete().toString());
-        if (task.getComplete().isCompleted()) {
-            completeStatus.setStyle("-fx-text-fill: #008600;");
-        } else {
-            if (task.getDeadline().hasDeadline()) {
-                if (task.getDeadline().getDeadline().getTime() < Instant.now().toEpochMilli()) {
-                    completeStatus.setText("Overdue");
-                    completeStatus.setStyle("-fx-text-fill: #ff0000;");
-                }
-            }
-            if (task.getPeriod().hasPeriod()) {
-                if (task.getPeriod().getEndTime().getTime() < Instant.now().toEpochMilli()) {
-                    completeStatus.setText("Overdue");
-                    completeStatus.setStyle("-fx-text-fill: #ff0000;");
-                }
-            }
-        }
+        String completeString = task.getCompleteString();
+        completeStatus.setText(completeString);
+        completeStatus.setStyle(
+                completeString == Complete.TO_STRING_COMPLETED ? "-fx-text-fill: #008600;" : 
+                completeString == Complete.TO_STRING_OVERDUE ? "-fx-text-fill: #ff0000;" :
+                "-fx-text-fill: #000000;");
     }
 
     public HBox getLayout() {
