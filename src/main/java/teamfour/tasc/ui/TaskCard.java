@@ -1,5 +1,6 @@
 package teamfour.tasc.ui;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 
 import javafx.fxml.FXML;
@@ -23,7 +24,9 @@ public class TaskCard extends UiPart{
     @FXML
     private Label recurrence;
     @FXML
-    private Label period;
+    private Label periodFrom;
+    @FXML
+    private Label periodTo;
     @FXML
     private Label tags;
     @FXML
@@ -45,12 +48,36 @@ public class TaskCard extends UiPart{
 
     @FXML
     public void initialize() {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy, HH:mm");
         name.setText(task.getName().getName());
         id.setText(displayedIndex + ". ");
-        deadline.setText("Deadline: " + task.getDeadline().toString());
-        recurrence.setText("Repeat: " + task.getRecurrence().toString());
-        period.setText("Period : " + task.getPeriod().toString());
-        tags.setText(task.tagsString().equals("") ? "" : "Tags: " + task.tagsString());
+        if (task.getDeadline().hasDeadline()) {
+            deadline.setVisible(true);
+            deadline.setText("Deadline: " + sdf.format(task.getDeadline().getDeadline()));
+        } else {
+            deadline.setVisible(false);
+        }
+        if (task.getRecurrence().hasRecurrence()) {
+            recurrence.setVisible(true);
+            recurrence.setText("Repeat: " + task.getRecurrence().toString());
+        } else {
+            recurrence.setVisible(false);
+        }
+        if (task.getPeriod().hasPeriod()) {
+            periodFrom.setVisible(true);
+            periodTo.setVisible(true);
+            periodFrom.setText("From : " + sdf.format(task.getPeriod().getStartTime()));
+            periodTo.setText("      To : " + sdf.format(task.getPeriod().getEndTime()));
+        } else {
+            periodFrom.setVisible(false);
+            periodTo.setVisible(false);
+        }
+        if (task.tagsString().equals("")) {
+            tags.setVisible(false);
+        } else {
+            tags.setVisible(true);
+            tags.setText("Tags: " + task.tagsString());
+        }
         completeStatus.setText(task.getComplete().toString());
         if (task.getComplete().isCompleted()) {
             completeStatus.setStyle("-fx-text-fill: #008600;");
