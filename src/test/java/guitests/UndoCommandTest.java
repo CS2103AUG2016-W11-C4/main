@@ -14,7 +14,7 @@ import teamfour.tasc.testutil.TypicalTestTasks;
 
 public class UndoCommandTest extends AddressBookGuiTest {
     
-    TestTask[] currentList;
+    private TestTask[] currentList;
     
     @Before
     public void prepare() {

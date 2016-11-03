@@ -15,7 +15,7 @@ import static teamfour.tasc.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 public class ShowCommandTest extends AddressBookGuiTest {
 
-    TestTask[] currentList;
+    private TestTask[] currentList;
     
     @Before
     public void setUp() {

@@ -14,7 +14,7 @@ import org.junit.Before;
 
 public class ListCommandTest extends AddressBookGuiTest {
 
-    TestTask[] currentList;
+    private TestTask[] currentList;
     
     @Before
     public void setUp() {
