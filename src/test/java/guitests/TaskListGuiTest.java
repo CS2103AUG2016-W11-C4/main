@@ -22,9 +22,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * A GUI Test class for AddressBook.
+ * A GUI Test class for TaskList.
  */
-public abstract class AddressBookGuiTest {
+public abstract class TaskListGuiTest {
 
     /* The TestName Rule makes the current test name available inside test methods */
     @Rule
