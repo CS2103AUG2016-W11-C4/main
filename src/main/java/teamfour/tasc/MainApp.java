@@ -199,7 +199,7 @@ public class MainApp extends Application {
     public void setDataStorageFilePath(String newPath) throws IOException, JAXBException, DataConversionException {
         newTaskListFilePath = newPath;
         config.changeTaskListFilePath(newTaskListFilePath);
-        storage.changeTaskListStorage(newTaskListFilePath);
+        storage.changeTaskListStorage(config.getTaskListFilePathAndName());
         EventsCenter.getInstance().post(new TaskListRenamedEvent(config.getTaskListFilePathAndName()));
     }
     
