@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Complete {
     public static final String TO_STRING_COMPLETED = "Completed";
     public static final String TO_STRING_NOT_COMPLETED = "Not Completed";
+    public static final String TO_STRING_OVERDUE = "Overdue";
     
     private final boolean isCompleted;
     

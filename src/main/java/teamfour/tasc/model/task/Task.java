@@ -3,6 +3,7 @@ package teamfour.tasc.model.task;
 import teamfour.tasc.commons.util.CollectionUtil;
 import teamfour.tasc.model.tag.UniqueTagList;
 
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -99,6 +100,26 @@ public class Task implements ReadOnlyTask {
     @Override
     public String toString() {
         return getAsText();
+    }
+    
+    //@@author A0147971U
+    @Override
+    public String getCompleteString() {
+        if (complete.isCompleted()) {
+            return Complete.TO_STRING_COMPLETED;
+        } else {
+            if (getDeadline().hasDeadline()) {
+                if (getDeadline().getDeadline().getTime() < Instant.now().toEpochMilli()) {
+                    return Complete.TO_STRING_OVERDUE;
+                }
+            }
+            if (getPeriod().hasPeriod()) {
+                if (getPeriod().getEndTime().getTime() < Instant.now().toEpochMilli()) {
+                    return Complete.TO_STRING_OVERDUE;
+                }
+            }
+        }
+        return Complete.TO_STRING_NOT_COMPLETED;
     }
 
     //@@author A0140011L

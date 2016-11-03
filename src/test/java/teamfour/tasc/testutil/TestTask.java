@@ -199,4 +199,10 @@ public class TestTask implements ReadOnlyTask {
         return sb.toString();
     }
 
+    @Override
+    public String getCompleteString() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
