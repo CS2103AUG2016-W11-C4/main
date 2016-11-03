@@ -10,7 +10,7 @@ public class SelectCommandTest extends TaskListGuiTest {
 
     @Test
     public void selectTask_nonEmptyList() {
-        
+
         commandBox.runCommand("list all");
 
         assertSelectionInvalid(10); //Out of bounds index
@@ -37,7 +37,7 @@ public class SelectCommandTest extends TaskListGuiTest {
     //@@author A0127014W
     @Test
     public void selectTask_selectLast_nonEmptyList_success(){
-        int index = td.getTypicalTasks().length;
+        int index = td.getTypicalTasks().length - 1;
         commandBox.runCommand("select last");
         assertResultMessage("Selected Task: "+ index);
     }
