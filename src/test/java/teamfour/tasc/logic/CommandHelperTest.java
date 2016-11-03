@@ -71,8 +71,9 @@ public class CommandHelperTest {
         Calendar c = Calendar.getInstance();
         c.set(2012, 12, 12, 13, 0);
         Date date = CommandHelper.getStartOfTheDate(c.getTime());
-        c.set(2012, 12, 12, 0, 0);
-        assertEquals(c.getTime(), date);
+        c.set(2012, 12, 12, 0, 0, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        assertTrue(date.equals(c.getTime()));
     }
     
     /*
@@ -92,8 +93,9 @@ public class CommandHelperTest {
         Calendar c = Calendar.getInstance();
         c.set(2012, 12, 12, 13, 0);
         Date date = CommandHelper.getEndOfTheDate(c.getTime());
-        c.set(2012, 12, 12, 23, 59);
-        assertEquals(c.getTime(), date);
+        c.set(2012, 12, 12, 23, 59, 59);
+        c.set(Calendar.MILLISECOND, 999);
+        assertTrue(date.equals(c.getTime()));
     }
 
     //@@author A0127014W
