@@ -2,6 +2,7 @@ package teamfour.tasc.model;
 
 import javafx.collections.transformation.FilteredList;
 import teamfour.tasc.commons.core.ComponentManager;
+import teamfour.tasc.commons.core.Config;
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.events.model.TaskListChangedEvent;
@@ -30,12 +31,13 @@ public class ModelManager extends ComponentManager implements Model {
     private PredicateExpression taskListFilter;
     private HistoryStack<TaskList> taskListHistory;
     private HistoryStack<TaskList> redoTaskListHistory;
+    private String[] tasklistNames;
 
     /**
      * Initializes a ModelManager with the given TaskList
      * TaskLIst and its variables should not be null
      */
-    public ModelManager(TaskList src, UserPrefs userPrefs) {
+    public ModelManager(TaskList src, UserPrefs userPrefs, Config config) {
         super();
         assert src != null;
         assert userPrefs != null;
@@ -47,18 +49,36 @@ public class ModelManager extends ComponentManager implements Model {
         taskListFilter = new PredicateExpression(new AllQualifier());
         taskListHistory = new HistoryStack<TaskList>();
         redoTaskListHistory = new HistoryStack<TaskList>();
+        tasklistNames = config.getTaskListNames();
     }
 
     public ModelManager() {
-        this(new TaskList(), new UserPrefs());
+        this(new TaskList(), new UserPrefs(), new Config());
     }
+    
 
-    public ModelManager(ReadOnlyTaskList initialData, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyTaskList initialData, UserPrefs userPrefs, Config config) {
         taskList = new TaskList(initialData);
         filteredTasks = new FilteredList<>(taskList.getTasks());
         taskListFilter = new PredicateExpression(new AllQualifier());
         taskListHistory = new HistoryStack<TaskList>();
         redoTaskListHistory = new HistoryStack<TaskList>();
+        tasklistNames = config.getTaskListNames();
+    }
+    
+    @Override
+    public void resetTasklistNames(String[] newTasklistNames) {
+        this.tasklistNames = newTasklistNames;
+    }
+    
+    @Override
+    public boolean tasklistExists(String tasklist) {
+        for (String name : this.tasklistNames) {
+            if (name.equals(tasklist)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

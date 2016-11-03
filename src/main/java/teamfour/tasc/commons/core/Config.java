@@ -12,9 +12,7 @@ import javax.xml.bind.JAXBException;
 import org.ocpsoft.prettytime.shade.org.apache.commons.lang.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
-import teamfour.tasc.commons.exceptions.TaskListFileExistException;
 import teamfour.tasc.commons.util.JsonUtil;
 import teamfour.tasc.commons.util.XmlUtil;
 import teamfour.tasc.storage.XmlSerializableTaskList;
@@ -142,12 +140,9 @@ public class Config {
      * @throws JsonProcessingException 
      * @throws FileNotFoundException 
      * */
-    public void replaceWithNewNameInNameList(String newName) throws IOException, TaskListFileExistException {
+    public void replaceWithNewNameInNameList(String newName) throws IOException {
         String[] names = this.getTaskListNames();
         for (int i=0; i<names.length; i++) {
-            if (names[i].equals(newName)) {
-                throw new TaskListFileExistException();
-            }
             if ((names[i] + ".xml").equals(this.taskListFileName)) {
                 names[i] = newName;
             }
@@ -160,7 +155,7 @@ public class Config {
      * @throws TaskListFileExistException 
      * @throws IOException 
      * */
-    public void renameCurrentTaskList(String newTasklistFileName) throws TaskListFileExistException, IOException {
+    public void renameCurrentTaskList(String newTasklistFileName) throws IOException {
         replaceWithNewNameInNameList(newTasklistFileName);
         File newFile = new File(taskListFilePath + File.separator + newTasklistFileName + ".xml");
         File oldFile = new File(taskListFilePath + File.separator + this.taskListFileName);
