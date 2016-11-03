@@ -11,7 +11,6 @@ import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.model.TaskListChangedEvent;
 import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
 import teamfour.tasc.commons.events.ui.ShowHelpRequestEvent;
-import teamfour.tasc.commons.exceptions.IllegalValueException;
 import teamfour.tasc.commons.util.DateUtil;
 import teamfour.tasc.logic.Logic;
 import teamfour.tasc.logic.LogicManager;

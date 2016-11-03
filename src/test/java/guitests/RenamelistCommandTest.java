@@ -8,7 +8,7 @@ import org.junit.Test;
 import teamfour.tasc.logic.commands.RenamelistCommand;
 import teamfour.tasc.logic.commands.UndoCommand;
 
-public class RenamelistCommandTest extends AddressBookGuiTest{
+public class RenamelistCommandTest extends TaskListGuiTest{
 
     @Test
     public void renamelist_invalidInput_failure() {

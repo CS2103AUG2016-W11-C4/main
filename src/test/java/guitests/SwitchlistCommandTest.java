@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import teamfour.tasc.logic.commands.SwitchlistCommand;
 
-public class SwitchlistCommandTest extends AddressBookGuiTest{
+public class SwitchlistCommandTest extends TaskListGuiTest{
 
     @Test
     public void switchlist_invalidInput_failure() {

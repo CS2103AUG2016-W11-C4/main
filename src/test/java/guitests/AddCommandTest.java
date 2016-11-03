@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.logic.commands.AddCommand;
-import teamfour.tasc.logic.commands.CommandResult;
 import teamfour.tasc.testutil.TestTask;
 import teamfour.tasc.testutil.TestUtil;
 
@@ -17,7 +16,7 @@ public class AddCommandTest extends TaskListGuiTest {
     public void add() {
 
         commandBox.runCommand("list all");
-        
+
         //add one task
         TestTask[] currentList = td.getTypicalTasks();
         TestTask taskToAdd = td.attendWorkshop;
