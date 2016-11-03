@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tasklist>
+    <tasks>
+        <name>Prove P=NP</name>
+        <deadline>31/12/2020 21:25:01</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+        <tagged>important</tagged>
+    </tasks>
+    <tasks>
+        <name>Learn how to code in java</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Learn latin</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Learn how to play the ocarina</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Think of new year's resolution</name>
+        <deadline>08/11/2015 21:43:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Celebrate new year</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>01/01/2016 00:00:00</startTime>
+        <endTime>01/01/2016 23:59:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Invent the light bulb</name>
+        <deadline>30/11/2050 23:59:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Go lifting [Completed At Tue Nov 01 22:01:54 SGT 2016]</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>true</isCompleted>
+        <startTime>08/05/2016 08:00:00</startTime>
+        <endTime>08/05/2016 12:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+        <tagged>important</tagged>
+    </tasks>
+    <tasks>
+        <name>Dream of electric sheep [Completed At Tue Nov 08 21:58:25 SGT 2016]</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>true</isCompleted>
+        <startTime>08/06/2016 00:00:00</startTime>
+        <endTime>08/06/2016 03:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Enjoy summer</name>
+        <deadline>08/08/2016 12:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Bid for CS2103 module</name>
+        <deadline>08/08/2016 21:27:14</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Submit homework 10 [Completed At Tue Nov 09 21:28:50 SGT 2016]</name>
+        <deadline>08/09/2016 21:28:44</deadline>
+        <isCompleted>true</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Become smarter than a 5th grader</name>
+        <deadline>16/09/2016 01:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Work on TaSc [Completed At Tue Nov 01 21:37:55 SGT 2016]</name>
+        <deadline>01/10/2016 21:37:42</deadline>
+        <isCompleted>true</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Buy Halloween costume [Completed At Tue Nov 01 21:23:15 SGT 2016]</name>
+        <deadline>30/10/2016 21:23:11</deadline>
+        <isCompleted>true</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Buy candies</name>
+        <deadline>30/10/2016 21:23:35</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+        <tagged>important</tagged>
+    </tasks>
+    <tasks>
+        <name>Go for a jog</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>01/11/2016 06:00:00</startTime>
+        <endTime>01/11/2016 07:00:00</endTime>
+        <recurrencePattern>DAILY</recurrencePattern>
+        <recurrenceFrequency>10</recurrenceFrequency>
+        <tagged>health</tagged>
+    </tasks>
+    <tasks>
+        <name>Carpe diem</name>
+        <deadline>08/11/2016 23:59:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Think of tasks to add for software demo</name>
+        <deadline>09/11/2016 11:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+        <tagged>important</tagged>
+    </tasks>
+    <tasks>
+        <name>Attend meeting tomorrow</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>02/11/2016 15:00:00</startTime>
+        <endTime>02/11/2016 16:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Go out with friends</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>04/11/2016 18:00:00</startTime>
+        <endTime>04/11/2016 20:00:00</endTime>
+        <recurrencePattern>WEEKLY</recurrencePattern>
+        <recurrenceFrequency>5</recurrenceFrequency>
+        <tagged>recreation</tagged>
+    </tasks>
+    <tasks>
+        <name>Revise coding principles</name>
+        <deadline>04/11/2016 21:29:15</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Write home about school</name>
+        <deadline>08/11/2016 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Clear writer's block</name>
+        <deadline>08/11/2016 21:32:50</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Go on vacation</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>01/12/2016 00:00:00</startTime>
+        <endTime>01/12/2016 23:59:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+        <tagged>important</tagged>
+        <tagged>recreation</tagged>
+    </tasks>
+    <tasks>
+        <name>Become a better person</name>
+        <deadline>01/12/2016 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Quit addiction to green tea</name>
+        <deadline>31/12/2016 23:59:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Fix bug #404</name>
+        <deadline>08/11/2017 13:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Finally get some sleep</name>
+        <deadline>08/11/2017 14:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Learn 5 languages</name>
+        <deadline>01/01/2030 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Be the very best, like no one ever was</name>
+        <deadline>01/01/2050 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Increase code quality</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+        <tagged>important</tagged>
+    </tasks>
+    <tasks>
+        <name>Submit report</name>
+        <deadline>09/11/2016 17:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Meet mentor</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Discuss project</name>
+        <deadline>09/11/2016 22:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Buy lunch</name>
+        <deadline>09/11/2016 12:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>WEEKLY</recurrencePattern>
+        <recurrenceFrequency>7</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Book badminton court</name>
+        <deadline>09/11/2016 12:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>WEEKLY</recurrencePattern>
+        <recurrenceFrequency>2</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Watch movie</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>04/11/2016 19:00:00</startTime>
+        <endTime>04/11/2016 21:00:00</endTime>
+        <recurrencePattern>WEEKLY</recurrencePattern>
+        <recurrenceFrequency>2</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Improve ui</name>
+        <deadline>09/11/2016 18:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Read book</name>
+        <deadline>09/11/2016 15:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>WEEKLY</recurrencePattern>
+        <recurrenceFrequency>10</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Do machine learning</name>
+        <deadline>14/11/2016 23:33:44</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Do exercise</name>
+        <deadline>08/11/2016 23:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>DAILY</recurrencePattern>
+        <recurrenceFrequency>50</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Eat breakfast</name>
+        <deadline>08/11/2016 13:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>DAILY</recurrencePattern>
+        <recurrenceFrequency>50</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Talk with parents</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>08/11/2016 21:00:00</startTime>
+        <endTime>08/11/2016 22:00:00</endTime>
+        <recurrencePattern>DAILY</recurrencePattern>
+        <recurrenceFrequency>100</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Charge phone battery</name>
+        <deadline>08/11/2016 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>DAILY</recurrencePattern>
+        <recurrenceFrequency>100</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Practise algorithms</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Take out trash</name>
+        <deadline>08/11/2016 10:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>DAILY</recurrencePattern>
+        <recurrenceFrequency>30</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Share thoughts with friends</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Consider business plan</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>    
+    <tasks>
+        <name>Submit CS2103T project</name>
+        <deadline>07/11/2016 23:59:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Revise for exams</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>14/11/2016 09:00:00</startTime>
+        <endTime>14/11/2016 17:00:00</endTime>
+        <recurrencePattern>DAILY</recurrencePattern>
+        <recurrenceFrequency>5</recurrenceFrequency>
+    </tasks>
+    <tasks>
+        <name>Pay school fees</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>    
+    <tasks>
+        <name>Find new hobby</name>
+        <deadline>00/00/0000 00:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>     
+    <tasks>
+        <name>Create new Slowgram account</name>
+        <deadline>12/12/2016 14:42:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks>        
+    <tasks>
+        <name>Find the next meeting venue</name>
+        <deadline>12/12/2016 17:00:00</deadline>
+        <isCompleted>false</isCompleted>
+        <startTime>00/00/0000 00:00:00</startTime>
+        <endTime>00/00/0000 00:00:00</endTime>
+        <recurrencePattern>NONE</recurrencePattern>
+        <recurrenceFrequency>0</recurrenceFrequency>
+    </tasks> 
+    <tags>
+        <tagName>important</tagName>
+    </tags>
+</tasklist>
