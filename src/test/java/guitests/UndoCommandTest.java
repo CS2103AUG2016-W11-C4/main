@@ -17,7 +17,7 @@ public class UndoCommandTest extends TaskListGuiTest {
     private TestTask[] currentList;
     
     @Before
-    public void prepare() {
+    public void setUp() {
         currentList = td.getTypicalTasks();
         commandBox.runCommand("list all");
         commandBox.runCommand("delete 1");
@@ -51,7 +51,7 @@ public class UndoCommandTest extends TaskListGuiTest {
     //---------------- undo (no argument) ----------------------
     
     @Test
-    public void undo_noArg_hasThreeHistory_undoOne() {
+    public void undo_noArgHasThreeHistory_undoOne() {
         currentList = TestUtil.addTasksToList(currentList, 0,
                 TypicalTestTasks.signUpForYoga);
         assertUndoResult("undo", createUndoSuccessResultMessage(1), 
@@ -59,7 +59,7 @@ public class UndoCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void undo_noArg_hasZeroHistory_remainsUnchanged() {
+    public void undo_noArgHasZeroHistory_remainsUnchanged() {
         commandBox.runCommand("undo 3");
         assertUndoResult("undo", UndoCommand.MESSAGE_NO_PAST_COMMAND_TO_UNDO,
                 td.getTypicalTasks());
@@ -68,7 +68,7 @@ public class UndoCommandTest extends TaskListGuiTest {
     //---------------- undo (positive integer) ----------------------
     
     @Test
-    public void undo_four_hasThreeHistory_undoAll() {
+    public void undo_fourHasThreeHistory_undoAll() {
         currentList = TestUtil.addTasksToList(currentList, 0, 
                 TypicalTestTasks.submitPrototype,
                 TypicalTestTasks.submitProgressReport,
@@ -78,7 +78,7 @@ public class UndoCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void undo_three_hasThreeHistory_undoThree() {
+    public void undo_threeHasThreeHistory_undoThree() {
         currentList = TestUtil.addTasksToList(currentList, 0, 
                 TypicalTestTasks.submitPrototype,
                 TypicalTestTasks.submitProgressReport,
@@ -88,7 +88,7 @@ public class UndoCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void undo_three_hasThreeHistory_undoOneByOneUntilOriginal() {
+    public void undo_threeHasThreeHistory_undoOneByOneUntilUnchanged() {
         currentList = TestUtil.addTasksToList(currentList, 0, 
                 TypicalTestTasks.signUpForYoga);
         assertUndoResult("undo 1", createUndoSuccessResultMessage(1), 
@@ -109,7 +109,7 @@ public class UndoCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void undo_three_hasZeroHistory_remainsUnchanged() {
+    public void undo_threeHasZeroHistory_remainsUnchanged() {
         commandBox.runCommand("undo 3");
         assertUndoResult("undo 3", UndoCommand.MESSAGE_NO_PAST_COMMAND_TO_UNDO,
                 td.getTypicalTasks());
@@ -118,13 +118,13 @@ public class UndoCommandTest extends TaskListGuiTest {
     //---------------- undo (illegal arguments) ----------------------
     
     @Test
-    public void undo_nonpositiveInteger_hasThreeHistory_remainsUnchanged_errorMessageShown() {
+    public void undo_nonpositiveIntegerHasThreeHistory_remainsUnchangedErrorMessageShown() {
         assertUndoResult("undo -3", "Invalid command format! \n"  + UndoCommand.MESSAGE_USAGE,
                 currentList);
     }
     
     @Test
-    public void undo_notAnInteger_hasThreeHistory_remainsUnchanged_errorMessageShown() {
+    public void undo_notAnIntegerHasThreeHistory_remainsUnchangedErrorMessageShown() {
         assertUndoResult("undo string", "Invalid command format! \n"  + UndoCommand.MESSAGE_USAGE,
                 currentList);
     }

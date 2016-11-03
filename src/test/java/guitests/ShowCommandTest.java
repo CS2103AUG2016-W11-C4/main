@@ -31,7 +31,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     //---------------- Tests individual arguments ----------------------
     
     @Test
-    public void show_invalidCommand_showsUsageMessage() {
+    public void show_noParameter_showsUsageMessage() {
         commandBox.runCommand("show");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
     }
@@ -51,7 +51,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_type_overdue_showsOverdueTasks() {
+    public void show_typeOverdue_showsOverdueTasks() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.signUpForYoga, 
@@ -63,7 +63,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_type_recurring_showsRecurringTasks() {
+    public void show_typeRecurring_showsRecurringTasks() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport,  
@@ -74,14 +74,14 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
 
     @Test
-    public void show_type_uncompleted_showsUncompletedTasks() {
+    public void show_typeUncompleted_showsUncompletedTasks() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.researchWhales);
         assertListResult("show uncompleted", currentList);
     }
     
     @Test
-    public void show_type_completed_showsCompletedTasks() {
+    public void show_typeCompleted_showsCompletedTasks() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport,  
@@ -93,7 +93,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_type_tasks_showsTasksWithoutPeriod() {
+    public void show_typeTasks_showsTasksWithoutPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.signUpForYoga, 
                 TypicalTestTasks.researchWhales, 
@@ -102,7 +102,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_type_events_showsTasksWithPeriod() {
+    public void show_typeEvents_showsTasksWithPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport, 
@@ -112,7 +112,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_type_completedEvents_showsCompletedTasksWithPeriod() {
+    public void show_typeCompletedEvents_showsCompletedTasksWithPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport, 
@@ -124,7 +124,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_type_uncompletedEvents_showsUncompletedTasksWithPeriod() {
+    public void show_typeUncompletedEvents_showsUncompletedTasksWithPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport, 
@@ -135,7 +135,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_date_on1Jan2022_showsTasksOn1Jan2022() {
+    public void show_dateOn1Jan2022_showsTasksOn1Jan2022() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport,  
@@ -147,7 +147,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_deadline_by12Dec2020_showsTasksWithDeadlineBefore12Dec2020() {
+    public void show_deadlineBy12Dec2020_showsTasksWithDeadlineBefore12Dec2020() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.signUpForYoga, 
@@ -158,7 +158,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_startTime_from1Jan2022_showsTasksWithPeriodAfter1Jan2022() {
+    public void show_startTimeFrom1Jan2022_showsTasksWithPeriodAfter1Jan2022() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitProgressReport, 
                 TypicalTestTasks.signUpForYoga, 
@@ -169,12 +169,12 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_endTime_to30Dec2021_showsTasksWithPeriodBefore30Dec2021() {
+    public void show_endTimeTo30Dec2021_showsTasksWithPeriodBefore30Dec2021() {
         assertListResult("show to 30 dec 2021", currentList);
     }
     
     @Test
-    public void show_tags_taggedUrgent_showsTasksTaggedUrgent() {
+    public void show_tagsUrgent_showsTasksTaggedUrgent() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.signUpForYoga, 
                 TypicalTestTasks.buyBirthdayGift, 
@@ -185,7 +185,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_tags_noMatches_showsEmptyList() {
+    public void show_tagsNoMatches_showsEmptyList() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport, 
@@ -213,7 +213,7 @@ public class ShowCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void show_continuously_narrowsList_showsNonEmptyListAtStart_showsEmptyListAtEnd() {
+    public void show_continuouslyNarrowsList_showsNonEmptyListAtStartAndEmptyListAtEnd() {
         assertListResult("show to 30 dec 2021", currentList);
         
         currentList = TestUtil.removeTasksFromList(currentList, 

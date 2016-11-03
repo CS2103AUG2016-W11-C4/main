@@ -31,7 +31,7 @@ public class HideCommandTest extends TaskListGuiTest {
     //---------------- Tests individual arguments ----------------------
     
     @Test
-    public void hide_invalidCommand_showsUsageMessage() {
+    public void hide_noParameter_showsUsageMessage() {
         commandBox.runCommand("hide");
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HideCommand.MESSAGE_USAGE));
     }
@@ -51,14 +51,14 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_type_overdue_showsTasksNotOverdue() {
+    public void hide_typeOverdue_showsTasksNotOverdue() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitProgressReport);
         assertListResult("hide overdue", currentList);
     }
     
     @Test
-    public void hide_type_recurring_showsTasksWithNoRecurrence() {
+    public void hide_typeRecurring_showsTasksWithNoRecurrence() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.learnVim, 
                 TypicalTestTasks.developerMeeting);
@@ -66,14 +66,14 @@ public class HideCommandTest extends TaskListGuiTest {
     }
 
     @Test
-    public void hide_type_completed_showsUncompletedTasks() {
+    public void hide_typeCompleted_showsUncompletedTasks() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.researchWhales);
         assertListResult("hide completed", currentList);
     }
     
     @Test
-    public void hide_type_uncompleted_showsCompletedTasks() {
+    public void hide_typeUncompleted_showsCompletedTasks() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport,  
@@ -85,7 +85,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_type_events_showsTasksWithoutPeriod() {
+    public void hide_typeEvents_showsTasksWithoutPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList,  
                 TypicalTestTasks.signUpForYoga,  
                 TypicalTestTasks.researchWhales, 
@@ -94,7 +94,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_type_tasks_showsTasksWithPeriod() {
+    public void hide_typeTasks_showsTasksWithPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport, 
@@ -104,7 +104,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_type_uncompletedEvents_showsCompletedTasksOrWithoutPeriod() {
+    public void hide_typeUncompletedEvents_showsCompletedTasksOrWithoutPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.signUpForYoga, 
                 TypicalTestTasks.learnVim);
@@ -112,21 +112,21 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_type_completedEvents_showsUncompletedTasksOrWithoutPeriod() {
+    public void hide_typeCompletedEvents_showsUncompletedTasksOrWithoutPeriod() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.researchWhales);
         assertListResult("hide events completed", currentList);
     }
     
     @Test
-    public void hide_date_on1Jan2022_showsTasksNotOn1Jan2022() {
+    public void hide_dateOn1Jan2022_showsTasksNotOn1Jan2022() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.researchWhales);
         assertListResult("hide on 1 jan 2022", currentList);
     }
     
     @Test
-    public void hide_deadline_by12Dec2020_showsTasksWithDeadlineAfter12Dec2020() {
+    public void hide_deadlineBy12Dec2020_showsTasksWithDeadlineAfter12Dec2020() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitProgressReport, 
                 TypicalTestTasks.buyBirthdayGift);
@@ -134,7 +134,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_startTime_from1Jan2022_showsTasksWithPeriodBefore1Jan2022() {
+    public void hide_startTimeFrom1Jan2022_showsTasksWithPeriodBefore1Jan2022() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.researchWhales);
@@ -142,7 +142,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_endTime_to30Dec2025_showsEmptyList() {
+    public void hide_endTimeTo30Dec2025_showsEmptyList() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport,  
@@ -155,7 +155,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_tags_taggedUrgent_showsTasksNotTaggedUrgent() {
+    public void hide_tagsUrgent_showsTasksNotTaggedUrgent() {
         currentList = TestUtil.removeTasksFromList(currentList, 
                 TypicalTestTasks.submitPrototype, 
                 TypicalTestTasks.submitProgressReport);
@@ -163,7 +163,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_tags_noMatches_showsAllTasks() {
+    public void hide_tagsNoMatches_showsAllTasks() {
         assertListResult("hide tag thistagdoesnotexist", currentList);
     }
     
@@ -185,7 +185,7 @@ public class HideCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void hide_continuously_narrowsList_showsNonEmptyListAtStart_showsEmptyListAtEnd() {
+    public void hide_continuouslyNarrowsList_showsNonEmptyListAtStartAndEmptyListAtEnd() {
         assertListResult("hide tag thistagdoesnotexist", currentList);
         
         currentList = TestUtil.removeTasksFromList(currentList, 
