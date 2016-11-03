@@ -231,21 +231,21 @@ public class ListCommandTest extends AddressBookGuiTest {
         currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.submitProgressReport, 5);
         currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.signUpForYoga, 4);
         currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.buyBirthdayGift, 3);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.researchWhales, 2);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.learnVim, 1);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.researchWhales, 1);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.learnVim, 2);
         currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.developerMeeting, 0);
         assertListResult("list all sort latest first", currentList);
     }
     
     @Test
     public void list_sort_default_showsSortedEarliestTasksFirst() {
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.submitPrototype, 1);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.submitProgressReport, 2);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.signUpForYoga, 3);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.buyBirthdayGift, 4);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.researchWhales, 5);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.learnVim, 6);
-        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.developerMeeting, 7);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.submitPrototype, 0);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.submitProgressReport, 1);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.signUpForYoga, 2);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.buyBirthdayGift, 3);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.researchWhales, 4);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.learnVim, 5);
+        currentList = TestUtil.replaceTaskFromList(currentList, TypicalTestTasks.developerMeeting, 6);
         assertListResult("list all sort typeanythinghere", currentList);
     }
     
