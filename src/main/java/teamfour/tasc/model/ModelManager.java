@@ -94,7 +94,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyTaskList newData) {
         taskList.resetData(newData);
-        setupDefaultFiltersAndSortOrder();
         indicateTaskListChanged();
     }
 
