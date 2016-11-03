@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import teamfour.tasc.logic.commands.RedoCommand;
 import teamfour.tasc.testutil.TestTask;
 
-public class RedoCommandTest extends AddressBookGuiTest {
+public class RedoCommandTest extends TaskListGuiTest {
     
     public void prepare() {
         commandBox.runCommand("add \"redo test case 1\"");

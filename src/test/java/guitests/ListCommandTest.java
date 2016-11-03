@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 
-public class ListCommandTest extends AddressBookGuiTest {
+public class ListCommandTest extends TaskListGuiTest {
 
     private TestTask[] currentList;
     

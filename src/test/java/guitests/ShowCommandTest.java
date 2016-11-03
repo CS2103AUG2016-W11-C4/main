@@ -13,7 +13,7 @@ import teamfour.tasc.testutil.TypicalTestTasks;
 import static org.junit.Assert.assertTrue;
 import static teamfour.tasc.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-public class ShowCommandTest extends AddressBookGuiTest {
+public class ShowCommandTest extends TaskListGuiTest {
 
     private TestTask[] currentList;
     

@@ -15,7 +15,7 @@ import teamfour.tasc.testutil.TestClock;
 import teamfour.tasc.testutil.TestTask;
 import teamfour.tasc.testutil.TestUtil;
 
-public class CompleteCommandTest extends AddressBookGuiTest {
+public class CompleteCommandTest extends TaskListGuiTest {
   
     @Before
     public void setUp() {

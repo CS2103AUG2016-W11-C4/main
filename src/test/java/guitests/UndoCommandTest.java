@@ -12,7 +12,7 @@ import teamfour.tasc.testutil.TestTask;
 import teamfour.tasc.testutil.TestUtil;
 import teamfour.tasc.testutil.TypicalTestTasks;
 
-public class UndoCommandTest extends AddressBookGuiTest {
+public class UndoCommandTest extends TaskListGuiTest {
     
     private TestTask[] currentList;
     

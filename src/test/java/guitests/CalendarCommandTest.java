@@ -9,7 +9,7 @@ import org.junit.Test;
 import teamfour.tasc.logic.commands.CalendarCommand;
 import teamfour.tasc.ui.CalendarPanel;
 
-public class CalendarCommandTest extends AddressBookGuiTest {
+public class CalendarCommandTest extends TaskListGuiTest {
 
     /* 
      * Equivalence Partitions:
