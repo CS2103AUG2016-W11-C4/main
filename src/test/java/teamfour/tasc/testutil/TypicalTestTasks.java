@@ -66,7 +66,7 @@ public class TypicalTestTasks {
     }
 
     public TestTask[] getTypicalTasks() {
-        return new TestTask[]{submitPrototype, submitProgressReport, signUpForYoga, buyBirthdayGift, learnVim, developerMeeting};
+        return new TestTask[]{submitPrototype, submitProgressReport, developerMeeting, researchWhales, learnVim, buyBirthdayGift, signUpForYoga};
     }
 
     public TaskList getTypicalTaskList(){
