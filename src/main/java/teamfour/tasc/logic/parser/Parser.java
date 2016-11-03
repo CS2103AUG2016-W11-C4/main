@@ -49,6 +49,12 @@ public class Parser {
 
     private static final Pattern RELATIVE_PATH_FORMAT =
             Pattern.compile("^((?!-)[a-zA-Z0-9-]+(?<!-)|(..))(/((?!-)[a-zA-Z0-9-]+(?<!-)|(..)))*$");
+    
+    private static final Pattern WIN_FULL_PATH_FORMAT = 
+            Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9 _.-]+)+\\\\?");
+    
+    private static final Pattern MAC_FULL_PATH_FORMAT = 
+            Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
 
     private static final Pattern FILE_NAME_ONLY_FORMAT = Pattern.compile("^[\\w,\\s-]+$");
 
@@ -370,13 +376,23 @@ public class Parser {
         if (args.equals("")) {
             return new RelocateCommand();
         }
-        final Matcher matcher = RELATIVE_PATH_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
+        final Matcher relativePathMatcher = RELATIVE_PATH_FORMAT.matcher(args.trim());
+        if (relativePathMatcher.matches()) {
+            return new RelocateCommand(args.trim(), false);
+        } else {
+            String os = System.getProperty("os.name");
+            final Matcher fullPathMatcher;
+            if (os.startsWith("Windows")) {
+                fullPathMatcher = WIN_FULL_PATH_FORMAT.matcher(args.trim());
+            } else {
+                fullPathMatcher = MAC_FULL_PATH_FORMAT.matcher(args.trim());
+            }
+            if (fullPathMatcher.matches()) {
+                return new RelocateCommand(args.trim(), true);
+            }
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     RelocateCommand.MESSAGE_USAGE));
         }
-
-        return new RelocateCommand(args.trim());
     }
 
     //@@author A0148096W

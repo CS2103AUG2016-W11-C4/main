@@ -88,10 +88,7 @@ public class Config {
             moveFile(newTaskListFilePath, file + ".xml");
         }
         this.taskListFilePath = newTaskListFilePath;
-        String newConfig = JsonUtil.toJsonString(this);
-        PrintWriter newConfigFileWriter = new PrintWriter(DEFAULT_CONFIG_FILE);
-        newConfigFileWriter.write(newConfig);
-        newConfigFileWriter.close();
+        writeToConfigFile();
     }
     
     public void moveFile(String newTaskListFilePath, String fileName) throws IOException, JAXBException {
@@ -122,15 +119,25 @@ public class Config {
     
     /**
      * Modifies config file for switchlist command execution.
+     * @throws IOException 
      * */
-    public void switchToNewTaskList(String tasklistFileName) throws IOException {
+    public void switchToNewTaskList(String tasklistFileName) throws IOException{
         addNameToTasklists(tasklistFileName);
         this.taskListFileName = tasklistFileName + ".xml";
+        writeToConfigFile();
+        EventsCenter.getInstance().post(new TaskListRenamedEvent(getTaskListFilePathAndName()));
+    }
+    
+    /**
+     * Saves config file.
+     * @throws IOException 
+     * */
+    private void writeToConfigFile() throws IOException {
+        this.taskListFilePath = new File(this.taskListFilePath).getAbsolutePath();
         String newConfig = JsonUtil.toJsonString(this);
         PrintWriter newConfigFileWriter = new PrintWriter(DEFAULT_CONFIG_FILE);
         newConfigFileWriter.write(newConfig);
         newConfigFileWriter.close();
-        EventsCenter.getInstance().post(new TaskListRenamedEvent(getTaskListFilePathAndName()));
     }
     
     /**
@@ -161,10 +168,7 @@ public class Config {
         File oldFile = new File(taskListFilePath + File.separator + this.taskListFileName);
         oldFile.renameTo(newFile);
         this.taskListFileName = newTasklistFileName + ".xml";
-        String newConfig = JsonUtil.toJsonString(this);
-        PrintWriter newConfigFileWriter = new PrintWriter(DEFAULT_CONFIG_FILE);
-        newConfigFileWriter.write(newConfig);
-        newConfigFileWriter.close();
+        writeToConfigFile();
         EventsCenter.getInstance().post(new TaskListRenamedEvent(getTaskListFilePathAndName()));
     }
     //@@author
