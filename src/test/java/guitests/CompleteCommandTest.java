@@ -22,6 +22,7 @@ public class CompleteCommandTest extends AddressBookGuiTest {
         // set up fake time
         TestClock testClock = new TestClock(new Date(0));
         DateUtil.getInstance().setClock(testClock);
+        commandBox.runCommand("list all");
     }
     
     @Test

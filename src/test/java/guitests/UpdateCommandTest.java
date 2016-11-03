@@ -21,6 +21,9 @@ public class UpdateCommandTest extends AddressBookGuiTest {
 
     @Test
     public void update() throws IllegalValueException {
+        
+        commandBox.runCommand("list all");
+        
         // update one task
         TestTask[] currentList = td.getTypicalTasks();
         int taskToUpdateIndex = 0;

@@ -14,6 +14,9 @@ public class AddCommandTest extends AddressBookGuiTest {
 
     @Test
     public void add() {
+
+        commandBox.runCommand("list all");
+        
         //add one task
         TestTask[] currentList = td.getTypicalTasks();
         TestTask taskToAdd = td.attendWorkshop;
