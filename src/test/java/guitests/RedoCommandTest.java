@@ -40,6 +40,7 @@ public class RedoCommandTest extends AddressBookGuiTest {
     //---------------- redo (no argument) ----------------------
 
     private void setupRedoPreparation() {
+        commandBox.runCommand("list all");
         commandBox.runCommand("delete 1");
         commandBox.runCommand("delete 1");
         commandBox.runCommand("delete 1");
@@ -51,29 +52,31 @@ public class RedoCommandTest extends AddressBookGuiTest {
         commandBox.runCommand("delete 1");
         setupRedoPreparation();
         assertRedoResult("redo", createRedoSuccessResultMessage(1), 
-                td.developerMeeting,
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.signUpForYoga,
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
     }
     
     @Test
     public void redo_noArg_hasZeroHistory_remainsUnchanged() {
+        commandBox.runCommand("list all");
         commandBox.runCommand("delete 1");
         assertRedoResult("redo", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.submitProgressReport, td.developerMeeting,
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.submitProgressReport, td.signUpForYoga,
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
     }
     
     @Test
     public void redo_noArg_resetHistory_remainsUnchanged() {
+        commandBox.runCommand("list all");
         commandBox.runCommand("delete 1");
         commandBox.runCommand("undo");
         commandBox.runCommand("delete 1");
         assertRedoResult("redo", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.submitProgressReport, td.developerMeeting,
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.submitProgressReport, td.signUpForYoga,
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
     }
     
     //---------------- redo (positive integer) ----------------------
@@ -82,44 +85,45 @@ public class RedoCommandTest extends AddressBookGuiTest {
     public void redo_four_hasThreeHistory_redoAll() {
         setupRedoPreparation();
         assertRedoResult("redo 4", createRedoSuccessResultMessage(3), 
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
     }
-    
+   
     @Test
     public void redo_three_hasThreeHistory_redoThree() {
         setupRedoPreparation();
         assertRedoResult("redo 3", createRedoSuccessResultMessage(3), 
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
     }
     
     @Test
     public void redo_three_hasThreeHistory_redoOneByOneUntilOriginal() {
         setupRedoPreparation();
         assertRedoResult("redo 1", createRedoSuccessResultMessage(1), 
-                td.submitProgressReport, td.developerMeeting,
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.submitProgressReport, td.signUpForYoga,
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
         assertRedoResult("redo 1", createRedoSuccessResultMessage(1), 
-                td.developerMeeting,
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
-        assertRedoResult("redo 1", createRedoSuccessResultMessage(1), 
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.signUpForYoga,
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
+        assertRedoResult("redo 1", createRedoSuccessResultMessage(1),
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
         assertRedoResult("redo 1", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
     }
     
     @Test
     public void redo_three_hasZeroHistory_remainsUnchanged() {
+        commandBox.runCommand("list all");
         assertRedoResult("redo 3", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.submitPrototype, 
-                td.submitProgressReport, td.developerMeeting,
-                td.researchWhales, td.learnVim, 
-                td.buyBirthdayGift, td.signUpForYoga);
+                td.submitPrototype,
+                td.submitProgressReport, td.signUpForYoga,
+                td.buyBirthdayGift, td.researchWhales, 
+                td.learnVim, td.developerMeeting);
     }
     
     //---------------- redo (illegal arguments) ----------------------
@@ -130,9 +134,9 @@ public class RedoCommandTest extends AddressBookGuiTest {
         assertRedoResult("redo -3", "Invalid command format! \n" 
                                     + RedoCommand.MESSAGE_USAGE,
                                     td.submitPrototype, 
-                                    td.submitProgressReport, td.developerMeeting,
-                                    td.researchWhales, td.learnVim, 
-                                    td.buyBirthdayGift, td.signUpForYoga);
+                                    td.submitProgressReport, td.signUpForYoga,
+                                    td.buyBirthdayGift, td.researchWhales, 
+                                    td.learnVim, td.developerMeeting);
     }
     
     @Test
@@ -141,9 +145,9 @@ public class RedoCommandTest extends AddressBookGuiTest {
         assertRedoResult("redo string", "Invalid command format! \n" 
                                         + RedoCommand.MESSAGE_USAGE,
                                         td.submitPrototype, 
-                                        td.submitProgressReport, td.developerMeeting,
-                                        td.researchWhales, td.learnVim, 
-                                        td.buyBirthdayGift, td.signUpForYoga);
+                                        td.submitProgressReport, td.signUpForYoga,
+                                        td.buyBirthdayGift, td.researchWhales, 
+                                        td.learnVim, td.developerMeeting);
     }
     
     //---------------- Utility methods ----------------------
