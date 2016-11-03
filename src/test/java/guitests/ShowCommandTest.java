@@ -2,16 +2,27 @@
 
 package guitests;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import teamfour.tasc.logic.commands.ShowCommand;
 import teamfour.tasc.testutil.TestTask;
+import teamfour.tasc.testutil.TestUtil;
+import teamfour.tasc.testutil.TypicalTestTasks;
 
 import static org.junit.Assert.assertTrue;
 import static teamfour.tasc.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 public class ShowCommandTest extends AddressBookGuiTest {
 
+    TestTask[] currentList;
+    
+    @Before
+    public void setUp() {
+        currentList = td.getTypicalTasks();
+        commandBox.runCommand("list all");
+    }
+    
     /*
      * - The test methods test one argument type at a time.
      * - Then tests combined arguments and continuous executions of show command.
@@ -28,89 +39,161 @@ public class ShowCommandTest extends AddressBookGuiTest {
     @Test
     public void show_emptyList_showsEmptyList(){
         commandBox.runCommand("clear");
-        assertListResult("show tasks"); //no results
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport,  
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show tasks");
     }
     
     @Test
-    public void show_type_overdue_showsNonEmptyList() {
-        assertListResult("show overdue", td.submitProgressReport);
+    public void show_type_overdue_showsOverdueTasks() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show overdue", currentList);
     }
     
     @Test
-    public void show_type_recurring_showsNonEmptyList() {
-        assertListResult("show recurring", td.developerMeeting,
-                td.learnVim);
+    public void show_type_recurring_showsRecurringTasks() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport,  
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.researchWhales);
+        assertListResult("show recurring", currentList);
     }
 
     @Test
-    public void show_type_uncompleted_showsNonEmptyList() {
-        assertListResult("show uncompleted", td.submitPrototype, 
-                td.submitProgressReport, td.developerMeeting,
-                td.learnVim, td.buyBirthdayGift, td.signUpForYoga);
+    public void show_type_uncompleted_showsUncompletedTasks() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.researchWhales);
+        assertListResult("show uncompleted", currentList);
     }
     
     @Test
-    public void show_type_completed_showsNonEmptyList() {
-        assertListResult("show completed", td.researchWhales);
+    public void show_type_completed_showsCompletedTasks() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport,  
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show completed", currentList);
     }
     
     @Test
-    public void show_type_tasks_showsNonEmptyList() {
-        assertListResult("show tasks", td.submitPrototype, 
-                td.submitProgressReport, td.developerMeeting,
-                td.buyBirthdayGift);
+    public void show_type_tasks_showsTasksWithoutPeriod() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim);
+        assertListResult("show tasks", currentList);
     }
     
     @Test
-    public void show_type_events_showsNonEmptyList() {
-        assertListResult("show events", td.researchWhales,
-                td.learnVim, td.signUpForYoga);
+    public void show_type_events_showsTasksWithPeriod() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show events", currentList);
     }
     
     @Test
-    public void show_type_completedEvents_showsNonEmptyList() {
-        assertListResult("show completed events", td.researchWhales);
+    public void show_type_completedEvents_showsCompletedTasksWithPeriod() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift,
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show completed events", currentList);
     }
     
     @Test
-    public void show_type_uncompletedEvents_showsNonEmptyList() {
-        assertListResult("show events uncompleted", td.learnVim, 
-                td.signUpForYoga);
+    public void show_type_uncompletedEvents_showsUncompletedTasksWithPeriod() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show events uncompleted", currentList);
     }
     
     @Test
-    public void show_date_on1Jan2022_showsNonEmptyList() {
-        assertListResult("show on 1 jan 2022", td.researchWhales);
+    public void show_date_on1Jan2022_showsTasksOn1Jan2022() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport,  
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show on 1 jan 2022", currentList);
     }
     
     @Test
-    public void show_deadline_by12Dec2020_showsNonEmptyList() {
-        assertListResult("show by 12 dec 2020", td.submitProgressReport,
-                td.buyBirthdayGift);
+    public void show_deadline_by12Dec2020_showsTasksWithDeadlineBefore12Dec2020() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show by 12 dec 2020", currentList);
     }
     
     @Test
-    public void show_startTime_from1Jan2022_showsNonEmptyList() {
-        assertListResult("show from 1 jan 2022", td.submitPrototype, 
-                td.researchWhales);
+    public void show_startTime_from1Jan2022_showsTasksWithPeriodAfter1Jan2022() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitProgressReport, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show from 1 jan 2022", currentList);
     }
     
     @Test
-    public void show_endTime_to30Dec2021_showsNonEmptyList() {
-        assertListResult("show to 30 dec 2021", td.submitPrototype,
-                td.submitProgressReport, td.developerMeeting,
-                td.researchWhales, td.learnVim,
-                td.buyBirthdayGift, td.signUpForYoga);
+    public void show_endTime_to30Dec2021_showsTasksWithPeriodBefore30Dec2021() {
+        assertListResult("show to 30 dec 2021", currentList);
     }
     
     @Test
-    public void show_tags_withMatches_showsNonEmptyList() {
-        assertListResult("show tag urgent", td.submitPrototype, 
-                td.submitProgressReport);
+    public void show_tags_taggedUrgent_showsTasksTaggedUrgent() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show tag urgent", currentList);
     }
     
     @Test
     public void show_tags_noMatches_showsEmptyList() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
         assertListResult("show tag thistagdoesnotexist");
     }
     
@@ -118,29 +201,39 @@ public class ShowCommandTest extends AddressBookGuiTest {
     //---------------- Tests combined arguments ----------------------
     
     @Test
-    public void show_combinedArgs_showsNonEmptyList() {
+    public void show_combinedArgs_showsUncompletedTasksFrom1Jan1998To1Jan2024() {
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.signUpForYoga, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, 
+                TypicalTestTasks.developerMeeting);
         assertListResult("show uncomplete tasks from 1 jan 1998"
-                + " to 1 jan 2024, tag urgent", td.submitPrototype,
-                td.submitProgressReport);
+                + " to 1 jan 2024, tag urgent", currentList);
     }
     
     @Test
     public void show_continuously_narrowsList_showsNonEmptyListAtStart_showsEmptyListAtEnd() {
-        assertListResult("show to 30 dec 2021", td.submitPrototype,
-                td.submitProgressReport, td.developerMeeting,
-                td.researchWhales, td.learnVim,
-                td.buyBirthdayGift, td.signUpForYoga);
+        assertListResult("show to 30 dec 2021", currentList);
         
-        assertListResult("show uncompleted", td.submitPrototype, 
-                td.submitProgressReport, td.developerMeeting,
-                td.learnVim, td.buyBirthdayGift, td.signUpForYoga);
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.researchWhales);
+        assertListResult("show uncompleted", currentList);
         
-        assertListResult("show events", td.learnVim, 
-                td.signUpForYoga);
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport, 
+                TypicalTestTasks.buyBirthdayGift, 
+                TypicalTestTasks.developerMeeting);
+        assertListResult("show events", currentList);
 
-        assertListResult("show recurring", td.learnVim);
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.signUpForYoga);
+        assertListResult("show recurring", currentList);
         
-        assertListResult("show completed");
+        currentList = TestUtil.removeTasksFromList(currentList, 
+                TypicalTestTasks.learnVim);
+        assertListResult("show completed", currentList);
     }
 
     //---------------- Utility methods ----------------------
