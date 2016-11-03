@@ -55,18 +55,18 @@ public class TypicalTestTasks {
         try {
             tl.addTask(new Task(submitPrototype));
             tl.addTask(new Task(submitProgressReport));
-            tl.addTask(new Task(developerMeeting));
+            tl.addTask(new Task(signUpForYoga));
+            tl.addTask(new Task(buyBirthdayGift));
             tl.addTask(new Task(researchWhales));
             tl.addTask(new Task(learnVim));
-            tl.addTask(new Task(buyBirthdayGift));
-            tl.addTask(new Task(signUpForYoga));
+            tl.addTask(new Task(developerMeeting));
         } catch (UniqueTaskList.DuplicateTaskException e) {
             assert false : "not possible";
         }
     }
 
     public TestTask[] getTypicalTasks() {
-        return new TestTask[]{submitPrototype, submitProgressReport, developerMeeting, researchWhales, learnVim, buyBirthdayGift, signUpForYoga};
+        return new TestTask[]{submitPrototype, submitProgressReport, signUpForYoga, buyBirthdayGift, researchWhales, learnVim, developerMeeting};
     }
 
     public TaskList getTypicalTaskList(){

@@ -11,10 +11,13 @@ import teamfour.tasc.testutil.TestUtil;
 
 import static org.junit.Assert.assertTrue;
 
-public class AddCommandTest extends AddressBookGuiTest {
+public class AddCommandTest extends TaskListGuiTest {
 
     @Test
     public void add() {
+
+        commandBox.runCommand("list all");
+        
         //add one task
         TestTask[] currentList = td.getTypicalTasks();
         TestTask taskToAdd = td.attendWorkshop;

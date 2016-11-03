@@ -18,6 +18,8 @@ public interface Model {
     public static final String SORT_ORDER_BY_LATEST_FIRST = "latest first";
     public static final String SORT_ORDER_BY_A_TO_Z = "a-z";
     public static final String SORT_ORDER_BY_Z_TO_A = "z-a";
+    public static final String SORT_ORDER_DEFAULT = SORT_ORDER_BY_EARLIEST_FIRST;
+    public static final String FILTER_TYPE_DEFAULT = "uncompleted";
 
     //@@author
     /** Clears existing backing model and replaces with the provided new data */
@@ -93,14 +95,14 @@ public interface Model {
      */
     void addTaskListFilterByTags(Set<String> tags, boolean negated);
 
+    /** Updates the filtered task list by the added filters */
+    void updateFilteredTaskListByFilter();
+
     /**
      * Precondition: arguments are not null.
      * Sorts the filtered task list by the given sorting order
      */
     void sortFilteredTaskListByOrder(String sortOrder);
-
-    /** Updates the filtered task list by the added filters */
-    void updateFilteredTaskListByFilter();
 
     //@@author A0140011L
     /**
@@ -129,4 +131,8 @@ public interface Model {
      * this will be run.
      * */
     void clearRedoTaskListHistory();
+
+    boolean tasklistExists(String tasklist);
+
+    void resetTasklistNames(String[] newTasklistNames);
 }

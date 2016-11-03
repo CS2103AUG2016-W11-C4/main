@@ -15,13 +15,14 @@ import teamfour.tasc.testutil.TestClock;
 import teamfour.tasc.testutil.TestTask;
 import teamfour.tasc.testutil.TestUtil;
 
-public class CompleteCommandTest extends AddressBookGuiTest {
+public class CompleteCommandTest extends TaskListGuiTest {
   
     @Before
     public void setUp() {
         // set up fake time
         TestClock testClock = new TestClock(new Date(0));
         DateUtil.getInstance().setClock(testClock);
+        commandBox.runCommand("list all");
     }
     
     @Test

@@ -16,6 +16,7 @@ public class CommandHelperTest {
 
     //@@author A0148096W
     /*
+     * Test tryConvertStringToDateOrReturnNull
      * Equivalence partitions for date strings:
      *  - null
      *  - empty string
@@ -51,6 +52,50 @@ public class CommandHelperTest {
         assertTrue(date.getDate() == 13);
         assertTrue(date.getMonth() == 8);
         assertTrue(date.getYear() == 2013 - 1900);
+    }
+    
+    /*
+     * Test getStartOfTheDate
+     * Equivalence partitions for date strings:
+     *  - null
+     *  - Date object
+     */
+    
+    @Test (expected = AssertionError.class)
+    public void getStartOfTheDate_inputNull_expectsAssertionError() {
+        CommandHelper.getStartOfTheDate(null);
+    }
+    
+    @Test
+    public void getStartOfTheDate_input12Dec2012time1300_expects12Dec2012time0000() {
+        Calendar c = Calendar.getInstance();
+        c.set(2012, 12, 12, 13, 0);
+        Date date = CommandHelper.getStartOfTheDate(c.getTime());
+        c.set(2012, 12, 12, 0, 0, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        assertTrue(date.equals(c.getTime()));
+    }
+    
+    /*
+     * Test getEndOfTheDate
+     * Equivalence partitions for date strings:
+     *  - null
+     *  - Date object
+     */
+    
+    @Test (expected = AssertionError.class)
+    public void getEndOfTheDate_inputNull_expectsAssertionError() {
+        CommandHelper.getEndOfTheDate(null);
+    }
+    
+    @Test
+    public void getEndOfTheDate_input12Dec2012time1300_expects12Dec2012time2359() {
+        Calendar c = Calendar.getInstance();
+        c.set(2012, 12, 12, 13, 0);
+        Date date = CommandHelper.getEndOfTheDate(c.getTime());
+        c.set(2012, 12, 12, 23, 59, 59);
+        c.set(Calendar.MILLISECOND, 999);
+        assertTrue(date.equals(c.getTime()));
     }
 
     //@@author A0127014W
