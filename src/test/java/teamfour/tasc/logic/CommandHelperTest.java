@@ -121,11 +121,6 @@ public class CommandHelperTest {
         assertTrue(dates2.get(0).getDate() != 13); //wrong date
         assertTrue(dates2.get(0).getMonth() == 8);
         assertTrue(dates2.get(0).getYear() == 1900 - 1900);
-
-        String date3 = "4th april 1600 hours";
-        List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
-        assertTrue(dates3.get(0).getDate() == 4);
-        assertTrue(dates3.get(0).getHours() != 16); //wrong time
     }
 
     @Test
