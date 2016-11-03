@@ -47,14 +47,10 @@ public class ListCommand extends Command {
      * Lists all uncompleted tasks and events from now.
      */
     public ListCommand() throws IllegalValueException {
-        this.type = "uncompleted";
-        this.deadline = null;
-        this.startTime = null;
-        this.endTime = null;
-        this.tags = new HashSet<String>();
-        this.sortOrder = Model.SORT_ORDER_BY_EARLIEST_FIRST;
+        this(Model.FILTER_TYPE_DEFAULT, null, null, null, 
+                new HashSet<String>(), Model.SORT_ORDER_DEFAULT);
     }
-
+    
     /**
      * List Command
      * Convenience constructor using raw values.

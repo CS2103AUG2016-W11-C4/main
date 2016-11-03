@@ -76,17 +76,17 @@ public class HistoryStackTest {
      */
     
     @Test (expected = AssertionError.class)
-    public void pushState_nullArg_throwsAssertionError() {
+    public void push_nullArg_throwsAssertionError() {
         historyStack.push(null);
     }
     
     @Test (expected = OutOfHistoryException.class)
-    public void popState_emptyHistoryStack_throwsException() throws OutOfHistoryException {
+    public void pop_emptyHistoryStack_throwsException() throws OutOfHistoryException {
         historyStack.pop();
     }
     
     @Test
-    public void pushFromZeroToMaxSize_popsNewestToOldest_success() throws OutOfHistoryException {
+    public void pushThreePopThree_popsNewestToOldest_success() throws OutOfHistoryException {
         historyStack.push(new HistoryItemStub(1));
         historyStack.push(new HistoryItemStub(2));
         historyStack.push(new HistoryItemStub(3));
@@ -96,7 +96,7 @@ public class HistoryStackTest {
     }
     
     @Test
-    public void pushFromZeroToOverMaxSize_popsNewestToOldest_success() throws OutOfHistoryException {
+    public void pushFourPopThree_popsNewestToOldest_success() throws OutOfHistoryException {
         historyStack.push(new HistoryItemStub(1));
         historyStack.push(new HistoryItemStub(2));
         historyStack.push(new HistoryItemStub(3));
@@ -107,7 +107,7 @@ public class HistoryStackTest {
     }
     
     @Test (expected = OutOfHistoryException.class)
-    public void pushFromZeroToMaxSize_popsTooMuch_throwsException() throws OutOfHistoryException {
+    public void pushThreePopFour_popsTooMuch_throwsException() throws OutOfHistoryException {
         historyStack.push(new HistoryItemStub(1));
         historyStack.push(new HistoryItemStub(2));
         historyStack.push(new HistoryItemStub(3));

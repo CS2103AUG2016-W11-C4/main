@@ -6,7 +6,6 @@ import teamfour.tasc.commons.core.Config;
 import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.events.model.TaskListChangedEvent;
-import teamfour.tasc.commons.util.StringUtil;
 import teamfour.tasc.model.history.HistoryStack;
 import teamfour.tasc.model.history.HistoryStack.OutOfHistoryException;
 import teamfour.tasc.model.task.ReadOnlyTask;
@@ -14,7 +13,20 @@ import teamfour.tasc.model.task.Task;
 import teamfour.tasc.model.task.UniqueTaskList;
 import teamfour.tasc.model.task.UniqueTaskList.TaskNotFoundException;
 
-import java.util.Comparator;
+import teamfour.tasc.model.task.comparators.AToZComparator;
+import teamfour.tasc.model.task.comparators.EarliestFirstComparator;
+import teamfour.tasc.model.task.comparators.LatestFirstComparator;
+import teamfour.tasc.model.task.comparators.ZToAComparator;
+import teamfour.tasc.model.task.qualifiers.AllQualifier;
+import teamfour.tasc.model.task.qualifiers.DeadlineQualifier;
+import teamfour.tasc.model.task.qualifiers.EndTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.NameQualifier;
+import teamfour.tasc.model.task.qualifiers.Qualifier;
+import teamfour.tasc.model.task.qualifiers.StartTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.StartToEndTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.TagQualifier;
+import teamfour.tasc.model.task.qualifiers.TypeQualifier;
+
 import java.util.Date;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -34,36 +46,34 @@ public class ModelManager extends ComponentManager implements Model {
     private String[] tasklistNames;
 
     /**
-     * Initializes a ModelManager with the given TaskList
-     * TaskLIst and its variables should not be null
+     * Initializes a ModelManager with the given ReadOnlyTaskList
+     * ReadOnlyTaskList and its variables should not be null
      */
-    public ModelManager(TaskList src, UserPrefs userPrefs, Config config) {
+    public ModelManager(ReadOnlyTaskList initialData, UserPrefs userPrefs, Config config) {
         super();
-        assert src != null;
+        assert initialData != null;
         assert userPrefs != null;
 
-        logger.fine("Initializing with task list: " + src + " and user prefs " + userPrefs);
+        logger.fine("Initializing with task list: " + initialData + " and user prefs " + userPrefs);
 
-        taskList = new TaskList(src);
-        filteredTasks = new FilteredList<>(taskList.getTasks());
-        taskListFilter = new PredicateExpression(new AllQualifier());
-        taskListHistory = new HistoryStack<TaskList>();
-        redoTaskListHistory = new HistoryStack<TaskList>();
-        tasklistNames = config.getTaskListNames();
-    }
-
-    public ModelManager() {
-        this(new TaskList(), new UserPrefs(), new Config());
-    }
-    
-
-    public ModelManager(ReadOnlyTaskList initialData, UserPrefs userPrefs, Config config) {
         taskList = new TaskList(initialData);
         filteredTasks = new FilteredList<>(taskList.getTasks());
         taskListFilter = new PredicateExpression(new AllQualifier());
         taskListHistory = new HistoryStack<TaskList>();
         redoTaskListHistory = new HistoryStack<TaskList>();
         tasklistNames = config.getTaskListNames();
+        setupDefaultFiltersAndSortOrder();
+    }
+
+    public ModelManager() {
+        this(new TaskList(), new UserPrefs(), new Config());
+    }
+
+    private void setupDefaultFiltersAndSortOrder() {
+        resetTaskListFilter();
+        addTaskListFilterByType(Model.FILTER_TYPE_DEFAULT, false);
+        updateFilteredTaskListByFilter();
+        sortFilteredTaskListByOrder(Model.SORT_ORDER_DEFAULT);
     }
     
     @Override
@@ -240,6 +250,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateFilteredTaskListByFilter() {
+        updateFilteredTaskList(taskListFilter);
+    }
+    
+    @Override
     public void sortFilteredTaskListByOrder(String sortOrder) {
         assert sortOrder != null;
         switch(sortOrder) {
@@ -260,11 +275,6 @@ public class ModelManager extends ComponentManager implements Model {
                     + "unrecognized sort order string: " + sortOrder);
             break;
         }
-    }
-
-    @Override
-    public void updateFilteredTaskListByFilter() {
-        updateFilteredTaskList(taskListFilter);
     }
 
     //@@author
@@ -328,256 +338,6 @@ public class ModelManager extends ComponentManager implements Model {
         @Override
         public String toString() {
             return qualifier.toString();
-        }
-    }
-
-    interface Qualifier {
-        boolean run(ReadOnlyTask task);
-        String toString();
-    }
-
-    private class AllQualifier implements Qualifier {
-        AllQualifier() {}
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            return true;
-        }
-
-        @Override
-        public String toString() {
-            return "all qualifier";
-        }
-    }
-
-    //@@author A0127014W
-    private class NameQualifier implements Qualifier {
-        private Set<String> nameKeyWords;
-
-        NameQualifier(Set<String> nameKeyWords) {
-            this.nameKeyWords = nameKeyWords;
-        }
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            boolean tagFound = false;
-            for (String keyword : nameKeyWords) {
-                tagFound = task.getTags().getInternalList().stream()
-                        .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny()
-                        .isPresent() || tagFound;
-            }
-
-            return nameKeyWords.stream()
-                    .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                    .findAny().isPresent() || tagFound;
-        }
-        @Override
-        public String toString() {
-            return "name=" + String.join(", ", nameKeyWords);
-        }
-    }
-
-    //@@author A0148096W
-    private class TypeQualifier implements Qualifier {
-        private String type;
-
-        TypeQualifier(String type) {
-            this.type = type;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            String[] typeWords = type.toLowerCase().split(" ");
-            String taskType = (" " + task.getAsTypeKeywords()).toLowerCase();
-
-            for (String typeWord : typeWords) {
-                if (!taskType.contains(" " + typeWord))
-                    return false;
-            }
-            return true;
-        }
-
-        @Override
-        public String toString() {
-            return "type=" + type;
-        }
-    }
-
-    private class DeadlineQualifier implements Qualifier {
-        private Date deadline;
-
-        DeadlineQualifier(Date deadline) {
-            this.deadline = deadline;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            if (task.getDeadline().hasDeadline() == false) {
-                return false;
-            }
-            return deadline.after(task.getDeadline().getDeadline());
-        }
-
-        @Override
-        public String toString() {
-            return "deadline=" + deadline;
-        }
-    }
-
-    private class StartTimeQualifier implements Qualifier {
-        private Date startTime;
-
-        StartTimeQualifier(Date startTime) {
-            this.startTime = startTime;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            if (task.getPeriod().hasPeriod()) {
-                return startTime.before(task.getPeriod().getEndTime());
-            } else if (task.getDeadline().hasDeadline()) {
-                return startTime.before(task.getDeadline().getDeadline());
-            }
-            return true;
-        }
-
-        @Override
-        public String toString() {
-            return "startTime=" + startTime;
-        }
-    }
-
-    private class EndTimeQualifier implements Qualifier {
-        private Date endTime;
-
-        EndTimeQualifier(Date endTime) {
-            this.endTime = endTime;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            if (task.getPeriod().hasPeriod()) {
-                return endTime.after(task.getPeriod().getStartTime());
-            } else if (task.getDeadline().hasDeadline()) {
-                return endTime.after(task.getDeadline().getDeadline());
-            }
-            return true;
-        }
-
-        @Override
-        public String toString() {
-            return "endTime=" + endTime;
-        }
-    }
-
-    private class StartToEndTimeQualifier implements Qualifier {
-        private Date startTime;
-        private Date endTime;
-
-        StartToEndTimeQualifier(Date startTime, Date endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            if (task.getPeriod().hasPeriod()) {
-                return startTime.before(task.getPeriod().getEndTime()) &&
-                        endTime.after(task.getPeriod().getStartTime());
-            } else if (task.getDeadline().hasDeadline()) {
-                return startTime.before(task.getDeadline().getDeadline()) &&
-                        endTime.after(task.getDeadline().getDeadline());
-            }
-            return false;
-        }
-
-        @Override
-        public String toString() {
-            return "startTime=" + startTime + ",endTime=" + endTime;
-        }
-    }
-
-    private class TagQualifier implements Qualifier {
-        private Set<String> tagNames;
-
-        TagQualifier(Set<String> tagNames) {
-            this.tagNames = tagNames;
-        }
-
-        @Override
-        public boolean run(ReadOnlyTask task) {
-            String taskTagsString = task.tagsString();
-            taskTagsString = taskTagsString.replace("[", "");
-            taskTagsString = taskTagsString.replace("]", "");
-            String source = taskTagsString.replace(",", "");
-            return tagNames.stream()
-                    .filter(tagName -> StringUtil.containsIgnoreCase(source, tagName))
-                    .findAny()
-                    .isPresent();
-        }
-
-        @Override
-        public String toString() {
-            return "tags=" + String.join(", ", tagNames);
-        }
-    }
-
-
-    //========== Inner classes/interfaces used for sorting ==================================================
-
-    private class EarliestFirstComparator implements Comparator<ReadOnlyTask> {
-        @Override
-        public int compare(ReadOnlyTask a, ReadOnlyTask b) {
-            int timeA = 0;
-            if (a.getDeadline().hasDeadline()) {
-                timeA = (int)(a.getDeadline().getDeadline().getTime() / 1000);
-            } else if (a.getPeriod().hasPeriod()) {
-                timeA = (int)(a.getPeriod().getStartTime().getTime() / 1000);
-            }
-
-            int timeB = 0;
-            if (b.getDeadline().hasDeadline()) {
-                timeB = (int)(b.getDeadline().getDeadline().getTime() / 1000);
-            } else if (b.getPeriod().hasPeriod()) {
-                timeB = (int)(b.getPeriod().getStartTime().getTime() / 1000);
-            }
-
-            return timeA - timeB;
-        }
-    }
-
-    private class LatestFirstComparator implements Comparator<ReadOnlyTask> {
-        @Override
-        public int compare(ReadOnlyTask a, ReadOnlyTask b) {
-            int timeA = 0;
-            if (a.getDeadline().hasDeadline()) {
-                timeA = (int)(a.getDeadline().getDeadline().getTime() / 1000);
-            } else if (a.getPeriod().hasPeriod()) {
-                timeA = (int)(a.getPeriod().getStartTime().getTime() / 1000);
-            }
-
-            int timeB = 0;
-            if (b.getDeadline().hasDeadline()) {
-                timeB = (int)(b.getDeadline().getDeadline().getTime() / 1000);
-            } else if (b.getPeriod().hasPeriod()) {
-                timeB = (int)(b.getPeriod().getStartTime().getTime() / 1000);
-            }
-
-            return timeB - timeA;
-        }
-    }
-
-    private class AToZComparator implements Comparator<ReadOnlyTask> {
-
-        @Override
-        public int compare(ReadOnlyTask a, ReadOnlyTask b) {
-            return a.getName().getName().compareTo(b.getName().getName());
-        }
-    }
-
-    private class ZToAComparator implements Comparator<ReadOnlyTask> {
-        @Override
-        public int compare(ReadOnlyTask a, ReadOnlyTask b) {
-            return b.getName().getName().compareTo(a.getName().getName());
         }
     }
 }

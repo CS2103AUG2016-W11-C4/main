@@ -4,10 +4,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
 
-public class ClearCommandTest extends AddressBookGuiTest {
+public class ClearCommandTest extends TaskListGuiTest {
 
     @Test
     public void clear() {
+
+        commandBox.runCommand("list all");
 
         //verify a non-empty list can be cleared
         assertTrue(taskListPanel.isListMatching(td.getTypicalTasks()));

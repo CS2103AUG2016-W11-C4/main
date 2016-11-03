@@ -17,10 +17,13 @@ import teamfour.tasc.model.task.Name;
 import teamfour.tasc.testutil.TestTask;
 import teamfour.tasc.testutil.TestUtil;
 
-public class UpdateCommandTest extends AddressBookGuiTest {
+public class UpdateCommandTest extends TaskListGuiTest {
 
     @Test
     public void update() throws IllegalValueException {
+        
+        commandBox.runCommand("list all");
+        
         // update one task
         TestTask[] currentList = td.getTypicalTasks();
         int taskToUpdateIndex = 0;

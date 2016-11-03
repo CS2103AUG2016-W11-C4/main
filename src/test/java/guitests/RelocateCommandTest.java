@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import teamfour.tasc.logic.commands.RelocateCommand;
 
-public class RelocateCommandTest extends AddressBookGuiTest {
+public class RelocateCommandTest extends TaskListGuiTest {
     @Test
     public void invalid_relocate_input() {
         

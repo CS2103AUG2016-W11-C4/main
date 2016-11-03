@@ -7,7 +7,7 @@ import teamfour.tasc.testutil.TestTask;
 
 import static org.junit.Assert.assertTrue;
 
-public class FindCommandTest extends AddressBookGuiTest {
+public class FindCommandTest extends TaskListGuiTest {
 
     @Test
     public void find_nonEmptyList() {

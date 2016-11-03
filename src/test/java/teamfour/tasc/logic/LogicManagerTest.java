@@ -98,6 +98,8 @@ public class LogicManagerTest {
         latestSavedTaskList = new TaskList(model.getTaskList()); // last saved assumed to be up to date before.
         helpShown = false;
         targetedJumpIndex = -1; // non yet
+        
+        logic.execute("list all");
     }
 
     @After
@@ -258,7 +260,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_withSorting_showsUncompleted() throws Exception {
+    public void execute_listSortEarliestFirst_showsUncompleted() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         TaskList expectedAB = helper.generateTaskList(2);
@@ -274,7 +276,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsCompletedTasks() throws Exception {
+    public void execute_listCompleted_showsCompletedTasks() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -295,7 +297,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsOverdue() throws Exception {
+    public void execute_listOverdue_showsOverdue() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -315,7 +317,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsRecurring() throws Exception {
+    public void execute_listRecurring_showsRecurring() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -335,7 +337,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsByDeadline() throws Exception {
+    public void execute_listBy1Jan2015_showsByDeadline() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -355,7 +357,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsFromStartTime() throws Exception {
+    public void execute_listFrom1Jan2020_showsFromStartTime() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -375,7 +377,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsToEndTime() throws Exception {
+    public void execute_listTo1Jan1950_showsToEndTime() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -395,7 +397,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsOneTag() throws Exception {
+    public void execute_listTagTag1_showsOneTag() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -415,7 +417,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_showsMultipleTags() throws Exception {
+    public void execute_listTagTag1Tag2Tag3Tag4_showsMultipleTags() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -435,7 +437,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_list_MultipleFilters_showsCompletedFromStartTimeOneTag() throws Exception {
+    public void execute_listCompletedFrom1Jan1998TagTag3_showsCompletedFromStartTimeOneTag() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -455,13 +457,13 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_invalidArgsFormat_errorMessageShown() throws Exception {
+    public void execute_show_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE);
         assertCommandBehavior("show", expectedMessage);
     }
 
     @Test
-    public void execute_show_showsCompletedTasks() throws Exception {
+    public void execute_showCompleted_showsCompletedTasks() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -481,7 +483,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_showsOnDate() throws Exception {
+    public void execute_showOn27Dec2000_showsOnDate() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -501,7 +503,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_showsByDeadline() throws Exception {
+    public void execute_showBy1Jan2015_showsByDeadline() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -521,7 +523,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_showsFromStartTime() throws Exception {
+    public void execute_showFrom1Jan2020_showsFromStartTime() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -541,7 +543,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_showsToEndTime() throws Exception {
+    public void execute_showTo1Jan1950_showsToEndTime() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -561,7 +563,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_showsOneTag() throws Exception {
+    public void execute_showTagTag1_showsOneTag() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -581,7 +583,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_showsMultipleTags() throws Exception {
+    public void execute_showTagTag1Tag2Tag3Tag4_showsMultipleTags() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -601,7 +603,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_show_MultipleFilters_showsCompletedFromStartTimeOneTag() throws Exception {
+    public void execute_showCompletedFrom1Jan1998TagTag3_showsCompletedFromStartTimeOneTag() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -621,13 +623,13 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_invalidArgsFormat_errorMessageShown() throws Exception {
+    public void execute_hide_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, HideCommand.MESSAGE_USAGE);
         assertCommandBehavior("hide", expectedMessage);
     }
 
     @Test
-    public void execute_hide_hidesCompletedTasks() throws Exception {
+    public void execute_hideCompleted_hidesCompletedTasks() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -647,7 +649,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_hidesOnDate() throws Exception {
+    public void execute_hideOn27Dec2000_hidesOnDate() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -667,7 +669,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_hidesByDeadline() throws Exception {
+    public void execute_hideBy1Jan2015_hidesByDeadline() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -687,7 +689,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_hidesFromStartTime() throws Exception {
+    public void execute_hideFrom1Jan2020_hidesFromStartTime() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -707,7 +709,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_hidesToEndTime() throws Exception {
+    public void execute_hideTo1Jan1950_hidesToEndTime() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -727,7 +729,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_hidesOneTag() throws Exception {
+    public void execute_hideTagTag1_hidesOneTag() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -747,7 +749,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_hidesMultipleTags() throws Exception {
+    public void execute_hideTagTag1Tag2Tag3Tag4_hidesMultipleTags() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
@@ -767,7 +769,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_hide_MultipleFilters_showsCompletedFromStartTimeOneTag() throws Exception {
+    public void execute_hideCompletedFrom1Jan1998TagTag3_showsCompletedFromStartTimeOneTag() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
         Task task1 = helper.adam();
