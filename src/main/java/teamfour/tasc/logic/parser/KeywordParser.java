@@ -1,4 +1,5 @@
 package teamfour.tasc.logic.parser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,9 +13,9 @@ public class KeywordParser {
      * Constructor
      * @param keywords used to pass strings
      */
-    public KeywordParser(String... inputKeywords){
+    public KeywordParser(String... inputKeywords) {
         this.keywords = new HashSet<String>();
-        for(String key: inputKeywords){
+        for (String key : inputKeywords) {
             this.keywords.add(key);
         }
     }
@@ -48,39 +49,40 @@ public class KeywordParser {
         String[] combinedParts = parts;
         int startIndex = -1;
         int endIndex = parts.length - 1;
-        for(int i = 1; i < parts.length; i++ ){
-        	if(parts[i].startsWith("\"")){
-        		startIndices.add(i);
-        	}
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].startsWith("\"")) {
+                startIndices.add(i);
+            }
         }
         if (!startIndices.isEmpty()) {
-			for (int i = 1; i < parts.length; i++) {
-				if (parts[i].endsWith("\"")) {
-					endIndices.add(i);
-				}
-			}
+            for (int i = 1; i < parts.length; i++) {
+                if (parts[i].endsWith("\"")) {
+                    endIndices.add(i);
+                }
+            }
 
-			while(startIndices.size() > endIndices.size()){
-			    //If more open " than close ", let the end of line serve as additional close "
-			    endIndices.add(parts.length - 1);
-			}
+            while (startIndices.size() > endIndices.size()) {
+                // If more open " than close ", let the end of line serve as
+                // additional close "
+                endIndices.add(parts.length - 1);
+            }
 
-			for (int i = 0; i < startIndices.size(); i++) {
-			    int start = startIndices.get(i);
-			    int end = endIndices.get(i);
+            for (int i = 0; i < startIndices.size(); i++) {
+                int start = startIndices.get(i);
+                int end = endIndices.get(i);
                 for (int j = start + 1; j <= end; j++) {
                     parts[start] = parts[start] + " " + parts[j];
                     parts[j] = null;
                 }
             }
             ArrayList<String> newParts = new ArrayList<String>();
-	        for(int i = 0; i < parts.length; i++){
-	        	if (parts[i] != null) {
-					newParts.add(parts[i]);
-				}
-	        }
-	        combinedParts = newParts.toArray(new String[newParts.size()]);
-		}
+            for (int i = 0; i < parts.length; i++) {
+                if (parts[i] != null) {
+                    newParts.add(parts[i]);
+                }
+            }
+            combinedParts = newParts.toArray(new String[newParts.size()]);
+        }
         return combinedParts;
     }
 
