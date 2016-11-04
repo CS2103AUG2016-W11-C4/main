@@ -15,7 +15,6 @@ import teamfour.tasc.commons.events.storage.TaskListSwitchedEvent;
 import teamfour.tasc.commons.events.ui.ExitAppRequestEvent;
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
 import teamfour.tasc.commons.exceptions.DataConversionException;
-import teamfour.tasc.commons.exceptions.TaskListFileExistException;
 import teamfour.tasc.commons.util.ConfigUtil;
 import teamfour.tasc.commons.util.StringUtil;
 import teamfour.tasc.logic.Logic;
@@ -68,7 +67,7 @@ public class MainApp extends Application {
 
         initLogging(config);
 
-        model = initModelManager(storage, userPrefs);
+        model = initModelManager(storage, userPrefs, config);
 
         logic = new LogicManager(model, storage);
 
@@ -82,7 +81,7 @@ public class MainApp extends Application {
         return applicationParameters.get(parameterName);
     }
 
-    private static Model initModelManager(Storage storage, UserPrefs userPrefs) {
+    private static Model initModelManager(Storage storage, UserPrefs userPrefs, Config config) {
         Optional<ReadOnlyTaskList> taskListOptional;
         ReadOnlyTaskList initialData;
         try {
@@ -99,7 +98,7 @@ public class MainApp extends Application {
             initialData = new TaskList();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, userPrefs, config);
     }
 
     private void initLogging(Config config) {
@@ -199,7 +198,7 @@ public class MainApp extends Application {
     public void setDataStorageFilePath(String newPath) throws IOException, JAXBException, DataConversionException {
         newTaskListFilePath = newPath;
         config.changeTaskListFilePath(newTaskListFilePath);
-        storage.changeTaskListStorage(newTaskListFilePath);
+        storage.changeTaskListStorage(config.getTaskListFilePathAndName());
         EventsCenter.getInstance().post(new TaskListRenamedEvent(config.getTaskListFilePathAndName()));
     }
     
@@ -221,14 +220,16 @@ public class MainApp extends Application {
         storage.changeTaskListStorage(config.getTaskListFilePathAndName());
         ReadOnlyTaskList initialData = storage.readTaskList().orElse(new TaskList());
         model.resetData(initialData);
+        model.resetTasklistNames(config.getTaskListNames());
     }
     
     @Subscribe
     public void handleTaskListRenameRequestEvent(TaskListRenameRequestEvent event)
-            throws IOException, TaskListFileExistException, DataConversionException {
+            throws IOException, DataConversionException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         config.renameCurrentTaskList(event.getNewFilename());
         storage.changeTaskListStorage(config.getTaskListFilePathAndName());
+        model.resetTasklistNames(config.getTaskListNames());
     }
   //@@author
     

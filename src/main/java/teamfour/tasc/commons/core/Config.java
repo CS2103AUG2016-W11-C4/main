@@ -12,9 +12,7 @@ import javax.xml.bind.JAXBException;
 import org.ocpsoft.prettytime.shade.org.apache.commons.lang.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
-import teamfour.tasc.commons.exceptions.TaskListFileExistException;
 import teamfour.tasc.commons.util.JsonUtil;
 import teamfour.tasc.commons.util.XmlUtil;
 import teamfour.tasc.storage.XmlSerializableTaskList;
@@ -90,10 +88,7 @@ public class Config {
             moveFile(newTaskListFilePath, file + ".xml");
         }
         this.taskListFilePath = newTaskListFilePath;
-        String newConfig = JsonUtil.toJsonString(this);
-        PrintWriter newConfigFileWriter = new PrintWriter(DEFAULT_CONFIG_FILE);
-        newConfigFileWriter.write(newConfig);
-        newConfigFileWriter.close();
+        writeToConfigFile();
     }
     
     public void moveFile(String newTaskListFilePath, String fileName) throws IOException, JAXBException {
@@ -124,15 +119,25 @@ public class Config {
     
     /**
      * Modifies config file for switchlist command execution.
+     * @throws IOException 
      * */
-    public void switchToNewTaskList(String tasklistFileName) throws IOException {
+    public void switchToNewTaskList(String tasklistFileName) throws IOException{
         addNameToTasklists(tasklistFileName);
         this.taskListFileName = tasklistFileName + ".xml";
+        writeToConfigFile();
+        EventsCenter.getInstance().post(new TaskListRenamedEvent(getTaskListFilePathAndName()));
+    }
+    
+    /**
+     * Saves config file.
+     * @throws IOException 
+     * */
+    private void writeToConfigFile() throws IOException {
+        this.taskListFilePath = new File(this.taskListFilePath).getAbsolutePath();
         String newConfig = JsonUtil.toJsonString(this);
         PrintWriter newConfigFileWriter = new PrintWriter(DEFAULT_CONFIG_FILE);
         newConfigFileWriter.write(newConfig);
         newConfigFileWriter.close();
-        EventsCenter.getInstance().post(new TaskListRenamedEvent(getTaskListFilePathAndName()));
     }
     
     /**
@@ -142,12 +147,9 @@ public class Config {
      * @throws JsonProcessingException 
      * @throws FileNotFoundException 
      * */
-    public void replaceWithNewNameInNameList(String newName) throws IOException, TaskListFileExistException {
+    public void replaceWithNewNameInNameList(String newName) throws IOException {
         String[] names = this.getTaskListNames();
         for (int i=0; i<names.length; i++) {
-            if (names[i].equals(newName)) {
-                throw new TaskListFileExistException();
-            }
             if ((names[i] + ".xml").equals(this.taskListFileName)) {
                 names[i] = newName;
             }
@@ -160,16 +162,13 @@ public class Config {
      * @throws TaskListFileExistException 
      * @throws IOException 
      * */
-    public void renameCurrentTaskList(String newTasklistFileName) throws TaskListFileExistException, IOException {
+    public void renameCurrentTaskList(String newTasklistFileName) throws IOException {
         replaceWithNewNameInNameList(newTasklistFileName);
         File newFile = new File(taskListFilePath + File.separator + newTasklistFileName + ".xml");
         File oldFile = new File(taskListFilePath + File.separator + this.taskListFileName);
         oldFile.renameTo(newFile);
         this.taskListFileName = newTasklistFileName + ".xml";
-        String newConfig = JsonUtil.toJsonString(this);
-        PrintWriter newConfigFileWriter = new PrintWriter(DEFAULT_CONFIG_FILE);
-        newConfigFileWriter.write(newConfig);
-        newConfigFileWriter.close();
+        writeToConfigFile();
         EventsCenter.getInstance().post(new TaskListRenamedEvent(getTaskListFilePathAndName()));
     }
     //@@author

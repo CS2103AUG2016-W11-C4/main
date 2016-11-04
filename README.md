@@ -34,10 +34,12 @@ workflow.
 
 
 #### Acknowledgements
-* The code base was based on [addressbook-level4](https://github.com/se-edu/addressbook-level4). It was
-  kindly written by the *cs2103t team*. 
-* Some parts of the original code base were inspired by the excellent 
-  [Java FX tutorial](http://code.makery.ch/library/javafx-8-tutorial/) by *Marco Jakob*. 
+The W11-C4 team (#teamfour) would like to thank the following people for supporting them during the development of TaSc.
 
+Many thanks to our supervisor, Mr Akshay Narayan, and our module lecturer, Professor Damith C. Rajapakse, for providing valuable feedback for improving our program features and interface, and guiding us through the development of the product in terms of workflow and design.
+
+We would also like to thank our other TA, Mr Muthu Kumar Chandrasekaran for guiding some of our team members on basic software engineering principles through week 1 to 6 (before the commencement of the TaSc project in week 7).
+
+Finally, we would like to thank the development team of [AddressBook-Level4](https://github.com/se-edu/addressbook-level4) for providing a solid foundational codebase for teams like ours to build on top of and develop into our own product. This has allowed us to focus mostly on developing the task management features in our product instead of having to start entirely from scratch, and has saved us a great amount of work.
 
 #### Licence : [MIT](LICENSE)

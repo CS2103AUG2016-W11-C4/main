@@ -3,7 +3,7 @@ package guitests;
 
 import org.junit.Test;
 
-public class CollapseExpandCommandTest extends AddressBookGuiTest{
+public class CollapseExpandCommandTest extends TaskListGuiTest{
 
     @Test
     public void collapse_alreadyCollapsed_cannotCollapse() {

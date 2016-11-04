@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import teamfour.tasc.model.task.Complete;
 import teamfour.tasc.model.task.ReadOnlyTask;
 
 /**
@@ -38,6 +39,11 @@ public class TaskCardCollapsed extends UiPart{
     @FXML
     public void initialize() {
         name.setText(displayedIndex + ". " + task.getName().getName());
+        String completeString = task.getCompleteString();
+        cardPane.setStyle(
+                completeString == Complete.TO_STRING_COMPLETED ? "-fx-background-color: #448644;" : 
+                completeString == Complete.TO_STRING_OVERDUE ? "-fx-background-color: #ff8888;" :
+                "-fx-background-color: #ffffff;");
     }
 
     public HBox getLayout() {

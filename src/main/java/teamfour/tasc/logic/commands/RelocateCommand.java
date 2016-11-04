@@ -3,7 +3,6 @@ package teamfour.tasc.logic.commands;
 
 import java.io.File;
 
-import teamfour.tasc.MainApp;
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.events.storage.FileRelocateEvent;
 import teamfour.tasc.logic.keyword.RelocateCommandKeyword;
@@ -16,11 +15,13 @@ public class RelocateCommand extends Command {
     public static final String COMMAND_WORD = RelocateCommandKeyword.keyword;
 
     public static final String MESSAGE_USAGE = 
-            COMMAND_WORD + ": Designates a new data storage location (relative to current location). \n"
-            + "Parameters: [RELATIVE_PATH] (Enter no parameter for relocating to original path)\n"
-            + "Example: " + COMMAND_WORD
-            + " .." + File.separator + ".." + File.separator + "relative" + File.separator + "path" 
-            + File.separator + "to" + File.separator + "storage" + File.separator + "location";
+            COMMAND_WORD + ": Designates a new data storage location. \n"
+            + "Parameters: [PATH] (Enter no parameter for relocating to original path)\n"
+            + "Example: \n"
+            + "Relative: " + COMMAND_WORD + " .." + File.separator + "relative" + File.separator + "path" 
+            + File.separator + "to" + File.separator + "storage" + File.separator + "location\n" 
+            + "Windows full path: " + COMMAND_WORD + " C:\\full\\path\\to\\destination\n" 
+            + "Mac full path: " + COMMAND_WORD + " /Users/your_username/path/to/destination";
 
     
     public static final String MESSAGE_SUCCESS = 
@@ -31,14 +32,16 @@ public class RelocateCommand extends Command {
             "Error occured while transfering data. ";
     
     private final String destination;
-    
-    private boolean isUndoable = false;
 
     /**
      * Relocate Command for changing storage path to new directory.
      */
-    public RelocateCommand(String destination) {
-        this.destination = "data"  + File.separator + destination;
+    public RelocateCommand(String destination, boolean isFullPath) {
+        if (isFullPath) {
+            this.destination = destination;
+        } else {
+            this.destination = "data"  + File.separator + destination;            
+        }
     }
     
     /**
@@ -52,12 +55,11 @@ public class RelocateCommand extends Command {
     public CommandResult execute() {
         assert model != null;
         EventsCenter.getInstance().post(new FileRelocateEvent(destination));
-        isUndoable = true;
         return new CommandResult(String.format(MESSAGE_SUCCESS, destination));
     }
 
     @Override
     public boolean canUndo() {
-        return isUndoable;
+        return false;
     }
 }
