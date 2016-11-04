@@ -41,7 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final TaskList taskList;
     private final FilteredList<Task> filteredTasks;
     private PredicateExpression taskListFilter;
-    private HistoryStack<TaskList> taskListHistory;
+    private HistoryStack<TaskList> undoTaskListHistory;
     private HistoryStack<TaskList> redoTaskListHistory;
     private String[] tasklistNames;
 
@@ -59,7 +59,7 @@ public class ModelManager extends ComponentManager implements Model {
         taskList = new TaskList(initialData);
         filteredTasks = new FilteredList<>(taskList.getTasks());
         taskListFilter = new PredicateExpression(new AllQualifier());
-        taskListHistory = new HistoryStack<TaskList>();
+        undoTaskListHistory = new HistoryStack<TaskList>();
         redoTaskListHistory = new HistoryStack<TaskList>();
         tasklistNames = config.getTaskListNames();
         setupDefaultFiltersAndSortOrder();
@@ -113,7 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author A0148096W
     @Override
     public void saveTaskListHistory() {
-        taskListHistory.push(taskList);
+        undoTaskListHistory.push(taskList);
     }
 
     @Override
@@ -124,8 +124,13 @@ public class ModelManager extends ComponentManager implements Model {
         TaskList historyTaskList = null;
         try {
             for (int i = 0; i < numToUndo; i++) {
-                redoTaskListHistory.push(historyTaskList == null ? taskList : historyTaskList);
-                historyTaskList = taskListHistory.pop();
+                TaskList redoTaskList = historyTaskList;
+                if (redoTaskList == null) {
+                    redoTaskList = taskList;
+                }
+                
+                historyTaskList = undoTaskListHistory.pop();
+                redoTaskListHistory.push(redoTaskList);
                 numUndone++;
             }
         } catch (OutOfHistoryException e) {
@@ -147,8 +152,13 @@ public class ModelManager extends ComponentManager implements Model {
         TaskList historyTaskList = null;
         try {
             for (int i = 0; i < numToRedo; i++) {
-                taskListHistory.push(historyTaskList == null ? taskList : historyTaskList);
+                TaskList undoTaskList = historyTaskList;
+                if (undoTaskList == null) {
+                    undoTaskList = taskList;
+                }
+                
                 historyTaskList = redoTaskListHistory.pop();
+                undoTaskListHistory.push(undoTaskList);
                 numRedone++;
             }
         } catch (OutOfHistoryException e) {
