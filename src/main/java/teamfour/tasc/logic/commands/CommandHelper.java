@@ -124,11 +124,11 @@ public class CommandHelper {
             if(dates.size() != 1){
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
-            Date today = new Date();
+            Date timeNow = new Date();
             Date parsedDate = dates.get(0);
-            boolean isParsedDateEqualToOrEarlierThanToday = (today.getDate() == parsedDate.getDate())
-                                                            && (today.after(parsedDate) || today.equals(parsedDate));
-            if (isParsedDateEqualToOrEarlierThanToday) {
+            boolean isParsedDateEqualToOrEarlierThanNow = (timeNow.getDate() == parsedDate.getDate())
+                                                            && (timeNow.after(parsedDate) || timeNow.equals(parsedDate));
+            if (isParsedDateEqualToOrEarlierThanNow) {
                 dateInStringConverted = "today 11.59pm";
             }
         }
