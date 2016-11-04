@@ -33,7 +33,7 @@ public class TaskCardHandle extends GuiHandle {
 
     //Edited for floating tasks
     public boolean isSameTask(ReadOnlyTask task){
-        return getFullName().equals(task.getName().getName());
+        return getFullName().split("\\. ")[1].equals(task.getName().getName());
     }
 
     @Override

@@ -18,8 +18,6 @@ public class TaskCard extends UiPart{
     @FXML
     private Label name;
     @FXML
-    private Label id;
-    @FXML
     private Label deadline;
     @FXML
     private Label recurrence;
@@ -49,8 +47,7 @@ public class TaskCard extends UiPart{
     @FXML
     public void initialize() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy, HH:mm");
-        name.setText(task.getName().getName());
-        id.setText(displayedIndex + ". ");
+        name.setText(displayedIndex + ". " + task.getName().getName());
         if (task.getDeadline().hasDeadline()) {
             deadline.setVisible(true);
             deadline.setText("Deadline: " + sdf.format(task.getDeadline().getDeadline()));

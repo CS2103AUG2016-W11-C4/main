@@ -21,8 +21,6 @@ public class TaskCardCollapsed extends UiPart{
     private HBox cardPane;
     @FXML
     private Label name;
-    @FXML
-    private Label id;
 
     private ReadOnlyTask task;
     private int displayedIndex;
@@ -40,8 +38,7 @@ public class TaskCardCollapsed extends UiPart{
 
     @FXML
     public void initialize() {
-        name.setText(task.getName().getName());
-        id.setText(displayedIndex + ". ");
+        name.setText(displayedIndex + ". " + task.getName().getName());
         String completeString = task.getCompleteString();
         cardPane.setStyle(
                 completeString == Complete.TO_STRING_COMPLETED ? "-fx-background-color: #448644;" : 
