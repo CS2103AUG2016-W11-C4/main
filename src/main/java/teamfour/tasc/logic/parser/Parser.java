@@ -479,7 +479,9 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareUndo(String args) {
-        if (args.trim().isEmpty()) {
+        String argument = args.trim();
+        
+        if (argument.isEmpty()) {
             try {
                 return new UndoCommand();
             } catch (IllegalValueException ive) {
@@ -487,16 +489,13 @@ public class Parser {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
             }
         }
-        
-        Optional<Integer> index = parseIndex(args);
-        if (!index.isPresent()) {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
-        }
 
         try {
-            return new UndoCommand(index.get());
+            return new UndoCommand(Integer.parseInt(argument));
         } catch (IllegalValueException ive) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+        } catch (NumberFormatException nfe) {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         }
