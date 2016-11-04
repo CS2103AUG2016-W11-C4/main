@@ -98,7 +98,7 @@ public class LogicManagerTest {
         latestSavedTaskList = new TaskList(model.getTaskList()); // last saved assumed to be up to date before.
         helpShown = false;
         targetedJumpIndex = -1; // non yet
-        
+
         logic.execute("list all");
     }
 
