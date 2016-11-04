@@ -221,7 +221,8 @@ public class Parser {
      */
     private String formatTagString(String tags) {
         String tagStringResult;
-        if(tags == null){
+        
+        if (tags == null) {
             tagStringResult = "";
         } else {
             tagStringResult = removeFullStopsAndCommas(tags);
@@ -298,7 +299,8 @@ public class Parser {
         assert args != null;
 
         if (args.trim().isEmpty()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
         }
 
         final KeywordParser parser = new KeywordParser(ShowCommand.VALID_KEYWORDS);
@@ -337,7 +339,8 @@ public class Parser {
         assert args != null;
 
         if (args.trim().isEmpty()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HideCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, HideCommand.MESSAGE_USAGE));
         }
 
         final KeywordParser parser = new KeywordParser(HideCommand.VALID_KEYWORDS);
@@ -404,12 +407,14 @@ public class Parser {
      */
     private Command prepareCalendar(String args) {
         if (args.trim().isEmpty()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarCommand.MESSAGE_USAGE));
         }
         try {
             return new CalendarCommand(args.trim());
         } catch (IllegalValueException ive) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalendarCommand.MESSAGE_USAGE));
         }
     }
 
@@ -476,11 +481,13 @@ public class Parser {
             try {
                 return new UndoCommand();
             } catch (IllegalValueException ive) {
-                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+                return new IncorrectCommand(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
             }
         }
+        
         Optional<Integer> index = parseIndex(args);
-        if(!index.isPresent()){
+        if (!index.isPresent()) {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         }
@@ -488,7 +495,8 @@ public class Parser {
         try {
             return new UndoCommand(index.get());
         } catch (IllegalValueException ive) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         }
     }
 

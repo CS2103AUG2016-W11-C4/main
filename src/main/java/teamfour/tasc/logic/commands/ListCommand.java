@@ -21,8 +21,10 @@ import teamfour.tasc.model.Model;
 public class ListCommand extends Command {
     public static final String COMMAND_WORD = ListCommandKeyword.keyword;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all tasks/events with filters. "
-            + "Parameters: [TYPE...] [by DEADLINE] [from START_TIME] [to END_TIME] [tag \"TAG\"...] [sort SORTING_ORDER]\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD 
+            + ": List all tasks/events with filters. "
+            + "Parameters: [TYPE...] [by DEADLINE] [from START_TIME] "
+            + "[to END_TIME] [tag \"TAG\"...] [sort SORTING_ORDER]\n"
             + "Example: " + COMMAND_WORD
             + " completed tasks, tag \"Important\", sort earliest first";
 
@@ -33,7 +35,7 @@ public class ListCommand extends Command {
     public static final String KEYWORD_SORT = SortKeyword.keyword;
 
     public static final String[] VALID_KEYWORDS = { COMMAND_WORD, KEYWORD_DEADLINE,
-            KEYWORD_PERIOD_START_TIME, KEYWORD_PERIOD_END_TIME, KEYWORD_TAG, KEYWORD_SORT};
+            KEYWORD_PERIOD_START_TIME, KEYWORD_PERIOD_END_TIME, KEYWORD_TAG, KEYWORD_SORT };
 
     private final String type;
     private final Date deadline;
@@ -59,14 +61,11 @@ public class ListCommand extends Command {
      */
     public ListCommand(String type, String deadline, String startTime, String endTime,
                         Set<String> tags, String sortingOrder) throws IllegalValueException {
+        
         this.deadline = CommandHelper.tryConvertStringToDateOrReturnNull(deadline);
         this.startTime = CommandHelper.tryConvertStringToDateOrReturnNull(startTime);
         this.endTime = CommandHelper.tryConvertStringToDateOrReturnNull(endTime);
-
-        this.tags = new HashSet<String>();
-        for (String tagName : tags) {
-            this.tags.add(tagName);
-        }
+        this.tags = new HashSet<String>(tags);
         this.type = type;
         this.sortOrder = sortingOrder;
     }
@@ -108,7 +107,8 @@ public class ListCommand extends Command {
             model.sortFilteredTaskListByOrder(sortOrder);
         }
 
-        return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+        return new CommandResult(getMessageForTaskListShownSummary(
+                                    model.getFilteredTaskList().size()));
     }
 
     @Override
