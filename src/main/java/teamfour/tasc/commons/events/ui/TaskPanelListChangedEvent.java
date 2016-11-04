@@ -19,7 +19,7 @@ public class TaskPanelListChangedEvent extends BaseEvent {
      * 
      * @param newTaskList contents
      */
-    public TaskPanelListChangedEvent(List<ReadOnlyTask> newTaskList){
+    public TaskPanelListChangedEvent(List<ReadOnlyTask> newTaskList) {
         this.newTaskList = newTaskList;
     }
 

@@ -18,7 +18,7 @@ public class CollapseCommand extends Command {
 
     public CommandResult execute(){
         assert model != null;
-        if(CollapseChangeEvent.getCollapsed()) {
+        if (CollapseChangeEvent.getCollapsed()) {
             return new CommandResult(MESSAGE_FAILURE_ALREADY_COLLAPSED);
         }
         EventsCenter.getInstance().post(new CollapseChangeEvent(true));

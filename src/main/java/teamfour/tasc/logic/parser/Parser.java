@@ -69,7 +69,8 @@ public class Parser {
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -77,7 +78,7 @@ public class Parser {
         switch (commandWord.toLowerCase()) {
 
         case AddCommand.COMMAND_WORD:
-            return prepareAdd(commandWord + arguments); //for adding floating tasks
+            return prepareAdd(commandWord + arguments); // for adding floating tasks
 
         case SelectCommand.COMMAND_WORD:
             return prepareSelect(arguments);
@@ -148,7 +149,7 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareAdd(String args){
+    private Command prepareAdd(String args) {
         final KeywordParser parser = new KeywordParser("add", "by", "from", "to", "repeat", "tag");
         HashMap<String, String> parsed = parser.parseKeywordsWithoutFixedOrder(args);
         String name = parsed.get("add");
@@ -158,10 +159,11 @@ public class Parser {
         String recurrence = parsed.get("repeat");
         String tags = parsed.get("tag");
 
-        if(name == null || name.equals("")){
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        if (name == null || name.equals("")) {
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-        if(tags == null){
+        if (tags == null) {
             tags = "";
         }
         try {
@@ -181,8 +183,8 @@ public class Parser {
     public Command prepareSwitchlist(String args) {
         final Matcher matcher = FILE_NAME_ONLY_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    SwitchlistCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchlistCommand.MESSAGE_USAGE));
         }
         return new SwitchlistCommand(args.trim());
     }
@@ -393,8 +395,8 @@ public class Parser {
             if (fullPathMatcher.matches()) {
                 return new RelocateCommand(args.trim(), true);
             }
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    RelocateCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RelocateCommand.MESSAGE_USAGE));
         }
     }
 
@@ -508,7 +510,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareRedo(String args) {
-        if (args.equals("")) {
+        if (args.isEmpty()) {
             return new RedoCommand(1);
         }
         Optional<Integer> index = parseIndex(args);
@@ -530,7 +532,7 @@ public class Parser {
     private Command prepareComplete(String args) {
 
         Optional<Integer> index = parseIndex(args);
-        if(!index.isPresent()){
+        if (!index.isPresent()) {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteCommand.MESSAGE_USAGE));
         }
@@ -622,8 +624,8 @@ public class Parser {
     private Command prepareFind(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    FindCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         // keywords delimited by whitespace

@@ -17,8 +17,8 @@ public class ExpandCommand extends Command {
             + "type \"collapse\" to go into collapsed view";
 
     public CommandResult execute() {
-        assert model!= null;
-        if(CollapseChangeEvent.getCollapsed()) {
+        assert model != null;
+        if (CollapseChangeEvent.getCollapsed()) {
             EventsCenter.getInstance().post(new CollapseChangeEvent(false));
             return new CommandResult(MESSAGE_SUCCESS);
         }

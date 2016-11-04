@@ -142,13 +142,11 @@ public class TaskListPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                if (isCollapsed && getIndex() != selectedIndex){
+                if (isCollapsed && getIndex() != selectedIndex) {
                     setGraphic(TaskCardCollapsed.load(task, getIndex() + 1).getLayout());
-                }
-                else if(getIndex() == selectedIndex){
+                } else if (getIndex() == selectedIndex) {
                     setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
-                }
-                else{
+                } else {
                     setGraphic(TaskCard.load(task, getIndex() + 1).getLayout());
                 }
             }

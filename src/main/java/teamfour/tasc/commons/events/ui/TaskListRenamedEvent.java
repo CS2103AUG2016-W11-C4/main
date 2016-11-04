@@ -11,7 +11,7 @@ public class TaskListRenamedEvent extends BaseEvent {
 
     private final String newPath;
 
-    public TaskListRenamedEvent(String newPath){
+    public TaskListRenamedEvent(String newPath) {
         this.newPath = newPath;
     }
 
