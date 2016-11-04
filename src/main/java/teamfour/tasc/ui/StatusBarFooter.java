@@ -13,7 +13,6 @@ import teamfour.tasc.commons.events.model.TaskListChangedEvent;
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
 import teamfour.tasc.commons.util.FxViewUtil;
 
-import java.io.File;
 import java.util.Date;
 import java.util.logging.Logger;
 

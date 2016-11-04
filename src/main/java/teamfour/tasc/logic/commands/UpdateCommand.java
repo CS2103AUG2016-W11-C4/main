@@ -4,10 +4,8 @@ package teamfour.tasc.logic.commands;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import teamfour.tasc.commons.core.EventsCenter;
-import teamfour.tasc.commons.core.LogsCenter;
 import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
@@ -41,8 +39,6 @@ public class UpdateCommand extends Command {
             + " 1 by 15 Sep 3pm";
 
     public static final String MESSAGE_UPDATE_TASK_SUCCESS = "Updated Task: %1$s";
-    private static final String MESSAGE_UPDATE_TASK_UNDO_SUCCESS = 
-            "Changes to task was reverted. Now: %1$s";
     private static final String MESSAGE_PERIOD_NEED_BOTH_START_AND_END_TIME = 
             "Period needs to have both start and end time.";
 
@@ -81,8 +77,6 @@ public class UpdateCommand extends Command {
     public final boolean removePeriod;
     public final boolean removeRecurrence;
     public final Set<String> tagsToRemove;
-    
-    private final Logger logger = LogsCenter.getLogger(UpdateCommand.class);
 
     private ReadOnlyTask oldReadOnlyTask;
     private Task newTask;

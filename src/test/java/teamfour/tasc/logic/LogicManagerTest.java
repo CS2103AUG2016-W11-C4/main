@@ -42,7 +42,6 @@ import teamfour.tasc.model.task.ReadOnlyTask;
 import teamfour.tasc.model.task.Recurrence;
 import teamfour.tasc.model.task.Task;
 import teamfour.tasc.model.task.util.TaskCompleteConverter;
-import teamfour.tasc.storage.StorageManager;
 import teamfour.tasc.testutil.TestClock;
 
 import java.util.ArrayList;
