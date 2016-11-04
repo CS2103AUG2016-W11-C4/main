@@ -17,7 +17,7 @@ import teamfour.tasc.model.task.Recurrence;
 public class CommandHelper {
     private static final Logger logger = LogsCenter.getLogger(CommandHelper.class);
 
-    private static final String MESSAGE_INVALID_DATE = "Invalid date";
+    private static final String MESSAGE_INVALID_DATES = "Invalid dates";
     public static String MESSAGE_REPEAT_PARAMETERS_INVALID = "Invalid repeat parameters";
 
     //@@author A0148096W
@@ -85,8 +85,8 @@ public class CommandHelper {
      * @param dateInString  Input String containing the date(s)
      * @return dates    List of dates parsed from dateInString
      */
-    public static List<Date> convertStringToMultipleDates(String dateInString) {
-        if (dateInString == null) {
+    public static List<Date> convertStringToMultipleDates(String dateInString){
+        if(dateInString == null){
             dateInString = "";
         }
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
@@ -101,11 +101,11 @@ public class CommandHelper {
      * @return Date parsed from dateInString
      * @throws IllegalValueException
      */
-    public static Date convertStringToDate(String dateInString) throws IllegalValueException {
+    public static Date convertStringToDate(String dateInString) throws IllegalValueException{
         dateInString = convertStringIfTodayAndNoValidTime(dateInString);
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
-        if (dates.size() != 1) {
-            throw new IllegalValueException(MESSAGE_INVALID_DATE);
+        if(dates.size() != 1){
+            throw new IllegalValueException(MESSAGE_INVALID_DATES);
         }
         return dates.get(0);
     }
@@ -119,16 +119,16 @@ public class CommandHelper {
      */
     private static String convertStringIfTodayAndNoValidTime(String dateInString) throws IllegalValueException {
         String dateInStringConverted = dateInString;
-        if (dateInString.toLowerCase().contains("today")) {
+        if(dateInString.toLowerCase().contains("today")){
             List<Date> dates = new PrettyTimeParser().parse(dateInString);
-            if (dates.size() != 1) {
-                throw new IllegalValueException(MESSAGE_INVALID_DATE);
+            if(dates.size() != 1){
+                throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
-            Date today = new Date();
+            Date timeNow = new Date();
             Date parsedDate = dates.get(0);
-            boolean isParsedDateEqualToOrEarlierThanToday = (today.getDate() == parsedDate.getDate())
-                                                        && (today.after(parsedDate) || today.equals(parsedDate));
-            if (isParsedDateEqualToOrEarlierThanToday) {
+            boolean isParsedDateEqualToOrEarlierThanNow = (timeNow.getDate() == parsedDate.getDate())
+                                                            && (timeNow.after(parsedDate) || timeNow.equals(parsedDate));
+            if (isParsedDateEqualToOrEarlierThanNow) {
                 dateInStringConverted = "today 11.59pm";
             }
         }
@@ -178,7 +178,7 @@ public class CommandHelper {
             Recurrence recurrence = new Recurrence(Recurrence.Pattern.YEARLY,
                     Integer.parseInt(repeatParameters.get("yearly")));
             return recurrence;
-        } else if (repeatParameters.containsKey("none")) {
+        } else if(repeatParameters.containsKey("none")){
             return new Recurrence();
         } else {
             throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
