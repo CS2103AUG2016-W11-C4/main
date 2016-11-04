@@ -11,10 +11,10 @@ import teamfour.tasc.model.task.ReadOnlyTask;
  * This qualifier allows tasks with names or tags
  * which matches the specified keywords to pass.
  */
-public class NameQualifier implements Qualifier {
+public class NameOrTagsQualifier implements Qualifier {
     private Set<String> nameKeyWords;
 
-    public NameQualifier(Set<String> nameKeyWords) {
+    public NameOrTagsQualifier(Set<String> nameKeyWords) {
         this.nameKeyWords = nameKeyWords;
     }
 
@@ -33,8 +33,10 @@ public class NameQualifier implements Qualifier {
         boolean isFound = false;
         for (String keyword : nameKeyWords) {
             isFound = task.getTags().getInternalList().stream()
-                    .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny().isPresent()
-                    || isFound;
+                    .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny().isPresent();
+            if (isFound) {
+                return true;
+            }
         }
         return isFound;
     }
