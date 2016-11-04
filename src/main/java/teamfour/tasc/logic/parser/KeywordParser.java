@@ -21,11 +21,11 @@ public class KeywordParser {
     }
 
     /**
-     * Parses input string arguments using keywords provided at construction
+     * Parses input string arguments using keywords provided at construction.
      * Substring associated with keyword starts after keyword,
-     * and ends before the next keyword or end of line
-     * Keyword and associated substring put in a HashMap, with key = keyword and value = associated substring
-     * If no match found then empty HashMap returned
+     * and ends before the next keyword or end of line.
+     * Keyword and associated substring put in a HashMap, with key = keyword and value = associated substring.
+     * If no match found then empty HashMap returned.
      *
      * @param inputString
      * @return HashMap containing the keyword - associated substring pairs
@@ -39,7 +39,7 @@ public class KeywordParser {
 
     /**
      * Combine the parts between open " and close " into one part (One array element).
-     * If no close " found, rest of the string after the open " will be combined
+     * If no close " found, rest of the string after the open " will be combined.
      *
      * @param parts     Array of Strings
      * @return combinedParts    Array of Strings with elements between open and close "" combined into one
@@ -89,7 +89,7 @@ public class KeywordParser {
 
     /**
      * Finds the keywords and their associated substrings in the parts array,
-     * and puts them in a HashMap, with key = keyword and value = substring associated with keyword
+     * and puts them in a HashMap, with key = keyword and value = substring associated with keyword.
      *
      * @param parts String array of parts extracted from the input String
      * @return entryPairs Keyword-substring pairs extracted from the String array

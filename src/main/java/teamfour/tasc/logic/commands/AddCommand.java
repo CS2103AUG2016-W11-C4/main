@@ -53,22 +53,20 @@ public class AddCommand extends Command {
         Recurrence taskRecurrence = getRecurrenceFromStrings(startTime, endTime, repeat, deadlineTime);
 
         this.toAdd = new Task(new Name(name), new Complete(false), deadline, period, taskRecurrence,
-                              new UniqueTagList(tagSet));
+                new UniqueTagList(tagSet));
     }
 
     private Recurrence getRecurrenceFromStrings(String startTime, String endTime,
             String repeat, String deadlineTime) throws IllegalValueException {
         Recurrence taskRecurrence = new Recurrence();
-        if (repeat != null) {
-            if ((startTime != null && endTime != null) || deadlineTime != null) {
-                taskRecurrence = CommandHelper.getRecurrence(repeat);
-            }
+        if (repeat != null && (startTime != null && endTime != null || deadlineTime != null)) {
+            taskRecurrence = CommandHelper.getRecurrence(repeat);
         }
         return taskRecurrence;
     }
 
-    private Period getPeriodFromStrings(String deadlineTime, String startTime,
-            String endTime) throws IllegalValueException {
+    private Period getPeriodFromStrings(String deadlineTime, String startTime, String endTime)
+            throws IllegalValueException {
         Period period = new Period();
         if ((startTime != null) && (endTime != null)) {
             List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + endTime);
@@ -112,8 +110,8 @@ public class AddCommand extends Command {
         } catch (UniqueTaskList.DuplicateTaskException e) {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
-
     }
+
     /**
      * Raises an event to select the last task that was added
      */
