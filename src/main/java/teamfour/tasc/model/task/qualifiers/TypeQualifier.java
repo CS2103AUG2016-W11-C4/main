@@ -21,8 +21,9 @@ public class TypeQualifier implements Qualifier {
         String taskType = (" " + task.getAsTypeKeywords()).toLowerCase();
 
         for (String typeWord : typeWords) {
-            if (!taskType.contains(" " + typeWord))
+            if (!taskType.contains(" " + typeWord)) {
                 return false;
+            }
         }
         return true;
     }
