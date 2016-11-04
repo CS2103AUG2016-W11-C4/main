@@ -34,14 +34,14 @@ public class KeywordParser {
         parts = combinePartsBetweenQuotes(parts);
 
         for (int i = 0; i < parts.length; i++) {
-            if (stringIsAKeyword(keywords, parts[i])) {
+            if (isStringAKeyword(parts[i])) {
 
                 String currentKeyword = parts[i];
                 StringBuilder stringBuilder = new StringBuilder();
 
                 int nextPartToCheck = i + 1;
                 while (nextPartToCheck < parts.length
-                        && !stringIsAKeyword(keywords, parts[nextPartToCheck])) {
+                        && !isStringAKeyword(parts[nextPartToCheck])) {
                     stringBuilder.append(parts[nextPartToCheck] + " ");
                     nextPartToCheck++;
                 }
@@ -103,11 +103,11 @@ public class KeywordParser {
 		}
         return combinedParts;
     }
-    //@@author
-    private boolean stringIsAKeyword(HashSet<String> allKeywords, String string) {
-        return allKeywords.contains(string.toLowerCase());
-    }
 
+    private boolean isStringAKeyword(String string) {
+        return keywords.contains(string.toLowerCase());
+    }
+    //@@author
     private String stripOpenAndCloseQuotationMarks(String input) {
         if (input.startsWith("\"")) {
             input = input.substring(1);
