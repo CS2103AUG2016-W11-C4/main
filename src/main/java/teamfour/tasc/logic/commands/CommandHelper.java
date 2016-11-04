@@ -33,7 +33,7 @@ public class CommandHelper {
         try {
             return CommandHelper.convertStringToDate(dateString);
         } catch (IllegalValueException e) {
-            logger.warning("Invalid date string in method " + 
+            logger.warning("Invalid date string in method " +
                         "convertStringToDateIfPossible: " + dateString);
         }
         return null;
@@ -77,10 +77,9 @@ public class CommandHelper {
     /**
      * Parses date(s) from an input String containing the dates
      * Dates parsed include time of day, day of week, day of month, month of year, and year
-     * Time of day can be in numerical 12 hours or 24 hours or word form (7pm or 1900 hours or seven in the evening)
+     * Time of day can be in numerical 12 hours or 24 hours or word form
      * Day of week can be in short or full (fri or friday)
      * Day of month can be in numerical or word form (13 or thirteenth)
-     * Month of year can only be in word form, and can be in short(january or jan, but not 1)
      * Year must be in numerical form, and put after month and day
      *
      * @param dateInString  Input String containing the date(s)
