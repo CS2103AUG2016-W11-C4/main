@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 public class KeywordParser {
     //@@author A0127014W
-    private ArrayList<String> keywords;
+    private HashSet<String> keywords;
     private String KEYWORD_PARSER_NO_MATCHES = "No matches found for given keywords";
 
     /**
@@ -13,7 +13,7 @@ public class KeywordParser {
      * @param keywords used to pass strings
      */
     public KeywordParser(String... inputKeywords){
-        this.keywords = new ArrayList<String>();
+        this.keywords = new HashSet<String>();
         for(String key: inputKeywords){
             this.keywords.add(key);
         }
@@ -28,24 +28,20 @@ public class KeywordParser {
      * @return HashMap containing the keyword - associated substring pairs
      */
     public HashMap<String, String> parseKeywordsWithoutFixedOrder(String inputString){
-        HashSet<String> keywordsInHashSet = new HashSet<String>();
-        for (String kw : keywords) {
-            keywordsInHashSet.add(kw);
-        }
 
         HashMap<String, String> entryPairs = new HashMap<String, String>();
         String[] parts = inputString.split(" ");
         parts = combinePartsBetweenQuotes(parts);
 
         for (int i = 0; i < parts.length; i++) {
-            if (stringIsAKeyword(keywordsInHashSet, parts[i])) {
+            if (stringIsAKeyword(keywords, parts[i])) {
 
                 String currentKeyword = parts[i];
                 StringBuilder stringBuilder = new StringBuilder();
 
                 int nextPartToCheck = i + 1;
                 while (nextPartToCheck < parts.length
-                        && !stringIsAKeyword(keywordsInHashSet, parts[nextPartToCheck])) {
+                        && !stringIsAKeyword(keywords, parts[nextPartToCheck])) {
                     stringBuilder.append(parts[nextPartToCheck] + " ");
                     nextPartToCheck++;
                 }
@@ -63,7 +59,7 @@ public class KeywordParser {
     /**
      * Combine the parts between open " and close " into one part.
      * If no close " found, rest of the string after the open " will be combined
-     * @param parts Array of Strings
+     * @param parts     Array of Strings
      * @return combinedParts    Array of Strings with elements between open and close "" combined into one
      */
     private String[] combinePartsBetweenQuotes(String[] parts) {
