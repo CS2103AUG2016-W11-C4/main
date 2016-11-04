@@ -75,12 +75,12 @@ public class CommandHelper {
 
     //@@author A0127014W
     /**
-     * Parses date(s) from an input String containing the dates
-     * Dates parsed include time of day, day of week, day of month, month of year, and year
-     * Time of day can be in numerical 12 hours or 24 hours or word form
-     * Day of week can be in short or full (fri or friday)
-     * Day of month can be in numerical or word form (13 or thirteenth)
-     * Year must be in numerical form, and put after month and day
+     * Parses date(s) from an input String containing the dates.
+     * Dates parsed include time of day, day of week, day of month, month of year, and year.
+     * Time of day can be in numerical 12 hours or 24 hours or word form.
+     * Day of week can be in short or full (fri or friday).
+     * Day of month can be in numerical or word form (13 or thirteenth).
+     * Year must be in numerical form, and put after month and day.
      *
      * @param dateInString  Input String containing the date(s)
      * @return dates    List of dates parsed from dateInString
@@ -94,9 +94,9 @@ public class CommandHelper {
     }
 
     /**
-     * Like convertStringToMultipleDates(String dateInString), but only returns one Date
-     * Throws exception if multiple dates/no dates can be parsed from one dateInString
-     * If date given is today, and no time is set/time set is in the past, then time will be set to 11.59pm
+     * Like convertStringToMultipleDates(String dateInString), but only returns one Date.
+     * Throws exception if multiple dates/no dates can be parsed from one dateInString.
+     * If date given is today, and no time is set/time set is in the past, then time will be set to 11.59pm.
      * @param dateInString
      * @return Date parsed from dateInString
      * @throws IllegalValueException
@@ -112,9 +112,9 @@ public class CommandHelper {
 
     /**
      * Converts dateInString to "today 11.59pm" if it contains "today",
-     * and no time is given or time given is in the past
-     * @param dateInString  String containing the date
-     * @return dateInStringConverted    String containing the date, but converted accordingly
+     * and no time is given or time given is in the past.
+     * @param dateInString  String containing the date.
+     * @return dateInStringConverted    String containing the date, but converted accordingly.
      * @throws IllegalValueException
      */
     private static String convertStringIfTodayAndNoValidTime(String dateInString) throws IllegalValueException {
@@ -136,9 +136,9 @@ public class CommandHelper {
     }
 
     /**
-     * Gets a Recurrence object from a string containing repeat parameters for recurrence
-     * Input parameter repeatString includes the pattern of recurrence, and frequency of recurrence
-     * @param repeatString  String containing repeat parameters. Cannot be null
+     * Gets a Recurrence object from a string containing repeat parameters for recurrence.
+     * Input parameter repeatString includes the pattern of recurrence, and frequency of recurrence.
+     * @param repeatString  String containing repeat parameters. Cannot be null.
      * @return Recurrence object from repeatString
      * @throws IllegalValueException
      */
@@ -155,9 +155,9 @@ public class CommandHelper {
 
     }
     /**
-     * Creates and returns Recurrence object with Pattern based on repeatParameter
-     * @param repeatParameters  HashMap with parameters parsed from string using recurrence keywords
-     * @return recurrence   Recurrence object with Pattern matching repeatParameters
+     * Creates and returns Recurrence object with Pattern based on repeatParameter.
+     * @param repeatParameters  HashMap with parameters parsed from string using recurrence keywords.
+     * @return recurrence   Recurrence object with Pattern matching repeatParameters.
      * @throws IllegalValueException
      */
     private static Recurrence getRecurrenceWithPatternFromParameters(HashMap<String, String> repeatParameters)
