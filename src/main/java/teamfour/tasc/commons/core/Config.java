@@ -33,8 +33,7 @@ public class Config {
     private String taskListName = "MyTaskList";
     private String taskListFileNames = "tasklist";
     
-    public Config() {
-    }
+    public Config() {}
 
     public String getAppTitle() {
         return appTitle;

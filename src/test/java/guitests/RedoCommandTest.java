@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import teamfour.tasc.logic.commands.RedoCommand;
 import teamfour.tasc.testutil.TestTask;
+import teamfour.tasc.testutil.TypicalTestTasks;
 
 public class RedoCommandTest extends TaskListGuiTest {
     
@@ -52,9 +53,9 @@ public class RedoCommandTest extends TaskListGuiTest {
         commandBox.runCommand("delete 1");
         setupRedoPreparation();
         assertRedoResult("redo", createRedoSuccessResultMessage(1), 
-                td.signUpForYoga,
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.signUpForYoga,
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     @Test
@@ -62,9 +63,9 @@ public class RedoCommandTest extends TaskListGuiTest {
         commandBox.runCommand("list all");
         commandBox.runCommand("delete 1");
         assertRedoResult("redo", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.submitProgressReport, td.signUpForYoga,
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.submitProgressReport, TypicalTestTasks.signUpForYoga,
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     @Test
@@ -74,9 +75,9 @@ public class RedoCommandTest extends TaskListGuiTest {
         commandBox.runCommand("undo");
         commandBox.runCommand("delete 1");
         assertRedoResult("redo", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.submitProgressReport, td.signUpForYoga,
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.submitProgressReport, TypicalTestTasks.signUpForYoga,
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     //---------------- redo (positive integer) ----------------------
@@ -85,45 +86,45 @@ public class RedoCommandTest extends TaskListGuiTest {
     public void redo_four_hasThreeHistory_redoAll() {
         setupRedoPreparation();
         assertRedoResult("redo 4", createRedoSuccessResultMessage(3), 
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
    
     @Test
     public void redo_three_hasThreeHistory_redoThree() {
         setupRedoPreparation();
         assertRedoResult("redo 3", createRedoSuccessResultMessage(3), 
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     @Test
     public void redo_three_hasThreeHistory_redoOneByOneUntilOriginal() {
         setupRedoPreparation();
         assertRedoResult("redo 1", createRedoSuccessResultMessage(1), 
-                td.submitProgressReport, td.signUpForYoga,
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.submitProgressReport, TypicalTestTasks.signUpForYoga,
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
         assertRedoResult("redo 1", createRedoSuccessResultMessage(1), 
-                td.signUpForYoga,
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.signUpForYoga,
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
         assertRedoResult("redo 1", createRedoSuccessResultMessage(1),
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
         assertRedoResult("redo 1", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     @Test
     public void redo_three_hasZeroHistory_remainsUnchanged() {
         commandBox.runCommand("list all");
         assertRedoResult("redo 3", RedoCommand.MESSAGE_NO_PAST_COMMAND_TO_REDO,
-                td.submitPrototype,
-                td.submitProgressReport, td.signUpForYoga,
-                td.buyBirthdayGift, td.researchWhales, 
-                td.learnVim, td.developerMeeting);
+                TypicalTestTasks.submitPrototype,
+                TypicalTestTasks.submitProgressReport, TypicalTestTasks.signUpForYoga,
+                TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     //---------------- redo (illegal arguments) ----------------------
@@ -133,10 +134,10 @@ public class RedoCommandTest extends TaskListGuiTest {
         setupRedoPreparation();
         assertRedoResult("redo -3", "Invalid command format! \n" 
                                     + RedoCommand.MESSAGE_USAGE,
-                                    td.submitPrototype, 
-                                    td.submitProgressReport, td.signUpForYoga,
-                                    td.buyBirthdayGift, td.researchWhales, 
-                                    td.learnVim, td.developerMeeting);
+                                    TypicalTestTasks.submitPrototype, 
+                                    TypicalTestTasks.submitProgressReport, TypicalTestTasks.signUpForYoga,
+                                    TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                                    TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     @Test
@@ -144,10 +145,10 @@ public class RedoCommandTest extends TaskListGuiTest {
         setupRedoPreparation();
         assertRedoResult("redo string", "Invalid command format! \n" 
                                         + RedoCommand.MESSAGE_USAGE,
-                                        td.submitPrototype, 
-                                        td.submitProgressReport, td.signUpForYoga,
-                                        td.buyBirthdayGift, td.researchWhales, 
-                                        td.learnVim, td.developerMeeting);
+                                        TypicalTestTasks.submitPrototype, 
+                                        TypicalTestTasks.submitProgressReport, TypicalTestTasks.signUpForYoga,
+                                        TypicalTestTasks.buyBirthdayGift, TypicalTestTasks.researchWhales, 
+                                        TypicalTestTasks.learnVim, TypicalTestTasks.developerMeeting);
     }
     
     //---------------- Utility methods ----------------------
