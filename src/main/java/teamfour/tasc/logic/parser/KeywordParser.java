@@ -31,6 +31,7 @@ public class KeywordParser {
      * @return HashMap containing the keyword - associated substring pairs
      */
     public HashMap<String, String> parseKeywordsWithoutFixedOrder(String inputString) {
+        assert inputString != null;
         String[] parts = combinePartsBetweenQuotes(inputString.split(" "));
         HashMap<String, String> entryPairs = extractEntryPairsFromParts(parts);
         return entryPairs;

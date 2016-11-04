@@ -49,11 +49,11 @@ public class Parser {
 
     private static final Pattern RELATIVE_PATH_FORMAT =
             Pattern.compile("^((?!-)[a-zA-Z0-9-]+(?<!-)|(..))(/((?!-)[a-zA-Z0-9-]+(?<!-)|(..)))*$");
-    
-    private static final Pattern WIN_FULL_PATH_FORMAT = 
+
+    private static final Pattern WIN_FULL_PATH_FORMAT =
             Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9 _.-]+)+\\\\?");
-    
-    private static final Pattern MAC_FULL_PATH_FORMAT = 
+
+    private static final Pattern MAC_FULL_PATH_FORMAT =
             Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
 
     private static final Pattern FILE_NAME_ONLY_FORMAT = Pattern.compile("^[\\w,\\s-]+$");
@@ -77,7 +77,7 @@ public class Parser {
         switch (commandWord.toLowerCase()) {
 
         case AddCommand.COMMAND_WORD:
-            return prepareAdd(commandWord + arguments); //for adding floating tasks
+            return prepareAdd(commandWord + arguments);
 
         case SelectCommand.COMMAND_WORD:
             return prepareSelect(arguments);
@@ -148,7 +148,7 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareAdd(String args){
+    private Command prepareAdd(String args) {
         final KeywordParser parser = new KeywordParser("add", "by", "from", "to", "repeat", "tag");
         HashMap<String, String> parsed = parser.parseKeywordsWithoutFixedOrder(args);
         String name = parsed.get("add");
@@ -158,10 +158,10 @@ public class Parser {
         String recurrence = parsed.get("repeat");
         String tags = parsed.get("tag");
 
-        if(name == null || name.equals("")){
+        if (name == null || name.equals("")) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-        if(tags == null){
+        if (tags == null) {
             tags = "";
         }
         try {
@@ -221,7 +221,7 @@ public class Parser {
      */
     private String formatTagString(String tags) {
         String tagStringResult;
-        
+
         if (tags == null) {
             tagStringResult = "";
         } else {
@@ -229,7 +229,7 @@ public class Parser {
         }
         return tagStringResult;
     }
-    
+
     /**
      * Precondition: argument is not null.
      * Takes in a string and remove all occurrences of full stops and commas.
@@ -311,7 +311,7 @@ public class Parser {
         String startTime = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_PERIOD_START_TIME));
         String endTime = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_PERIOD_END_TIME));
         String tags = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_TAG));
-        
+
         tags = formatTagString(tags);
 
         try {
@@ -351,7 +351,7 @@ public class Parser {
         String startTime = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_PERIOD_START_TIME));
         String endTime = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_PERIOD_END_TIME));
         String tags = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_TAG));
-        
+
         tags = formatTagString(tags);
 
         try {
@@ -485,7 +485,7 @@ public class Parser {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
             }
         }
-        
+
         Optional<Integer> index = parseIndex(args);
         if (!index.isPresent()) {
             return new IncorrectCommand(
