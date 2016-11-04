@@ -20,10 +20,11 @@ import teamfour.tasc.logic.keyword.ToKeyword;
 public class ShowCommand extends Command {
     public static final String COMMAND_WORD = ShowCommandKeyword.keyword;
     
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows only listing results with specified type, date or tags. "
-            + "Parameters: [TYPE...] [on DATE] [by DEADLINE] [from START_TIME] [to END_TIME] [tag \"TAG\"...]\n"
-            + "Example: " + COMMAND_WORD
-            + " events on 24 Sep, tag \"Important\"";
+    public static final String MESSAGE_USAGE = COMMAND_WORD 
+            + ": Shows only listing results with specified type, date or tags. "
+            + "Parameters: [TYPE...] [on DATE] [by DEADLINE] [from START_TIME] "
+            + "[to END_TIME] [tag \"TAG\"...]\n"
+            + "Example: " + COMMAND_WORD + " events on 24 Sep, tag \"Important\"";
 
     public static final String KEYWORD_DATE = OnKeyword.keyword;
     public static final String KEYWORD_DEADLINE = ByKeyword.keyword;
@@ -32,7 +33,7 @@ public class ShowCommand extends Command {
     public static final String KEYWORD_TAG = TagKeyword.keyword;
     
     public static final String[] VALID_KEYWORDS = { COMMAND_WORD, KEYWORD_DATE,
-            KEYWORD_DEADLINE, KEYWORD_PERIOD_START_TIME, KEYWORD_PERIOD_END_TIME, KEYWORD_TAG};
+            KEYWORD_DEADLINE, KEYWORD_PERIOD_START_TIME, KEYWORD_PERIOD_END_TIME, KEYWORD_TAG };
 
     private final String type;
     private final Date deadline;
@@ -49,7 +50,9 @@ public class ShowCommand extends Command {
      */
     public ShowCommand(String type, String date, String deadline, String startTime, 
                         String endTime, Set<String> tags) throws IllegalValueException {
+        
         this.deadline = CommandHelper.tryConvertStringToDateOrReturnNull(deadline);
+        
         Date convertedDate = CommandHelper.tryConvertStringToDateOrReturnNull(date);
         if (convertedDate != null) {
             hasDate = true;
@@ -61,10 +64,7 @@ public class ShowCommand extends Command {
             this.endTime = CommandHelper.tryConvertStringToDateOrReturnNull(endTime);
         }
         
-        this.tags = new HashSet<String>();
-        for (String tagName : tags) {
-            this.tags.add(tagName);
-        }
+        this.tags = new HashSet<String>(tags);
         this.type = type;
     }
     
@@ -84,13 +84,12 @@ public class ShowCommand extends Command {
         }
         if (hasDate) {
             model.addTaskListFilterByStartToEndTime(startTime, endTime, false);
-        } else {
-            if (startTime != null) {
-                model.addTaskListFilterByStartTime(startTime, false);
-            }
-            if (endTime != null) {
-                model.addTaskListFilterByEndTime(endTime, false);
-            }
+        }
+        if (!hasDate && startTime != null) {
+            model.addTaskListFilterByStartTime(startTime, false);
+        }
+        if (!hasDate && endTime != null) {
+            model.addTaskListFilterByEndTime(endTime, false);
         }
         if (!tags.isEmpty()) {
             model.addTaskListFilterByTags(tags, false);

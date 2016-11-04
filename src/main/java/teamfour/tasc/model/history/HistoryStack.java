@@ -67,8 +67,9 @@ public class HistoryStack<T extends HistoryItem<T>> {
      * @throws OutOfHistoryException if the history queue is empty
      */
     public T pop() throws OutOfHistoryException {
-        if (historyLL.size() <= 0)
+        if (historyLL.size() <= 0) {
             throw new OutOfHistoryException();
+        }
         
         return historyLL.removeLast();
     }

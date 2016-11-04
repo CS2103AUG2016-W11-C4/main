@@ -27,14 +27,14 @@ public class CommandHelper {
      * @return the Date from String, or null if not possible
      */
     public static Date tryConvertStringToDateOrReturnNull(String dateString) {
-        if (dateString != null) {
-            try {
-                return CommandHelper.convertStringToDate(dateString);
-            } catch (IllegalValueException e) {
-                logger.warning("Invalid date string in method " +
-                            "convertStringToDateIfPossible: " + dateString);
-                return null;
-            }
+        if (dateString == null) {
+            return null;
+        }
+        try {
+            return CommandHelper.convertStringToDate(dateString);
+        } catch (IllegalValueException e) {
+            logger.warning("Invalid date string in method " + 
+                        "convertStringToDateIfPossible: " + dateString);
         }
         return null;
     }
