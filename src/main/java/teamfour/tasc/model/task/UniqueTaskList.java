@@ -17,6 +17,9 @@ import java.util.*;
  */
 public class UniqueTaskList implements Iterable<Task> {
 
+    private static final int INTERNAL_LIST_INVALID_INDEX = -1;
+    private final ObservableList<Task> internalList = FXCollections.observableArrayList();
+    
     /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
@@ -31,9 +34,6 @@ public class UniqueTaskList implements Iterable<Task> {
      * there is no such matching task in the list.
      */
     public static class TaskNotFoundException extends Exception {}
-
-    private static final int INTERNAL_LIST_INVALID_INDEX = -1;
-    private final ObservableList<Task> internalList = FXCollections.observableArrayList();
 
     /**
      * Constructs empty TaskList.

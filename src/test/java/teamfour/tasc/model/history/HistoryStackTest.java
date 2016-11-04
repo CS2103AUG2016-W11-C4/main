@@ -11,11 +11,11 @@ import teamfour.tasc.model.history.HistoryStack;
 import teamfour.tasc.model.history.HistoryStack.OutOfHistoryException;
 
 public class HistoryStackTest {
+
+    private HistoryStack<HistoryItemStub> historyStack;
     
-    /*
-     * Set up with HistoryStack of size 3,
-     * containing objects of type HistoryItemStub. 
-     * (Dependency injection)
+    /**
+     * Stub for dependency injection as objects implementing HistoryItem interface
      */
     private class HistoryItemStub implements HistoryItem<HistoryItemStub> {
         private int data;
@@ -36,11 +36,9 @@ public class HistoryStackTest {
                     && this.data == ((HistoryItemStub)other).data);
         }
     }
-
-    private HistoryStack<HistoryItemStub> historyStack;
     
     @Before
-    public void setUp_withSizeThree() {
+    public void setUp_maxSizeThree() {
         historyStack = new HistoryStack<HistoryItemStub>(3);
     }
     
