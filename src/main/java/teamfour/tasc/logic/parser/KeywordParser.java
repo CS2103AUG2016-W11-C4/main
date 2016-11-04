@@ -21,44 +21,24 @@ public class KeywordParser {
 
     /**
      * Parses input string arguments using keywords provided at construction
-     * Substring associated with keyword starts after keyword, and ends before the next keyword or end of line
+     * Substring associated with keyword starts after keyword,
+     * and ends before the next keyword or end of line
      * Keyword and associated substring put in a HashMap, with key = keyword and value = associated substring
      * If no match found then empty HashMap returned
-     * @param string to be parsed
+     *
+     * @param inputString
      * @return HashMap containing the keyword - associated substring pairs
      */
-    public HashMap<String, String> parseKeywordsWithoutFixedOrder(String inputString){
-
-        HashMap<String, String> entryPairs = new HashMap<String, String>();
-        String[] parts = inputString.split(" ");
-        parts = combinePartsBetweenQuotes(parts);
-
-        for (int i = 0; i < parts.length; i++) {
-            if (isStringAKeyword(parts[i])) {
-
-                String currentKeyword = parts[i];
-                StringBuilder stringBuilder = new StringBuilder();
-
-                int nextPartToCheck = i + 1;
-                while (nextPartToCheck < parts.length
-                        && !isStringAKeyword(parts[nextPartToCheck])) {
-                    stringBuilder.append(parts[nextPartToCheck] + " ");
-                    nextPartToCheck++;
-                }
-
-                String finalValue = stringBuilder.toString().trim();
-                finalValue = stripOpenAndCloseQuotationMarks(finalValue);
-
-                entryPairs.put(currentKeyword.toLowerCase(), finalValue);
-                i = nextPartToCheck - 1;
-            }
-        }
-
+    public HashMap<String, String> parseKeywordsWithoutFixedOrder(String inputString) {
+        String[] parts = combinePartsBetweenQuotes(inputString.split(" "));
+        HashMap<String, String> entryPairs = extractEntryPairsFromParts(parts);
         return entryPairs;
     }
+
     /**
-     * Combine the parts between open " and close " into one part.
+     * Combine the parts between open " and close " into one part (One array element).
      * If no close " found, rest of the string after the open " will be combined
+     *
      * @param parts     Array of Strings
      * @return combinedParts    Array of Strings with elements between open and close "" combined into one
      */
@@ -102,6 +82,38 @@ public class KeywordParser {
 	        combinedParts = newParts.toArray(new String[newParts.size()]);
 		}
         return combinedParts;
+    }
+
+    /**
+     * Finds the keywords and their associated substrings in the parts array,
+     * and puts them in a HashMap, with key = keyword and value = substring associated with keyword
+     *
+     * @param parts String array of parts extracted from the input String
+     * @return entryPairs Keyword-substring pairs extracted from the String array
+     */
+    private HashMap<String, String> extractEntryPairsFromParts(String[] parts) {
+        HashMap<String, String> entryPairs = new HashMap<String, String>();
+
+        for (int i = 0; i < parts.length; i++) {
+            if (isStringAKeyword(parts[i])) {
+
+                String currentKeyword = parts[i];
+                StringBuilder stringBuilder = new StringBuilder();
+
+                int nextPartToCheck = i + 1;
+                while (nextPartToCheck < parts.length && !isStringAKeyword(parts[nextPartToCheck])) {
+                    stringBuilder.append(parts[nextPartToCheck] + " ");
+                    nextPartToCheck++;
+                }
+
+                String finalValue = stringBuilder.toString().trim();
+                finalValue = stripOpenAndCloseQuotationMarks(finalValue);
+
+                entryPairs.put(currentKeyword.toLowerCase(), finalValue);
+                i = nextPartToCheck - 1;
+            }
+        }
+        return entryPairs;
     }
 
     private boolean isStringAKeyword(String string) {
