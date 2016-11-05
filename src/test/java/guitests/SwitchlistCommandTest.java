@@ -1,7 +1,6 @@
 //@@author A0127014W
 package guitests;
 
-import static org.junit.Assert.*;
 import static teamfour.tasc.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import org.junit.Test;

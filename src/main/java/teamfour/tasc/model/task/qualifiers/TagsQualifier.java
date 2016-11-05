@@ -11,10 +11,10 @@ import teamfour.tasc.model.task.ReadOnlyTask;
  * This qualifier allows tasks with any tag
  * which matches the specified tags to pass.
  */
-public class TagQualifier implements Qualifier {
+public class TagsQualifier implements Qualifier {
     private Set<String> tagNames;
 
-    public TagQualifier(Set<String> tagNames) {
+    public TagsQualifier(Set<String> tagNames) {
         this.tagNames = tagNames;
     }
 

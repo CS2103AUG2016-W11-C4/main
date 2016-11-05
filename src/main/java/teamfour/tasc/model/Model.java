@@ -5,9 +5,7 @@ import teamfour.tasc.model.task.ReadOnlyTask;
 import teamfour.tasc.model.task.Task;
 import teamfour.tasc.model.task.UniqueTaskList;
 import teamfour.tasc.model.task.UniqueTaskList.TaskNotFoundException;
-
-import java.util.Date;
-import java.util.Set;
+import teamfour.tasc.model.task.qualifiers.Qualifier;
 
 /**
  * The API of the Model component.
@@ -49,60 +47,24 @@ public interface Model {
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 
-    /** Updates the filter of the filtered task list to show all tasks */
-    void updateFilteredTaskToShowAll();
-
-    /** Updates the filter of the filtered task list to filter by the given keywords */
-    void updateFilteredTaskList(Set<String> keywords);
-
     //@@author A0148096W
     /** Removes all filters of the filtered task list */
     void resetTaskListFilter();
-
+    
     /**
-     * Precondition: arguments are not null.
-     * Adds the filter of the filtered task list by the given type
+     * Precondition: qualifier is not null.
+     * Adds the filter of the filtered task list by the qualifier
      */
-    void addTaskListFilterByType(String type, boolean negated);
-
-    /**
-     * Precondition: arguments are not null.
-     * Adds the filter of the filtered task list by the given deadline
-     */
-    void addTaskListFilterByDeadline(Date deadline, boolean negated);
-
-    /**
-     * Precondition: arguments are not null.
-     * Adds the filter of the filtered task list by the given start time
-     */
-    void addTaskListFilterByStartTime(Date startTime, boolean negated);
-
-    /**
-     * Precondition: arguments are not null.
-     * Adds the filter of the filtered task list by the given end time
-     */
-    void addTaskListFilterByEndTime(Date endTime, boolean negated);
-
-    /**
-     * Precondition: arguments are not null.
-     * Adds the filter of the filtered task list by between start time and end time
-     */
-    void addTaskListFilterByStartToEndTime(Date startTime, Date endTime, boolean negated);
-
-    /**
-     * Precondition: arguments are not null.
-     * Adds the filter of the filtered task list by the given tag names
-     */
-    void addTaskListFilterByTags(Set<String> tags, boolean negated);
+    void addTaskListFilter(Qualifier qualifier, boolean negated);
 
     /** Updates the filtered task list by the added filters */
-    void updateFilteredTaskListByFilter();
+    void updateFilteredTaskListByFilters();
 
     /**
      * Precondition: arguments are not null.
      * Sorts the filtered task list by the given sorting order
      */
-    void sortFilteredTaskListByOrder(String sortOrder);
+    void sortFilteredTaskList(String sortOrder);
 
     //@@author A0140011L
     /**

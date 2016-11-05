@@ -11,28 +11,32 @@ import teamfour.tasc.model.task.ReadOnlyTask;
  * This qualifier allows tasks with names or tags
  * which matches the specified keywords to pass.
  */
-public class NameQualifier implements Qualifier {
-    private Set<String> nameKeyWords;
+public class NameOrTagsQualifier implements Qualifier {
+    private Set<String> keyWords;
 
-    public NameQualifier(Set<String> nameKeyWords) {
-        this.nameKeyWords = nameKeyWords;
+    public NameOrTagsQualifier(Set<String> keyWords) {
+        this.keyWords = keyWords;
     }
     
     @Override
     public boolean run(ReadOnlyTask task) {
         boolean tagFound = false;
-        for (String keyword : nameKeyWords) {
+        for (String keyword : keyWords) {
             tagFound = task.getTags().getInternalList().stream()
                     .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny()
-                    .isPresent() || tagFound;
+                    .isPresent();
+            if (tagFound) {
+                return true;
+            }
         }
-        return nameKeyWords.stream()
+        
+        return keyWords.stream()
                 .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                .findAny().isPresent() || tagFound;
+                .findAny().isPresent();
     }
     
     @Override
     public String toString() {
-        return "name=" + String.join(", ", nameKeyWords);
+        return "name or tags=" + String.join(", ", keyWords);
     }
 }
