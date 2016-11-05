@@ -8,7 +8,7 @@ import teamfour.tasc.logic.keyword.SelectCommandKeyword;
 /**
  * Selects a task identified using it's last displayed index
  */
-//@@author A0127014
+//@@author A0127014W
 public class SelectCommand extends Command {
 
     private static final int SELECT_LAST_TARGET_INDEX = -1;
