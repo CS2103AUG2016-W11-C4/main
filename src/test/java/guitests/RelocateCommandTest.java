@@ -29,10 +29,23 @@ public class RelocateCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void relocate_validInput_successMessage() {
+    public void relocate_relativePath_successMessage() {
         String newDestination = "dir1/dir2";
         commandBox.runCommand("relocate " + newDestination);
         assertResultMessage(String.format(RelocateCommand.MESSAGE_SUCCESS, 
                 "data" + File.separator + newDestination));
+    }
+    
+    @Test
+    public void relocate_absolutePath_successMessage() {
+        String newDestination = "C:\\tasc\\test";
+        commandBox.runCommand("relocate " + newDestination);
+        assertResultMessage(String.format(RelocateCommand.MESSAGE_SUCCESS, newDestination));
+    }
+    
+    @Test
+    public void relocate_emptyInputDefault_successMessage() {
+        commandBox.runCommand("relocate");
+        assertResultMessage(String.format(RelocateCommand.MESSAGE_SUCCESS, "data"));
     }
 }
