@@ -2,10 +2,8 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.core.Messages;
-import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
 import teamfour.tasc.logic.keyword.SelectCommandKeyword;
-import teamfour.tasc.model.task.ReadOnlyTask;
 
 /**
  * Selects a task identified using it's last displayed index
@@ -56,8 +54,8 @@ public class SelectCommand extends Command {
 
     private CommandResult selectTaskWithInvalidIndex(int lastShownListSize) {
         indicateAttemptToExecuteIncorrectCommand();
-        return new CommandResult(
-                Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n" + (VALID_INDEX_RANGE_START + lastShownListSize));
+        return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n"
+                    + (VALID_INDEX_RANGE_START + lastShownListSize));
     }
 
     /**
