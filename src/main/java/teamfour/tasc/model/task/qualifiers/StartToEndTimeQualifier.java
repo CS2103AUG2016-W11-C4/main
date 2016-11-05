@@ -15,12 +15,15 @@ public class StartToEndTimeQualifier implements Qualifier {
     private Date endTime;
 
     public StartToEndTimeQualifier(Date startTime, Date endTime) {
+        assert startTime != null;
+        assert endTime != null;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
     @Override
     public boolean run(ReadOnlyTask task) {
+        assert task != null;
         if (task.getPeriod().hasPeriod()) {
             return startTime.before(task.getPeriod().getEndTime()) &&
                     endTime.after(task.getPeriod().getStartTime());

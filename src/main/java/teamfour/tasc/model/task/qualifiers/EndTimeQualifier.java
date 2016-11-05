@@ -14,11 +14,13 @@ public class EndTimeQualifier implements Qualifier {
     private Date endTime;
 
     public EndTimeQualifier(Date endTime) {
+        assert endTime != null;
         this.endTime = endTime;
     }
 
     @Override
     public boolean run(ReadOnlyTask task) {
+        assert task != null;
         if (task.getPeriod().hasPeriod()) {
             return endTime.after(task.getPeriod().getStartTime());
         } else if (task.getDeadline().hasDeadline()) {

@@ -15,11 +15,13 @@ public class NameOrTagsQualifier implements Qualifier {
     private Set<String> keyWords;
 
     public NameOrTagsQualifier(Set<String> keyWords) {
+        assert keyWords != null;
         this.keyWords = keyWords;
     }
     
     @Override
     public boolean run(ReadOnlyTask task) {
+        assert task != null;
         boolean tagFound = false;
         for (String keyword : keyWords) {
             tagFound = task.getTags().getInternalList().stream()

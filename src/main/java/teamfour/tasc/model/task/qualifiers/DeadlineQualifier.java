@@ -14,11 +14,13 @@ public class DeadlineQualifier implements Qualifier {
     private Date deadline;
 
     public DeadlineQualifier(Date deadline) {
+        assert deadline != null;
         this.deadline = deadline;
     }
 
     @Override
     public boolean run(ReadOnlyTask task) {
+        assert task != null;
         if (task.getDeadline().hasDeadline() == false) {
             return false;
         }
