@@ -29,9 +29,7 @@ public class SelectCommand extends Command {
     public SelectCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }
-    /**
-     * Executes the SelectCommand, and returns a CommandResult
-     */
+
     @Override
     public CommandResult execute() {
         int lastShownListSize = model.getFilteredTaskList().size();

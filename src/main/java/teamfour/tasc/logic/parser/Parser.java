@@ -149,6 +149,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args) {
+        assert args != null;
         final KeywordParser parser = new KeywordParser("add", "by", "from", "to", "repeat", "tag");
         HashMap<String, String> parsed = parser.parseKeywordsWithoutFixedOrder(args);
         String name = parsed.get("add");

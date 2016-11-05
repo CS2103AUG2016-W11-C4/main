@@ -54,14 +54,15 @@ public class AddCommand extends Command {
      */
     public AddCommand(String name, String deadlineTime, String startTime,
                 String endTime, String repeat, Set<String> tagStrings) throws IllegalValueException {
-        final Set<Tag> tagSet = getTagSetFromStringSet(tagStrings);
         Deadline deadline = getDeadlineFromString(deadlineTime);
         Period period = getPeriodFromStrings(deadlineTime, startTime, endTime);
         Recurrence taskRecurrence = getRecurrenceFromStrings(startTime, endTime, repeat, deadlineTime);
+        UniqueTagList tagList = getTagListFromTagStrings(tagStrings);
 
         this.toAdd = new Task(new Name(name), new Complete(false), deadline, period, taskRecurrence,
-                new UniqueTagList(tagSet));
+                tagList);
     }
+
     /**
      * Returns a Recurrence object from the input strings
      *
@@ -80,6 +81,7 @@ public class AddCommand extends Command {
         }
         return taskRecurrence;
     }
+
     /**
      * Returns a Period object from the input string
      *
@@ -107,6 +109,7 @@ public class AddCommand extends Command {
         }
         return period;
     }
+
     /**
      * Returns a Deadline object from the input string
      *
@@ -121,13 +124,20 @@ public class AddCommand extends Command {
         }
         return deadline;
     }
+
     /**
-     * Returns a Set of Tag objects from the input Set of Strings
+     * Returns a UniqueTagList object from the input string containing tag names
      *
-     * @param tagStrings    Set of Strings
-     * @return tagSet       Set of Tag objects
+     * @param tagStrings    Strings containing tag names
+     * @return tagList      UniqueTagList object containing tags
      * @throws IllegalValueException
      */
+    private UniqueTagList getTagListFromTagStrings(Set<String> tagStrings) throws IllegalValueException {
+        final Set<Tag> tagSet = getTagSetFromStringSet(tagStrings);
+        UniqueTagList tagList = new UniqueTagList(tagSet);
+        return tagList;
+    }
+
     private Set<Tag> getTagSetFromStringSet(Set<String> tagStrings) throws IllegalValueException {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tagStrings) {
