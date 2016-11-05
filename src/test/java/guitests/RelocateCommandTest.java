@@ -4,6 +4,7 @@ package guitests;
 import static teamfour.tasc.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.io.File;
+import java.util.regex.Matcher;
 
 import org.junit.Test;
 
@@ -38,7 +39,13 @@ public class RelocateCommandTest extends TaskListGuiTest {
     
     @Test
     public void relocate_absolutePath_successMessage() {
-        String newDestination = "C:\\tasc\\test";
+        String newDestination = "/Users/my_username/tasc/test";
+        
+        String os = System.getProperty("os.name");
+        if (os.startsWith("Windows")) {
+            newDestination = "C:\\tasc\\test";
+        }
+        
         commandBox.runCommand("relocate " + newDestination);
         assertResultMessage(String.format(RelocateCommand.MESSAGE_SUCCESS, newDestination));
     }
