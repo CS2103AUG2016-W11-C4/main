@@ -38,7 +38,8 @@ public class KeywordParser {
 
     /**
      * Combine the String elements between open " and close " into one
-     * If no close " found, rest of the string after the open " will be combined.
+     * If less close " than open " found, rest of the string after the open " will be combined.
+     * If more close " than open " found, rest of the close " will be ignored
      *
      * @param parts             Array of Strings
      * @return combinedParts    Array of Strings with elements between open and close "" combined into one
@@ -142,7 +143,6 @@ public class KeywordParser {
 
         for (int i = 0; i < parts.length; i++) {
             if (isStringAKeyword(parts[i])) {
-
                 String currentKeyword = parts[i];
                 StringBuilder stringBuilder = new StringBuilder();
 
