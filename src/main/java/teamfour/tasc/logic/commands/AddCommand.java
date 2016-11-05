@@ -70,16 +70,15 @@ public class AddCommand extends Command {
      * @param endTime           String containing end time
      * @param repeat            String containing repeat parameters
      * @param deadlineTime      String containing deadline
-     * @return taskRecurrence   Recurrence object
+     * @return                  Recurrence object
      * @throws IllegalValueException
      */
     private Recurrence getRecurrenceFromStrings(String startTime, String endTime,
                 String repeat, String deadlineTime) throws IllegalValueException {
-        Recurrence taskRecurrence = new Recurrence();
         if (repeat != null && (startTime != null && endTime != null || deadlineTime != null)) {
-            taskRecurrence = CommandHelper.getRecurrence(repeat);
+            return CommandHelper.getRecurrence(repeat);
         }
-        return taskRecurrence;
+        return new Recurrence();
     }
 
     /**
@@ -88,41 +87,39 @@ public class AddCommand extends Command {
      * @param deadlineTime  String containing deadline
      * @param startTime     String containing start time
      * @param endTime       String containing end time
-     * @return period       Period object
+     * @return              Period object
      * @throws IllegalValueException
      */
     private Period getPeriodFromStrings(String deadlineTime, String startTime, String endTime)
             throws IllegalValueException {
-        Period period = new Period();
         if ((startTime != null) && (endTime != null)) {
             List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + endTime);
             if (dates.size() < 2) {
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
-            period = new Period(dates.get(0), dates.get(1));
+            return new Period(dates.get(0), dates.get(1));
         } else if ((startTime != null) && (deadlineTime != null)) {
             List<Date> dates = CommandHelper.convertStringToMultipleDates(startTime + " and " + deadlineTime);
             if (dates.size() < 2) {
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
-            period = new Period(dates.get(0), dates.get(1));
+            return new Period(dates.get(0), dates.get(1));
         }
-        return period;
+        return new Period();
     }
 
     /**
      * Returns a Deadline object from the input string
      *
      * @param deadlineTime  String containing deadline
-     * @return deadline     Deadline object
+     * @return              Deadline object
      * @throws IllegalValueException
      */
     private Deadline getDeadlineFromString(String deadlineTime) throws IllegalValueException {
-        Deadline deadline = new Deadline();
         if (deadlineTime != null) {
-            deadline = new Deadline(CommandHelper.convertStringToDate(deadlineTime));
+            return new Deadline(CommandHelper.convertStringToDate(deadlineTime));
         }
-        return deadline;
+        return new Deadline();
     }
 
     /**
