@@ -449,7 +449,7 @@ public class Parser {
 
         return new DeleteCommand(index.get());
     }
-
+    //@@author A0127014W
     /**
      * Parses arguments in the context of the select task command.
      * Special case: if arg provided is "last", index is set to -1
@@ -465,7 +465,6 @@ public class Parser {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
         }
-
         return new SelectCommand(index.get());
     }
 
