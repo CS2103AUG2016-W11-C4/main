@@ -85,8 +85,8 @@ public class CommandHelper {
      * @param dateInString  Input String containing the date(s)
      * @return dates    List of dates parsed from dateInString
      */
-    public static List<Date> convertStringToMultipleDates(String dateInString){
-        if(dateInString == null){
+    public static List<Date> convertStringToMultipleDates(String dateInString) {
+        if (dateInString == null) {
             dateInString = "";
         }
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
@@ -97,14 +97,15 @@ public class CommandHelper {
      * Like convertStringToMultipleDates(String dateInString), but only returns one Date.
      * Throws exception if multiple dates/no dates can be parsed from one dateInString.
      * If date given is today, and no time is set/time set is in the past, then time will be set to 11.59pm.
-     * @param dateInString
-     * @return Date parsed from dateInString
+     *
+     * @param dateInString  Input String containing date
+     * @return              Date parsed from dateInString
      * @throws IllegalValueException
      */
-    public static Date convertStringToDate(String dateInString) throws IllegalValueException{
+    public static Date convertStringToDate(String dateInString) throws IllegalValueException {
         dateInString = convertStringIfTodayAndNoValidTime(dateInString);
         List<Date> dates = new PrettyTimeParser().parse(dateInString);
-        if(dates.size() != 1){
+        if (dates.size() != 1) {
             throw new IllegalValueException(MESSAGE_INVALID_DATES);
         }
         return dates.get(0);
@@ -113,21 +114,22 @@ public class CommandHelper {
     /**
      * Converts dateInString to "today 11.59pm" if it contains "today",
      * and no time is given or time given is in the past.
-     * @param dateInString  String containing the date.
+     *
+     * @param dateInString              String containing the date.
      * @return dateInStringConverted    String containing the date, but converted accordingly.
      * @throws IllegalValueException
      */
     private static String convertStringIfTodayAndNoValidTime(String dateInString) throws IllegalValueException {
         String dateInStringConverted = dateInString;
-        if(dateInString.toLowerCase().contains("today")){
+        if (dateInString.toLowerCase().contains("today")) {
             List<Date> dates = new PrettyTimeParser().parse(dateInString);
-            if(dates.size() != 1){
+            if (dates.size() != 1) {
                 throw new IllegalValueException(MESSAGE_INVALID_DATES);
             }
             Date timeNow = new Date();
             Date parsedDate = dates.get(0);
             boolean isParsedDateEqualToOrEarlierThanNow = (timeNow.getDate() == parsedDate.getDate())
-                                                            && (timeNow.after(parsedDate) || timeNow.equals(parsedDate));
+                    && (timeNow.after(parsedDate) || timeNow.equals(parsedDate));
             if (isParsedDateEqualToOrEarlierThanNow) {
                 dateInStringConverted = "today 11.59pm";
             }
@@ -138,26 +140,26 @@ public class CommandHelper {
     /**
      * Gets a Recurrence object from a string containing repeat parameters for recurrence.
      * Input parameter repeatString includes the pattern of recurrence, and frequency of recurrence.
+     *
      * @param repeatString  String containing repeat parameters. Cannot be null.
-     * @return Recurrence object from repeatString
+     * @return              Recurrence object from repeatString
      * @throws IllegalValueException
      */
     public static Recurrence getRecurrence(String repeatString) throws IllegalValueException{
         assert repeatString != null;
-        KeywordParser kp = new KeywordParser("daily","weekly","monthly","yearly","none");
+        KeywordParser kp = new KeywordParser("daily", "weekly", "monthly", "yearly", "none");
         HashMap<String, String> repeatParameters = kp.parseKeywordsWithoutFixedOrder(repeatString.toLowerCase());
         try {
             return getRecurrenceWithPatternFromParameters(repeatParameters);
-        }
-        catch (IllegalValueException|NumberFormatException e) {
+        } catch (IllegalValueException | NumberFormatException e) {
             throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
         }
-
     }
     /**
      * Creates and returns Recurrence object with Pattern based on repeatParameter.
+     *
      * @param repeatParameters  HashMap with parameters parsed from string using recurrence keywords.
-     * @return recurrence   Recurrence object with Pattern matching repeatParameters.
+     * @return recurrence       Recurrence object with Pattern matching repeatParameters.
      * @throws IllegalValueException
      */
     private static Recurrence getRecurrenceWithPatternFromParameters(HashMap<String, String> repeatParameters)
@@ -178,7 +180,7 @@ public class CommandHelper {
             Recurrence recurrence = new Recurrence(Recurrence.Pattern.YEARLY,
                     Integer.parseInt(repeatParameters.get("yearly")));
             return recurrence;
-        } else if(repeatParameters.containsKey("none")){
+        } else if (repeatParameters.containsKey("none")) {
             return new Recurrence();
         } else {
             throw new IllegalValueException(MESSAGE_REPEAT_PARAMETERS_INVALID);
