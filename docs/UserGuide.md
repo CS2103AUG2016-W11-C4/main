@@ -69,7 +69,7 @@ Just type in your command, and hit <kbd>Enter</kbd>. Let us handle the rest - yo
 
 Double-click on `TaSc.jar` to start the application. The application window *(Figure 2)* should appear within a few seconds.
 
-<img src="images/Ui.png" width="600"><br>
+<img src="images/Ui-MainWindow.png" width="600"><br>
 *Figure 2: TaSc application window*
 <br><br>
 
@@ -83,9 +83,6 @@ You can try some of these example commands:
    * **`list`** : lists all uncompleted tasks and upcoming events
    * **`complete`**` 1` : marks the first task shown in the current task list as complete
    * **`exit`** : exits the application
-
-> **Tip:**<br>
-> You may refer to the [Features](#features) section for details of each command.
 
 <br>
 
@@ -359,7 +356,7 @@ modified the task list (for example, deleting a task):
 `undo`
 
 <br>
-You can undo the last *X* number of actions. For example, to undo the
+You can undo the last *X* actions. For example, to undo the
 last 5 actions taken:
 
 `undo 5`
@@ -382,14 +379,13 @@ If you simply type:
 <!-- @@author A0147971U -->
 ###  Redoing the last action: `redo`
 
-Whenver you want to redo the tasks you undid, you can simply reverse them by redoing.
-Only tasks that are undone right before you type redo (Without any other commands 
-entered) can be actually redone.
+If the undo is not what you wanted, you can simply reverse them by using the redo command. 
+Only tasks that are undone right before you type redo (with no other commands entered) can be actually redone.
 
 `redo`
 
 <br>
-You can redo the last *X* number of actions. For example, to redo the
+You can redo the last *X* actions. For example, to redo the
 last 4 actions taken:
 
 `redo 4`
@@ -514,14 +510,20 @@ If you want to see all the details of your tasks again, type:
 <!-- @@author A0148096W -->
 ### Changing calendar view: `calendar`
 
-Sometimes, you may want to focus on a day on the calendar. To do so, just type: 
+Sometimes, you may want to focus on a day on the calendar. 
+Just switch to the calendar day view (*pictured on the left in Figure 7*) by typing: 
 
 `calendar day`
 
+<img src="images/Ui-CalendarViews.png" width="600"><br>
+*Figure 7: Examples of calendar day and week view*
+
+<br>
 You can switch back to the calendar week view by typing:
 
 `calendar week`
 
+<br>
 At any time, you can show your current time on the calendar to see your upcoming schedules, using:
 
 `calendar today`
@@ -545,10 +547,10 @@ Just open this document anytime again by typing the `help` command:
 Shows suggested command keywords, dates, sorting order, and tags as you type.
 
 Use the <kbd>up</kbd> and <kbd>down</kbd> arrow keys to select a keyword in the list, 
-and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword (see *Figure 7*).
+and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword (*see Figure 8*).
 
 <img src="images/Ui-Autocomplete.png" width="200"><br>
-*Figure 7: The autocomplete allows you to see the list of valid keywords for the command.*
+*Figure 8: The autocomplete feature shows you the list of valid keywords for the command.*
 <br><br>
 
 <!-- @@author -->
