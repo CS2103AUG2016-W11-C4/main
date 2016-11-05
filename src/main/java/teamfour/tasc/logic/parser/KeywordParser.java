@@ -7,11 +7,10 @@ import java.util.HashSet;
 public class KeywordParser {
 
     private final HashSet<String> keywords;
-    private String KEYWORD_PARSER_NO_MATCHES = "No matches found for given keywords";
 
     /**
      * Constructor
-     * @param keywords used to pass strings
+     * @param keywords used to parse strings
      */
     public KeywordParser(String... inputKeywords) {
         this.keywords = new HashSet<String>();
@@ -48,9 +47,10 @@ public class KeywordParser {
         ArrayList<Integer> openQuoteStartIndices = new ArrayList<Integer>();
         ArrayList<Integer> closeQuoteEndIndices = new ArrayList<Integer>();
         String[] combinedParts = parts;
-        addOpenQuoteStartIndices(combinedParts, openQuoteStartIndices);
+
+        getOpenQuoteStartIndices(combinedParts, openQuoteStartIndices);
         if (!openQuoteStartIndices.isEmpty()) {
-            addCloseQuoteEndIndices(combinedParts, openQuoteStartIndices, closeQuoteEndIndices);
+            getCloseQuoteEndIndices(combinedParts, openQuoteStartIndices, closeQuoteEndIndices);
             movePartsBetweenQuotesIntoFirstElement(combinedParts, openQuoteStartIndices, closeQuoteEndIndices);
             combinedParts = getNewArrayWithoutNullElements(combinedParts);
         }
@@ -61,6 +61,7 @@ public class KeywordParser {
      * For each group of strings between a pair of open and close ",
      * remove every string after the start index and append them to the
      * element at the start index.
+     *
      * @param parts                     Array of Strings
      * @param openQuoteStartIndices     Array containing start indices of groups of parts between quotes
      * @param closeQuoteEndIndices      Array containing end indices of groups of parts between quotes
@@ -100,7 +101,7 @@ public class KeywordParser {
      * @param parts                     Array of Strings
      * @param openQuoteStartIndices     Array containing start indices of groups of parts between quotes
      */
-    private void addOpenQuoteStartIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices) {
+    private void getOpenQuoteStartIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices) {
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].startsWith("\"")) {
                 openQuoteStartIndices.add(i);
@@ -115,14 +116,13 @@ public class KeywordParser {
      * @param parts                     Array of Strings
      * @param openQuoteStartIndices     Array containing end indices of groups of parts between quotes
      */
-    private void addCloseQuoteEndIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices,
+    private void getCloseQuoteEndIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices,
             ArrayList<Integer> closeQuoteEndIndices) {
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].endsWith("\"")) {
                 closeQuoteEndIndices.add(i);
             }
         }
-
         while (openQuoteStartIndices.size() > closeQuoteEndIndices.size()) {
             // If more open " than close ", let the end of line serve as
             // additional close "
