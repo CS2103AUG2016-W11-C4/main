@@ -3,6 +3,7 @@ package teamfour.tasc.logic.commands;
 import java.util.Set;
 
 import teamfour.tasc.logic.keyword.FindCommandKeyword;
+import teamfour.tasc.model.task.qualifiers.NameOrTagsQualifier;
 
 /**
  * Finds and lists all tasks in task list which has names containing the keywords.
@@ -12,8 +13,10 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = FindCommandKeyword.keyword;
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD 
+            + ": Finds all tasks whose names contain any of "
+            + "the specified keywords (case-sensitive) and "
+            + "displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " meeting presentation";
 
@@ -25,8 +28,11 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredTaskList(keywords);
-        return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
+        model.resetTaskListFilter();
+        model.addTaskListFilter(new NameOrTagsQualifier(keywords), false);
+        model.updateFilteredTaskListByFilters();
+        return new CommandResult(
+                getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
     }
 
     @Override
