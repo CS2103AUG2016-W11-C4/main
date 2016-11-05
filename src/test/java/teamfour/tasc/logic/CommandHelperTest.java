@@ -166,11 +166,6 @@ public class CommandHelperTest {
         assertTrue(dates2.get(0).getDate() != 13); //wrong date
         assertTrue(dates2.get(0).getMonth() == 8);
         assertTrue(dates2.get(0).getYear() == 1900 - 1900);
-
-        String date3 = "4th april 1600 hours";
-        List<Date> dates3 = CommandHelper.convertStringToMultipleDates(date3);
-        assertTrue(dates3.get(0).getDate() == 4);
-        assertTrue(dates3.get(0).getHours() != 16); //wrong time
     }
 
     @Test
@@ -271,11 +266,10 @@ public class CommandHelperTest {
         Date date;
         try {
             date = CommandHelper.convertStringToDate(dateString);
-            if(new Date().after(testDate) || (new Date().equals(testDate))){
+            if (new Date().after(testDate) || (new Date().equals(testDate))) {
                 assertTrue(date.getHours() == 23);
                 assertTrue(date.getMinutes() == 59);
-            }
-            else{
+            } else {
                 assertTrue(date.getHours() == 19);
                 assertTrue(date.getMinutes() == 0);
             }
@@ -303,13 +297,21 @@ public class CommandHelperTest {
         } catch (IllegalValueException e) {
             fail();
         }
+
+        String repeatParameter3 = "yearly 5";
+        Recurrence recurrence3;
+        try {
+            recurrence3 = CommandHelper.getRecurrence(repeatParameter3);
+            assertEquals("YEARLY [5 time(s)]", recurrence3.toString());
+        } catch (IllegalValueException e) {
+            fail();
+        }
     }
 
     @Test(expected = IllegalValueException.class)
     public void getRecurrence_invalidRepeatCount_throwsIllegalValueException() throws IllegalValueException{
         String repeatParameter = "weekly 0";
         Recurrence recurrence = CommandHelper.getRecurrence(repeatParameter);
-
     }
 
     @Test(expected = IllegalValueException.class)

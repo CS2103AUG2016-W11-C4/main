@@ -52,6 +52,14 @@ public class TestUtil {
 
     public static String LS = System.lineSeparator();
 
+    /**
+     * Folder used for temp files created during testing. Ignored by Git.
+     */
+    public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
+
+    public static final Task[] sampleTaskData = getSampleTaskData();
+    public static final Tag[] sampleTagData = getSampleTagData();
+    
     public static void assertThrows(Class<? extends Throwable> expected, Runnable executable) {
         try {
             executable.run();
@@ -66,13 +74,6 @@ public class TestUtil {
         throw new AssertionFailedError(
                 String.format("Expected %s to be thrown, but nothing was thrown.", expected.getName()));
     }
-
-    /**
-     * Folder used for temp files created during testing. Ignored by Git.
-     */
-    public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
-
-    public static final Task[] sampleTaskData = getSampleTaskData();
     
     private static Task createNewTaskWithName(String name) throws IllegalValueException {
         return new Task(
@@ -103,8 +104,6 @@ public class TestUtil {
             return null;
         }
     }
-
-    public static final Tag[] sampleTagData = getSampleTagData();
 
     private static Tag[] getSampleTagData() {
         try {
@@ -395,7 +394,7 @@ public class TestUtil {
 
     public static Tag[] getTagList(String tags) {
 
-        if (tags.equals("")) {
+        if (tags.isEmpty()) {
             return new Tag[]{};
         }
 

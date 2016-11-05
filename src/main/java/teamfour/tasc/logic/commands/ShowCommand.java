@@ -13,6 +13,12 @@ import teamfour.tasc.logic.keyword.OnKeyword;
 import teamfour.tasc.logic.keyword.ShowCommandKeyword;
 import teamfour.tasc.logic.keyword.TagKeyword;
 import teamfour.tasc.logic.keyword.ToKeyword;
+import teamfour.tasc.model.task.qualifiers.DeadlineQualifier;
+import teamfour.tasc.model.task.qualifiers.EndTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.StartTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.StartToEndTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.TagsQualifier;
+import teamfour.tasc.model.task.qualifiers.TypeQualifier;
 
 /**
  * Shows results from current listing results to the user that match the filters.
@@ -77,30 +83,32 @@ public class ShowCommand extends Command {
         assert model != null;
         
         if (type != null) {
-            model.addTaskListFilterByType(type, false);
+            model.addTaskListFilter(new TypeQualifier(type), false);
         }
         if (deadline != null) {
-            model.addTaskListFilterByDeadline(deadline, false);
+            model.addTaskListFilter(new DeadlineQualifier(deadline), false);
         }
         if (hasDate) {
-            model.addTaskListFilterByStartToEndTime(startTime, endTime, false);
+            model.addTaskListFilter(new StartToEndTimeQualifier(startTime, endTime), false);
         }
         if (!hasDate && startTime != null) {
-            model.addTaskListFilterByStartTime(startTime, false);
+            model.addTaskListFilter(new StartTimeQualifier(startTime), false);
         }
         if (!hasDate && endTime != null) {
-            model.addTaskListFilterByEndTime(endTime, false);
+            model.addTaskListFilter(new EndTimeQualifier(endTime), false);
         }
         if (!tags.isEmpty()) {
-            model.addTaskListFilterByTags(tags, false);
+            model.addTaskListFilter(new TagsQualifier(tags), false);
         }
     }
 
     @Override
     public CommandResult execute() {
         assert model != null;
+        
         addCommandFiltersToModel();
-        model.updateFilteredTaskListByFilter();
+        model.updateFilteredTaskListByFilters();
+        
         return new CommandResult(getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
     }
 

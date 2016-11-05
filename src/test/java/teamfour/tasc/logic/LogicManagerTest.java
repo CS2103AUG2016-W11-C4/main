@@ -42,7 +42,6 @@ import teamfour.tasc.model.task.ReadOnlyTask;
 import teamfour.tasc.model.task.Recurrence;
 import teamfour.tasc.model.task.Task;
 import teamfour.tasc.model.task.util.TaskCompleteConverter;
-import teamfour.tasc.storage.StorageManager;
 import teamfour.tasc.testutil.TestClock;
 
 import java.util.ArrayList;
@@ -88,22 +87,20 @@ public class LogicManagerTest {
     }
 
     @Before
-    public void setup() {
+    public void setUp() {
         model = new ModelManager();
-        String tempTaskListFile = saveFolder.getRoot().getPath() + "TempTaskList.xml";
-        String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        logic = new LogicManager(model, new StorageManager(tempTaskListFile, tempPreferencesFile));
+        logic = new LogicManager(model);
         EventsCenter.getInstance().registerHandler(this);
 
         latestSavedTaskList = new TaskList(model.getTaskList()); // last saved assumed to be up to date before.
         helpShown = false;
         targetedJumpIndex = -1; // non yet
-        
+
         logic.execute("list all");
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         EventsCenter.clearSubscribers();
     }
 
@@ -181,11 +178,39 @@ public class LogicManagerTest {
         assertCommandBehavior(
                 "add tag validTag", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         assertCommandBehavior(
-                "add validName by invalidDate", "Invalid dates");
+                "add validName by invalidDate", "Invalid date");
 
     }
-    //@@author
 
+    @Test
+    public void execute_add_validTaskWithDeadline_success() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.taskWithDeadlineNoPeriod();
+        String inputCommand = helper.generateAddCommand(toBeAdded);
+        assertAddCommandCorrectResult(toBeAdded, inputCommand);
+    }
+
+    @Test
+    public void execute_add_validTaskWithStartAndEndTime_success() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.taskWithDeadlineNoPeriod();
+        String inputCommand = helper.generateAddCommand(toBeAdded);
+        assertAddCommandCorrectResult(toBeAdded, inputCommand);
+    }
+
+    @Test
+    public void execute_add_validTaskWithRecurrence_success() throws Exception{
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.taskWithPeriodNoDeadline();
+        String inputCommand = helper.generateAddCommand(toBeAdded);
+        assertAddCommandCorrectResult(toBeAdded, inputCommand);
+    }
+
+    private void assertAddCommandCorrectResult(Task toBeAdded, String inputCommand) {
+        CommandResult result = logic.execute(inputCommand);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded), result.feedbackToUser);
+    }
+    //@@author
     @Test
     public void execute_add_successful() throws Exception {
         // setup expectations
@@ -199,7 +224,6 @@ public class LogicManagerTest {
                 String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
                 expectedAB,
                 expectedAB.getTaskList());
-
     }
 
     @Test
@@ -992,7 +1016,7 @@ public class LogicManagerTest {
         // due to one millisecond difference
         TestClock testClock = new TestClock(new Date(0));
         DateUtil.getInstance().setClock(testClock);
-        
+
         // actual test as follows
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTasksList(3);
@@ -1074,17 +1098,16 @@ public class LogicManagerTest {
                 expectedList);
     }
 
-
+    //@@author A0127014W
     /**
      * A utility class to generate test data.
      */
-    class TestDataHelper{
+    private class TestDataHelper {
 
         //Edited for floating tasks
-        Task adam() throws Exception {
+        private Task adam() throws Exception {
             Name name = new Name("Adam Brown");
 
-            // TODO update test case
             Complete complete = new Complete(false);
             Deadline deadline = new Deadline();
             Period period = new Period();
@@ -1097,10 +1120,9 @@ public class LogicManagerTest {
         }
 
         // This is a copy of Adam Brown with slightly different values
-        Task john() throws Exception {
+        private Task john() throws Exception {
             Name name = new Name("John Doe");
 
-            // TODO update test case
             Complete complete = new Complete(false);
             Calendar c = Calendar.getInstance();
             c.set(2000, 12, 27, 12, 0, 0);
@@ -1117,6 +1139,61 @@ public class LogicManagerTest {
             return new Task(name, complete, deadline, period, recurrence, tags);
         }
 
+        Task taskWithDeadlineNoPeriod() throws Exception {
+            Name name = new Name("DeadlineTask");
+
+            Complete complete = new Complete(false);
+            Calendar c = Calendar.getInstance();
+            c.set(2006, 12, 27, 12, 0, 0);
+            Date d1 = c.getTime();
+            Deadline deadline = new Deadline(d1);
+            Period period = new Period();
+            Recurrence recurrence = new Recurrence();
+
+            Tag tag1 = new Tag("tag2");
+            Tag tag2 = new Tag("tag3");
+            UniqueTagList tags = new UniqueTagList(tag1, tag2);
+            return new Task(name, complete, deadline, period, recurrence, tags);
+        }
+
+        Task taskWithPeriodNoDeadline() throws Exception {
+            Name name = new Name("Event");
+
+            Complete complete = new Complete(false);
+            Calendar c = Calendar.getInstance();
+            c.set(2006, 12, 27, 12, 0, 0);
+            Date d1 = c.getTime();
+            c.set(2006, 12, 30, 12, 0, 0);
+            Date d2 = c.getTime();
+            Deadline deadline = new Deadline();
+            Period period = new Period(d1, d2);
+            Recurrence recurrence = new Recurrence();
+
+            Tag tag1 = new Tag("tag2");
+            Tag tag2 = new Tag("tag3");
+            UniqueTagList tags = new UniqueTagList(tag1, tag2);
+            return new Task(name, complete, deadline, period, recurrence, tags);
+        }
+
+        Task taskWithRecurrence() throws Exception {
+            Name name = new Name("RecurringTask");
+
+            Complete complete = new Complete(false);
+            Calendar c = Calendar.getInstance();
+            c.set(2006, 12, 27, 12, 0, 0);
+            Date d1 = c.getTime();
+            c.set(2006, 12, 30, 12, 0, 0);
+            Date d2 = c.getTime();
+            Deadline deadline = new Deadline();
+            Period period = new Period(d1, d2);
+            Recurrence recurrence = CommandHelper.getRecurrence("daily 5");
+
+            Tag tag1 = new Tag("tag2");
+            Tag tag2 = new Tag("tag3");
+            UniqueTagList tags = new UniqueTagList(tag1, tag2);
+            return new Task(name, complete, deadline, period, recurrence, tags);
+        }
+
         /**
          * Generates a valid Task using the given seed.
          * Running this function with the same parameter values guarantees the returned Task will have the same state.
@@ -1124,7 +1201,7 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the Task data field values
          */
-        Task generateTask(int seed) throws Exception {
+        private Task generateTask(int seed) throws Exception {
             // TODO update test case
             return new Task(
                     new Name("Task " + seed),
@@ -1137,12 +1214,25 @@ public class LogicManagerTest {
         }
 
         /** Generates the correct add command based on the Task given */
-        String generateAddCommand(Task p) {
+        private String generateAddCommand(Task p) {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("add ");
 
             cmd.append( "\"" + p.getName().toString() + "\" ");
+
+            if(p.getDeadline().hasDeadline()){
+                String deadlineString = generateParserFriendlyDateStringFromDate(p.getDeadline().getDeadline());
+                cmd.append("by " + deadlineString);
+            }
+            if(p.getPeriod().hasPeriod()){
+                String startString = generateParserFriendlyDateStringFromDate(p.getPeriod().getStartTime());
+                String endString = generateParserFriendlyDateStringFromDate(p.getPeriod().getEndTime());
+                cmd.append("from " + startString + "to " + endString);
+            }
+            if(p.getRecurrence().hasRecurrence()){
+                cmd.append("repeat " + p.getRecurrence().getPattern().toString() + " " + p.getRecurrence().getFrequency() + " ");
+            }
 
             UniqueTagList tags = p.getTags();
             cmd.append("tag ");
@@ -1153,10 +1243,16 @@ public class LogicManagerTest {
             return cmd.toString();
         }
 
+        String generateParserFriendlyDateStringFromDate(Date date){
+            String[] stringFromDate = date.toString().split(" ");
+            String returnString = stringFromDate[1] + " " + stringFromDate[2] + " " + stringFromDate[5] + " " + stringFromDate[3] + " ";
+            return returnString;
+        }
+        //@@author
         /**
          * Generates an TaskList with auto-generated Tasks.
          */
-        TaskList generateTaskList(int numGenerated) throws Exception{
+        private TaskList generateTaskList(int numGenerated) throws Exception{
             TaskList taskList = new TaskList();
             addToTaskList(taskList, numGenerated);
             return taskList;
@@ -1165,7 +1261,7 @@ public class LogicManagerTest {
         /**
          * Generates an TaskList based on the list of Tasks given.
          */
-        TaskList generateTaskList(List<Task> tasks) throws Exception{
+        private TaskList generateTaskList(List<Task> tasks) throws Exception{
             TaskList taskList = new TaskList();
             addToTaskList(taskList, tasks);
             return taskList;
@@ -1175,15 +1271,15 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given TaskList
          * @param taskList The TaskList to which the Tasks will be added
          */
-        void addToTaskList(TaskList taskList, int numGenerated) throws Exception{
+        private void addToTaskList(TaskList taskList, int numGenerated) throws Exception{
             addToTaskList(taskList, generateTasksList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given TaskList
          */
-        void addToTaskList(TaskList taskList, List<Task> tasksToAdd) throws Exception{
-            for(Task p: tasksToAdd){
+        private void addToTaskList(TaskList taskList, List<Task> tasksToAdd) throws Exception{
+            for (Task p : tasksToAdd) {
                 taskList.addTask(p);
             }
         }
@@ -1192,15 +1288,15 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given model
          * @param model The model to which the Tasks will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        private void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateTasksList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
-            for(Task p: tasksToAdd){
+        private void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+            for (Task p : tasksToAdd) {
                 model.addTask(p);
             }
         }
@@ -1208,15 +1304,15 @@ public class LogicManagerTest {
         /**
          * Generates a list of Tasks based on the flags.
          */
-        List<Task> generateTasksList(int numGenerated) throws Exception{
+        private List<Task> generateTasksList(int numGenerated) throws Exception{
             List<Task> tasks = new ArrayList<>();
-            for(int i = 1; i <= numGenerated; i++){
+            for (int i = 1; i <= numGenerated; i++) {
                 tasks.add(generateTask(i));
             }
             return tasks;
         }
 
-        List<Task> generateTaskList(Task... tasks) {
+        private List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
 
@@ -1224,7 +1320,7 @@ public class LogicManagerTest {
         /**
          * Generates a Task object with given name. Other fields will have some dummy values.
          */
-        Task generateTaskWithName(String name) throws Exception {
+        private Task generateTaskWithName(String name) throws Exception {
             return new Task(
                     new Name(name),
                     new Complete(false),

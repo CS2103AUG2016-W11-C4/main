@@ -1,7 +1,6 @@
 package teamfour.tasc.ui;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -33,9 +32,7 @@ public class TaskCard extends UiPart{
     private ReadOnlyTask task;
     private int displayedIndex;
 
-    public TaskCard(){
-
-    }
+    public TaskCard() {}
 
     public static TaskCard load(ReadOnlyTask task, int displayedIndex){
         TaskCard card = new TaskCard();
