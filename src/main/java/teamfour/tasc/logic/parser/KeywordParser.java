@@ -3,10 +3,10 @@ package teamfour.tasc.logic.parser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
+//@@author A0127014W
 public class KeywordParser {
-    //@@author A0127014W
-    private HashSet<String> keywords;
+
+    private final HashSet<String> keywords;
     private String KEYWORD_PARSER_NO_MATCHES = "No matches found for given keywords";
 
     /**
@@ -38,7 +38,7 @@ public class KeywordParser {
     }
 
     /**
-     * Combine the parts between open " and close " into one part (One array element).
+     * Combine the String elements between open " and close " into one
      * If no close " found, rest of the string after the open " will be combined.
      *
      * @param parts             Array of Strings
@@ -48,43 +48,86 @@ public class KeywordParser {
         ArrayList<Integer> openQuoteStartIndices = new ArrayList<Integer>();
         ArrayList<Integer> closeQuoteEndIndices = new ArrayList<Integer>();
         String[] combinedParts = parts;
-        int startIndex = -1;
-        int endIndex = parts.length - 1;
+        addOpenQuoteStartIndices(combinedParts, openQuoteStartIndices);
+        if (!openQuoteStartIndices.isEmpty()) {
+            addCloseQuoteEndIndices(combinedParts, openQuoteStartIndices, closeQuoteEndIndices);
+            movePartsBetweenQuotesIntoFirstElement(combinedParts, openQuoteStartIndices, closeQuoteEndIndices);
+            combinedParts = getNewArrayWithoutNullElements(combinedParts);
+        }
+        return combinedParts;
+    }
+
+    /**
+     * For each group of strings between a pair of open and close ",
+     * remove every string after the start index and append them to the
+     * element at the start index.
+     * @param parts                     Array of Strings
+     * @param openQuoteStartIndices     Array containing start indices of groups of parts between quotes
+     * @param closeQuoteEndIndices      Array containing end indices of groups of parts between quotes
+     */
+    private void movePartsBetweenQuotesIntoFirstElement(String[] parts, ArrayList<Integer> openQuoteStartIndices,
+            ArrayList<Integer> closeQuoteEndIndices) {
+        for (int i = 0; i < openQuoteStartIndices.size(); i++) {
+            int startOfGroup = openQuoteStartIndices.get(i);
+            int endOfGroup = closeQuoteEndIndices.get(i);
+            for (int j = startOfGroup + 1; j <= endOfGroup; j++) {
+                parts[startOfGroup] = parts[startOfGroup] + " " + parts[j];
+                parts[j] = null;
+            }
+        }
+    }
+
+    /**
+     * Gets a new String array from input array but without null elements
+     *
+     * @param parts     Array of Strings
+     * @return          Array of String without null elements
+     */
+    private String[] getNewArrayWithoutNullElements(String[] parts) {
+        ArrayList<String> newParts = new ArrayList<String>();
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i] != null) {
+                newParts.add(parts[i]);
+            }
+        }
+        return newParts.toArray(new String[newParts.size()]);
+    }
+
+    /**
+     * Gets the indices of strings which start with an open quote ".
+     * These strings form the start of a group of strings between open and close quotes.
+     *
+     * @param parts                     Array of Strings
+     * @param openQuoteStartIndices     Array containing start indices of groups of parts between quotes
+     */
+    private void addOpenQuoteStartIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices) {
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].startsWith("\"")) {
                 openQuoteStartIndices.add(i);
             }
         }
-        if (!openQuoteStartIndices.isEmpty()) {
-            for (int i = 1; i < parts.length; i++) {
-                if (parts[i].endsWith("\"")) {
-                    closeQuoteEndIndices.add(i);
-                }
-            }
+    }
 
-            while (openQuoteStartIndices.size() > closeQuoteEndIndices.size()) {
-                // If more open " than close ", let the end of line serve as
-                // additional close "
-                closeQuoteEndIndices.add(parts.length - 1);
+    /**
+     * Gets the indices of strings which end with a close quote ".
+     * These strings form the end of a group of strings between open and close quotes.
+     *
+     * @param parts                     Array of Strings
+     * @param openQuoteStartIndices     Array containing end indices of groups of parts between quotes
+     */
+    private void addCloseQuoteEndIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices,
+            ArrayList<Integer> closeQuoteEndIndices) {
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].endsWith("\"")) {
+                closeQuoteEndIndices.add(i);
             }
-
-            for (int i = 0; i < openQuoteStartIndices.size(); i++) {
-                int start = openQuoteStartIndices.get(i);
-                int end = closeQuoteEndIndices.get(i);
-                for (int j = start + 1; j <= end; j++) {
-                    parts[start] = parts[start] + " " + parts[j];
-                    parts[j] = null;
-                }
-            }
-            ArrayList<String> newParts = new ArrayList<String>();
-            for (int i = 0; i < parts.length; i++) {
-                if (parts[i] != null) {
-                    newParts.add(parts[i]);
-                }
-            }
-            combinedParts = newParts.toArray(new String[newParts.size()]);
         }
-        return combinedParts;
+
+        while (openQuoteStartIndices.size() > closeQuoteEndIndices.size()) {
+            // If more open " than close ", let the end of line serve as
+            // additional close "
+            closeQuoteEndIndices.add(parts.length - 1);
+        }
     }
 
     /**
