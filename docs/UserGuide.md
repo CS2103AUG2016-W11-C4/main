@@ -505,7 +505,7 @@ To this (*Figure 6b*):<br>
 <img src="images/Ui-collapse2.png" width="600"><br>
 *Figure 6b: The collapsed view*
 
-If you want to see all the details of your tasks agains, type:
+If you want to see all the details of your tasks again, type:
 
 `expand`
 
