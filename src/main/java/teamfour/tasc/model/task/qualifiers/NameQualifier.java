@@ -17,20 +17,28 @@ public class NameQualifier implements Qualifier {
     public NameQualifier(Set<String> nameKeyWords) {
         this.nameKeyWords = nameKeyWords;
     }
-    
+
     @Override
     public boolean run(ReadOnlyTask task) {
-        boolean tagFound = false;
-        for (String keyword : nameKeyWords) {
-            tagFound = task.getTags().getInternalList().stream()
-                    .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny()
-                    .isPresent() || tagFound;
-        }
-        return nameKeyWords.stream()
-                .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                .findAny().isPresent() || tagFound;
+        return isNameFound(task) || isTagFound(task);
     }
-    
+
+    private boolean isNameFound(ReadOnlyTask task) {
+        return nameKeyWords.stream()
+                .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword)).findAny()
+                .isPresent();
+    }
+
+    private boolean isTagFound(ReadOnlyTask task) {
+        boolean isFound = false;
+        for (String keyword : nameKeyWords) {
+            isFound = task.getTags().getInternalList().stream()
+                    .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny().isPresent()
+                    || isFound;
+        }
+        return isFound;
+    }
+
     @Override
     public String toString() {
         return "name=" + String.join(", ", nameKeyWords);
