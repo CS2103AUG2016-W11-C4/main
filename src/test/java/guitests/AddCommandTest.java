@@ -17,7 +17,7 @@ public class AddCommandTest extends TaskListGuiTest {
     public void add() {
 
         commandBox.runCommand("list all");
-        
+
         //add one task
         TestTask[] currentList = td.getTypicalTasks();
         TestTask taskToAdd = TypicalTestTasks.attendWorkshop;
@@ -42,7 +42,22 @@ public class AddCommandTest extends TaskListGuiTest {
         commandBox.runCommand("adds Johnny");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
     }
+    //@@author A0127014W
+    @Test
+    public void add_taskWithInvalidDates_failure(){
+        String inputCommand = "add validTask from invalidDate to invalidDate";
+        commandBox.runCommand(inputCommand);
+        assertResultMessage(AddCommand.MESSAGE_INVALID_DATES);
 
+        inputCommand = "add validTask from invalidDate by today";
+        commandBox.runCommand(inputCommand);
+        assertResultMessage(AddCommand.MESSAGE_INVALID_DATES);
+
+        inputCommand = "add validTask by invalidDate";
+        commandBox.runCommand(inputCommand);
+        assertResultMessage("Invalid date");
+    }
+    //@@author A0127014W
     private void assertAddSuccess(TestTask taskToAdd, TestTask... currentList) {
         commandBox.runCommand(taskToAdd.getAddCommand());
 

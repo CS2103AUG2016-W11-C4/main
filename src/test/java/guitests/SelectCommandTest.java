@@ -8,10 +8,9 @@ import static org.junit.Assert.assertEquals;
 
 public class SelectCommandTest extends TaskListGuiTest {
 
-
     @Test
     public void selectTask_nonEmptyList() {
-        
+
         commandBox.runCommand("list all");
 
         assertSelectionInvalid(10); //Out of bounds index
@@ -36,13 +35,28 @@ public class SelectCommandTest extends TaskListGuiTest {
         assertSelectionInvalid(1); //invalid index
     }
     //@@author A0127014W
+    @Test
+    public void selectTask_selectLast_nonEmptyList_success(){
+        int index = td.getTypicalTasks().length - 1;
+        commandBox.runCommand("select last");
+        assertResultMessage("Selected Task: "+ index);
+    }
+
+    @Test
+    public void selectTask_selectLast_emptyList_failure(){
+        commandBox.runCommand("clear");
+        assertListSize(0);
+        commandBox.runCommand("select last");
+        assertResultMessage("Can't select from an empty list");
+    }
+
     private void assertSelectionInvalid(int index) {
         commandBox.runCommand("select " + index);
-        if(taskListPanel.getNumberOfTasks() < 1){
+        if (taskListPanel.getNumberOfTasks() < 1) {
             assertResultMessage("The task index provided is invalid" + "\n" + "Can't select from an empty list");
-        }
-        else{
-            assertResultMessage("The task index provided is invalid" + "\n" + "Valid index range: 1 to " + taskListPanel.getNumberOfTasks());
+        } else {
+            assertResultMessage("The task index provided is invalid" + "\n" + "Valid index range: 1 to "
+                    + taskListPanel.getNumberOfTasks());
         }
     }
     //@@author
