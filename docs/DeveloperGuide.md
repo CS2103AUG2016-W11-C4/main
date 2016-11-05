@@ -104,7 +104,7 @@ d. **Buildship Gradle Integration** plugin from the Eclipse Marketplace
 <img src="images/Architecture.png" width="600"><br>
 *Figure 1: Architecture Diagram*
 
-The **_Architecture Diagram_** *(figure 1)* explains the high-level design of the App.
+The **_Architecture Diagram_** *(Figure 1)* explains the high-level design of the App.
 A quick overview of each component is given below:
 
 `Main` has only one class called [`MainApp`](../src/main/java/teamfour/tasc/MainApp.java). It has two main responsibilities:
@@ -129,7 +129,7 @@ Each of the four components
 * exposes its functionality using a `{Component Name}Manager` class.
 <br><br>
 
-For example, the **`Logic`** component (see the class diagram in *figure 2* below) defines its API in the `Logic.java`
+For example, the **`Logic`** component (see the class diagram in *Figure 2* below) defines its API in the `Logic.java`
 interface and exposes its functionality using the `LogicManager.java` class.<br>
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
@@ -193,17 +193,15 @@ The **`UI`** component
 
 The `TaskListPanel` shows a list of `TaskCard` object, where each `TaskCard` contains the details of a task shown to the user.
 The `TaskCard` is also assigned a unique index in increasing order, which is used in other commands to identify a task, e.g. `delete 3` deletes the third item in the list.
-<br><br>
+
+>Note that `TaskCardCollapsed` may be used in place of `TaskCard` when the user is in collapsed task list view.
+
+<br>
 
 **`CalendarPanel` Class:**
 
 The `CalendarPanel` encapsulates the `Agenda` control from [`JFXtras`](http://jfxtras.org/doc/8.0/jfxtras-agenda/) library.
 The `CalendarPanel` handles the display and selection of tasks on the calendar, and also handles the switching between *Day* and *Week* view of the calendar.
-<br><br>
-
-**`HelpWindow` Class:**
-
-The `HelpWindow` is a window separate from the `MainWindow`. It shows our product's User Guide using a WebBrowser which supports modern HTML and CSS.
 
 <br>
 
@@ -219,7 +217,7 @@ The `HelpWindow` is a window separate from the `MainWindow`. It shows our produc
  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 <br><br>
 
-Given below *(figure 8)* is the Sequence Diagram for interactions within the **`Logic`** component for the `execute("delete 1")`
+Given below *(Figure 8)* is the Sequence Diagram for interactions within the **`Logic`** component for the `execute("delete 1")`
  API call.<br>
 
 <img src="images/DeletePersonSdForLogic.png" width="800"><br>
