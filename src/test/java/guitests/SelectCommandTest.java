@@ -36,6 +36,21 @@ public class SelectCommandTest extends TaskListGuiTest {
         assertSelectionInvalid(1); //invalid index
     }
     //@@author A0127014W
+
+    @Test
+    public void selectTask_selectLast_nonEmptyList_success(){
+        commandBox.runCommand("select last");
+        assertResultMessage("Selected Task: "+ 6);
+    }
+
+    @Test
+    public void selectTask_selectLast_emptyList_failure(){
+        commandBox.runCommand("clear");
+        assertListSize(0);
+        commandBox.runCommand("select last");
+        assertResultMessage("Can't select from an empty list");
+    }
+
     private void assertSelectionInvalid(int index) {
         commandBox.runCommand("select " + index);
         if(taskListPanel.getNumberOfTasks() < 1){
