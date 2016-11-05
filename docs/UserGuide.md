@@ -57,7 +57,7 @@ Just type in your command, and hit <kbd>Enter</kbd>. Let us handle the rest - yo
 > Having any Java 8 version is not enough. <br>
 > This app will not work with earlier versions of Java 8.
 
-2. Download the latest `TaSc.jar` from the [releases](../../../releases) tab (on our GitHub project website) as shown in *figure 1* below.
+2. Download the latest `TaSc.jar` from the [releases](../../../releases) tab (on our GitHub project website) as shown in *Figure 1* below.
 
    <img src="images/github-download-release.png" width="600"><br>
    *Figure 1: Download TaSc.jar from GitHub*
@@ -67,7 +67,7 @@ Just type in your command, and hit <kbd>Enter</kbd>. Let us handle the rest - yo
 
 ### Launching
 
-Double-click on `TaSc.jar` to start the application. The application window *(figure 2)* should appear within a few seconds.
+Double-click on `TaSc.jar` to start the application. The application window *(Figure 2)* should appear within a few seconds.
 
 <img src="images/Ui.png" width="600"><br>
 *Figure 2: TaSc application window*
@@ -81,7 +81,7 @@ You can try some of these example commands:
    * **`add`**` "Do Research" by 21 Sep 5pm` :
 	adds a new task named "Do Research" with the deadline on 21 September, 5pm
    * **`list`** : lists all uncompleted tasks and upcoming events
-   * **`complete`**` 1` : marks the 1st task shown in the current task list as complete
+   * **`complete`**` 1` : marks the first task shown in the current task list as complete
    * **`exit`** : exits the application
 
 > **Tip:**<br>
@@ -107,9 +107,9 @@ If your task is due on a certain date, you may provide a deadline by adding the 
 `add "CS2101 homework" by 21 Oct 5pm`
 
 > **Tip:**<br>
-> Acceptable date formats: 18 Sep, 18 September, 18 Sep 2016, Sep 18 2016,
+> Accepted date formats: 18 Sep, 18 September, 18 Sep 2016, Sep 18 2016,
   Today, Monday<br>
-> Acceptable time formats: 5pm, 5:01pm, 5:01:59pm, 17:00
+> Accepted time formats: 5pm, 5:01pm, 5:01:59pm, 17:00
 
 <br>
 Events can also be added easily by providing the period that it will happen
@@ -125,11 +125,12 @@ You can specify a recurring task/event by using the `repeat` keywords:
 
 > **Note:** <br>
 > `repeat weekly 18` means that the lecture will take place for 18 weeks.<br>
-> Acceptable recurrence patterns: daily, weekly, monthly
+> Accepted recurrence patterns: daily, weekly, monthly
 
 <br>
-Finally, tags can be added to tasks for you to categorize them. For example,
-you may choose to use tags as a way to prioritize or to classify tasks.
+
+Finally, you can add tags to categorize your tasks. For example,
+you may use tag "Very Important" to prioritize certain tasks (as shown in *Figure 3* below).
 
 `add CS2101 Submission by 5 Nov tag "Very Important" tag "CS2101"`
 
@@ -155,6 +156,7 @@ Now that you have added your tasks, you can select the first task on the list by
 `select 1`
 
 The task will be shown and highlighted on the task list and calendar, where you can see all its details such as its time period.
+<br><br>
 
 The task list will also automatically scroll to the task details on the task list. 
 For example, if you have many tasks and you would like to see the fourteenth task which is not shown in the task list, just type:
@@ -167,7 +169,7 @@ Additionally, if you would like to see the last task in the task list, you can t
 <br><br>
 
 In general, you may use this format to select specific tasks on the task list.<br>
-`select INDEX|last`
+`select INDEX` *or* `select last`
 
 <br>
 
@@ -182,7 +184,7 @@ events, just type:
 `list`
 
 > **Note:**<br>
-> For your convenience, this command automatically sorts the tasks by their dates `earliest first`.
+> For your convenience, this command automatically sorts the task list by date `earliest first`.
 
 <br>
 You may want to view tasks that happen during certain periods:
@@ -196,7 +198,7 @@ and require your attention:
 `list by 20 Sep`
 
 <br>
-You may also list category of tasks:
+You may also list category of tasks by their tags:
 
 `list tag "Submissions"`
 
@@ -286,7 +288,7 @@ In general, you may use this format to hide various tasks from the tasks listed.
 You don't have to remember every details of the tasks you added, just use the `find`
 command which returns the list of tasks which partially match by their names or tags.
 
-To show tasks with names such as "Up**grad**e myself", or tags such as
+To show tasks with names such as "Up**grad**e myself", or with tags such as
 "**Grad**ed":
 
 `find grad`<br>
@@ -336,7 +338,7 @@ In general, you may use this format to update your tasks' various parameters.<br
 
 ### Marking a task as complete: `complete`
 
-Once you have completed a task, you can mark it as complete.
+Once you have completed a task, you can mark it as complete (*Figure 5*).
 
 `complete 1`
 
@@ -494,16 +496,16 @@ Or perhaps you prefer to see an overview of many tasks at one glance at the task
 
 `collapse`
 
-This will change the view from something like this: <br>
+This will change the view from something like this (*Figure 6a*): <br>
 <img src="images/Ui-collapse1.png" width="600"><br>
-*Figure 6: The expanded view*
+*Figure 6a: The expanded view*
 <br><br>
 
-To this:<br>
+To this (*Figure 6b*):<br>
 <img src="images/Ui-collapse2.png" width="600"><br>
-*Figure 7: The collapsed view*
+*Figure 6b: The collapsed view*
 
-If you want to see all the details of your tasks agains, type:
+If you want to see all the details of your tasks again, type:
 
 `expand`
 
@@ -542,17 +544,17 @@ Just open this document anytime again by typing the `help` command:
 ### Autocomplete and suggestions
 Shows suggested command keywords, dates, sorting order, and tags as you type.
 
-Use the <kbd>up</kbd> and <kbd>down</kbd> arrow keys to select a keyword in the list,<br>
-and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword.
+Use the <kbd>up</kbd> and <kbd>down</kbd> arrow keys to select a keyword in the list, 
+and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword (see *Figure 7*).
 
-<img src="images/Ui-Autocomplete.png" width="200">
-
-<br>
+<img src="images/Ui-Autocomplete.png" width="200"><br>
+*Figure 7: The autocomplete allows you to see the list of valid keywords for the command.*
+<br><br>
 
 <!-- @@author -->
 ### Saving the Data
-TaSc saves automatically after every command that changes the data.
-Don't worry about losing your data
+TaSc saves your data automatically after every command that changes the data.
+Don't worry about losing your data.
 
 <br>
 
@@ -571,6 +573,7 @@ and a new data file will be created. Overwrite the new data file with the backup
 Command | Format  
 -------- | :--------
 Add | `add NAME [by DEADLINE] [from START_TIME to END_TIME] [repeat PATTERN FREQUENCY] [tag TAG...]`
+Select | `select INDEX` *or* `select last`
 List | `list [TYPE...] [by DEADLINE] [from START_TIME] [to END_TIME] [tag TAG...] [sort SORTING_ORDER]`
 Show | `show [TYPE...] [on DATE] [by DEADLINE] [from START_TIME] [to END_TIME]  [tag TAG...]`
 Hide | `hide [TYPE...] [on DATE] [by DEADLINE] [from START_TIME] [to END_TIME] [tag TAG...]`
@@ -586,5 +589,5 @@ Rename List | `renamelist FILENAME`
 Relocate | `relocate PATH`
 Collapse | `collapse`
 Expand | `expand`
-Calendar | `calendar day|week|today`
+Calendar | `calendar day` *or* `calendar week` *or* `calendar today`
 Help | `help`
