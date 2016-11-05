@@ -197,11 +197,6 @@ public class ModelManager extends ComponentManager implements Model {
         return new UnmodifiableObservableList<>(filteredTasks);
     }
 
-    @Override
-    public void updateFilteredTaskToShowAll() {
-        filteredTasks.setPredicate(null);
-    }
-
     //@@author A0148096W
     @Override
     public void resetTaskListFilter() {
