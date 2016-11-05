@@ -45,32 +45,32 @@ public class KeywordParser {
      * @return combinedParts    Array of Strings with elements between open and close "" combined into one
      */
     private String[] combinePartsBetweenQuotes(String[] parts) {
-        ArrayList<Integer> startIndices = new ArrayList<Integer>();
-        ArrayList<Integer> endIndices = new ArrayList<Integer>();
+        ArrayList<Integer> openQuoteStartIndices = new ArrayList<Integer>();
+        ArrayList<Integer> closeQuoteEndIndices = new ArrayList<Integer>();
         String[] combinedParts = parts;
         int startIndex = -1;
         int endIndex = parts.length - 1;
         for (int i = 1; i < parts.length; i++) {
             if (parts[i].startsWith("\"")) {
-                startIndices.add(i);
+                openQuoteStartIndices.add(i);
             }
         }
-        if (!startIndices.isEmpty()) {
+        if (!openQuoteStartIndices.isEmpty()) {
             for (int i = 1; i < parts.length; i++) {
                 if (parts[i].endsWith("\"")) {
-                    endIndices.add(i);
+                    closeQuoteEndIndices.add(i);
                 }
             }
 
-            while (startIndices.size() > endIndices.size()) {
+            while (openQuoteStartIndices.size() > closeQuoteEndIndices.size()) {
                 // If more open " than close ", let the end of line serve as
                 // additional close "
-                endIndices.add(parts.length - 1);
+                closeQuoteEndIndices.add(parts.length - 1);
             }
 
-            for (int i = 0; i < startIndices.size(); i++) {
-                int start = startIndices.get(i);
-                int end = endIndices.get(i);
+            for (int i = 0; i < openQuoteStartIndices.size(); i++) {
+                int start = openQuoteStartIndices.get(i);
+                int end = closeQuoteEndIndices.get(i);
                 for (int j = start + 1; j <= end; j++) {
                     parts[start] = parts[start] + " " + parts[j];
                     parts[j] = null;
