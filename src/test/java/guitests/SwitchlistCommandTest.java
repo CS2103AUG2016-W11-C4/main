@@ -26,4 +26,11 @@ public class SwitchlistCommandTest extends TaskListGuiTest{
         commandBox.runCommand("switchlist " + testFilename);
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchlistCommand.MESSAGE_USAGE));
     }
+    
+    @Test
+    public void switchlist_validInput_successMessage() {
+        String newListFilename = "taskList2";
+        commandBox.runCommand("switchlist " + newListFilename);
+        assertResultMessage(String.format(SwitchlistCommand.MESSAGE_SUCCESS, newListFilename));
+    }
 }

@@ -27,5 +27,12 @@ public class RenamelistCommandTest extends TaskListGuiTest{
         assertResultMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenamelistCommand.MESSAGE_USAGE));
 
     }
+    
+    @Test
+    public void renamelist_validInput_successMessage() {
+        String testFilename = "NewTaskListName";
+        commandBox.runCommand("renamelist " + testFilename);
+        assertResultMessage(String.format(RenamelistCommand.MESSAGE_SUCCESS, testFilename));
+    }
 
 }
