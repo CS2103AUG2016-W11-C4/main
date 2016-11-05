@@ -42,7 +42,6 @@ import teamfour.tasc.model.task.ReadOnlyTask;
 import teamfour.tasc.model.task.Recurrence;
 import teamfour.tasc.model.task.Task;
 import teamfour.tasc.model.task.util.TaskCompleteConverter;
-import teamfour.tasc.storage.StorageManager;
 import teamfour.tasc.testutil.TestClock;
 
 import java.util.ArrayList;
@@ -88,11 +87,9 @@ public class LogicManagerTest {
     }
 
     @Before
-    public void setup() {
+    public void setUp() {
         model = new ModelManager();
-        String tempTaskListFile = saveFolder.getRoot().getPath() + "TempTaskList.xml";
-        String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        logic = new LogicManager(model, new StorageManager(tempTaskListFile, tempPreferencesFile));
+        logic = new LogicManager(model);
         EventsCenter.getInstance().registerHandler(this);
 
         latestSavedTaskList = new TaskList(model.getTaskList()); // last saved assumed to be up to date before.
@@ -103,7 +100,7 @@ public class LogicManagerTest {
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         EventsCenter.clearSubscribers();
     }
 
@@ -1105,9 +1102,10 @@ public class LogicManagerTest {
     /**
      * A utility class to generate test data.
      */
-    class TestDataHelper{
+    private class TestDataHelper {
 
-        Task adam() throws Exception {
+        //Edited for floating tasks
+        private Task adam() throws Exception {
             Name name = new Name("Adam Brown");
 
             Complete complete = new Complete(false);
@@ -1122,7 +1120,7 @@ public class LogicManagerTest {
         }
 
         // This is a copy of Adam Brown with slightly different values
-        Task john() throws Exception {
+        private Task john() throws Exception {
             Name name = new Name("John Doe");
 
             Complete complete = new Complete(false);
@@ -1203,7 +1201,8 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the Task data field values
          */
-        Task generateTask(int seed) throws Exception {
+        private Task generateTask(int seed) throws Exception {
+            // TODO update test case
             return new Task(
                     new Name("Task " + seed),
                     new Complete(false),
@@ -1215,7 +1214,7 @@ public class LogicManagerTest {
         }
 
         /** Generates the correct add command based on the Task given */
-        String generateAddCommand(Task p) {
+        private String generateAddCommand(Task p) {
             StringBuffer cmd = new StringBuffer();
 
             cmd.append("add ");
@@ -1253,7 +1252,7 @@ public class LogicManagerTest {
         /**
          * Generates an TaskList with auto-generated Tasks.
          */
-        TaskList generateTaskList(int numGenerated) throws Exception{
+        private TaskList generateTaskList(int numGenerated) throws Exception{
             TaskList taskList = new TaskList();
             addToTaskList(taskList, numGenerated);
             return taskList;
@@ -1262,7 +1261,7 @@ public class LogicManagerTest {
         /**
          * Generates an TaskList based on the list of Tasks given.
          */
-        TaskList generateTaskList(List<Task> tasks) throws Exception{
+        private TaskList generateTaskList(List<Task> tasks) throws Exception{
             TaskList taskList = new TaskList();
             addToTaskList(taskList, tasks);
             return taskList;
@@ -1272,15 +1271,15 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given TaskList
          * @param taskList The TaskList to which the Tasks will be added
          */
-        void addToTaskList(TaskList taskList, int numGenerated) throws Exception{
+        private void addToTaskList(TaskList taskList, int numGenerated) throws Exception{
             addToTaskList(taskList, generateTasksList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given TaskList
          */
-        void addToTaskList(TaskList taskList, List<Task> tasksToAdd) throws Exception{
-            for(Task p: tasksToAdd){
+        private void addToTaskList(TaskList taskList, List<Task> tasksToAdd) throws Exception{
+            for (Task p : tasksToAdd) {
                 taskList.addTask(p);
             }
         }
@@ -1289,15 +1288,15 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given model
          * @param model The model to which the Tasks will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        private void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateTasksList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
-            for(Task p: tasksToAdd){
+        private void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+            for (Task p : tasksToAdd) {
                 model.addTask(p);
             }
         }
@@ -1305,15 +1304,15 @@ public class LogicManagerTest {
         /**
          * Generates a list of Tasks based on the flags.
          */
-        List<Task> generateTasksList(int numGenerated) throws Exception{
+        private List<Task> generateTasksList(int numGenerated) throws Exception{
             List<Task> tasks = new ArrayList<>();
-            for(int i = 1; i <= numGenerated; i++){
+            for (int i = 1; i <= numGenerated; i++) {
                 tasks.add(generateTask(i));
             }
             return tasks;
         }
 
-        List<Task> generateTaskList(Task... tasks) {
+        private List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
 
@@ -1321,7 +1320,7 @@ public class LogicManagerTest {
         /**
          * Generates a Task object with given name. Other fields will have some dummy values.
          */
-        Task generateTaskWithName(String name) throws Exception {
+        private Task generateTaskWithName(String name) throws Exception {
             return new Task(
                     new Name(name),
                     new Complete(false),

@@ -113,7 +113,7 @@ public class MainWindow extends UiPart {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F1"));
     }
 
-    void fillInnerParts() {
+    protected void fillInnerParts() {
         wordList = new ListView<String>();
         wordList.setPrefHeight(0);
         wordList.setStyle(".word-list");

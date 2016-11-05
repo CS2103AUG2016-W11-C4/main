@@ -13,7 +13,6 @@ import teamfour.tasc.commons.events.model.TaskListChangedEvent;
 import teamfour.tasc.commons.events.ui.TaskListRenamedEvent;
 import teamfour.tasc.commons.util.FxViewUtil;
 
-import java.io.File;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -93,9 +92,10 @@ public class StatusBarFooter extends UiPart {
     }
 
     @Subscribe
-    public void handleTaskListChangedEvent(TaskListChangedEvent abce) {
+    public void handleTaskListChangedEvent(TaskListChangedEvent event) {
         String lastUpdated = (new Date()).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, 
+                "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
     }
     

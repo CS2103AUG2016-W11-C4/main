@@ -12,7 +12,7 @@ public class CollapseChangeEvent extends BaseEvent {
     // Static variable used by all instances of this event
     private static boolean isCollapsed = false;
 
-    public CollapseChangeEvent(boolean toCollapse){
+    public CollapseChangeEvent(boolean toCollapse) {
         setCollapsed(toCollapse);
     }
 

@@ -25,9 +25,7 @@ public class TaskCardCollapsed extends UiPart{
     private ReadOnlyTask task;
     private int displayedIndex;
 
-    public TaskCardCollapsed(){
-
-    }
+    public TaskCardCollapsed() {}
 
     public static TaskCardCollapsed load(ReadOnlyTask task, int displayedIndex){
         TaskCardCollapsed card = new TaskCardCollapsed();

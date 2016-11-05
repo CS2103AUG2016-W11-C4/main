@@ -8,7 +8,6 @@ import teamfour.tasc.logic.commands.CommandResult;
 import teamfour.tasc.logic.parser.Parser;
 import teamfour.tasc.model.Model;
 import teamfour.tasc.model.task.ReadOnlyTask;
-import teamfour.tasc.storage.Storage;
 
 import java.util.logging.Logger;
 
@@ -21,7 +20,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Model model;
     private final Parser parser;
     
-    public LogicManager(Model model, Storage storage) {
+    public LogicManager(Model model) {
         this.model = model;
         this.parser = new Parser();
     }

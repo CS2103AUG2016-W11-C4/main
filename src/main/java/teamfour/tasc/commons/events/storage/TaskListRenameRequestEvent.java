@@ -3,7 +3,7 @@ package teamfour.tasc.commons.events.storage;
 
 import teamfour.tasc.commons.events.BaseEvent;
 
-/** Indicates the Task List in the model has been renamed*/
+/** Indicates the Task List in the model has been renamed */
 public class TaskListRenameRequestEvent extends BaseEvent {
     private final String newFilename;
     
@@ -11,7 +11,7 @@ public class TaskListRenameRequestEvent extends BaseEvent {
         return newFilename;
     }
 
-    public TaskListRenameRequestEvent(String newFilename){
+    public TaskListRenameRequestEvent(String newFilename) {
         this.newFilename = newFilename;
     }
 

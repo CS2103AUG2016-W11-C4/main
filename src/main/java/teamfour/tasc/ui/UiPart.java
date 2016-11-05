@@ -18,11 +18,9 @@ public abstract class UiPart {
     /**
      * The primary stage for the UI Part.
      */
-    Stage primaryStage;
+    protected Stage primaryStage;
 
-    public UiPart(){
-
-    }
+    public UiPart() {}
 
     /**
      * Raises the event via {@link EventsCenter#post(BaseEvent)}

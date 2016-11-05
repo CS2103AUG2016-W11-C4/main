@@ -4,17 +4,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class KeywordParser {
+    
     //@@author A0127014W
     private ArrayList<String> keywords;
-    private String KEYWORD_PARSER_NO_MATCHES = "No matches found for given keywords";
 
     /**
      * Constructor
      * @param keywords used to pass strings
      */
-    public KeywordParser(String... inputKeywords){
+    public KeywordParser(String... inputKeywords) {
         this.keywords = new ArrayList<String>();
-        for(String key: inputKeywords){
+        for (String key : inputKeywords) {
             this.keywords.add(key);
         }
     }
@@ -27,7 +27,7 @@ public class KeywordParser {
      * @param string to be parsed
      * @return HashMap containing the keyword - associated substring pairs
      */
-    public HashMap<String, String> parseKeywordsWithoutFixedOrder(String inputString){
+    public HashMap<String, String> parseKeywordsWithoutFixedOrder(String inputString) {
         HashSet<String> keywordsInHashSet = new HashSet<String>();
         for (String kw : keywords) {
             keywordsInHashSet.add(kw);
@@ -44,7 +44,7 @@ public class KeywordParser {
                 StringBuilder stringBuilder = new StringBuilder();
 
                 int nextPartToCheck = i + 1;
-                while (nextPartToCheck < parts.length
+                while(nextPartToCheck < parts.length 
                         && !stringIsAKeyword(keywordsInHashSet, parts[nextPartToCheck])) {
                     stringBuilder.append(parts[nextPartToCheck] + " ");
                     nextPartToCheck++;
@@ -57,9 +57,9 @@ public class KeywordParser {
                 i = nextPartToCheck - 1;
             }
         }
-
         return entryPairs;
     }
+    
     /**
      * Combine the parts between open " and close " into one part.
      * If no close " found, rest of the string after the open " will be combined
@@ -70,43 +70,42 @@ public class KeywordParser {
         ArrayList<Integer> startIndices = new ArrayList<Integer>();
         ArrayList<Integer> endIndices = new ArrayList<Integer>();
         String[] combinedParts = parts;
-        int startIndex = -1;
-        int endIndex = parts.length - 1;
-        for(int i = 1; i < parts.length; i++ ){
-        	if(parts[i].startsWith("\"")){
-        		startIndices.add(i);
-        	}
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].startsWith("\"")) {
+                startIndices.add(i);
+            }
         }
         if (!startIndices.isEmpty()) {
-			for (int i = 1; i < parts.length; i++) {
-				if (parts[i].endsWith("\"")) {
-					endIndices.add(i);
-				}
-			}
+            for (int i = 1; i < parts.length; i++) {
+                if (parts[i].endsWith("\"")) {
+                    endIndices.add(i);
+                }
+            }
 
-			while(startIndices.size() > endIndices.size()){
-			    //If more open " than close ", let the end of line serve as additional close "
-			    endIndices.add(parts.length - 1);
-			}
+            while(startIndices.size() > endIndices.size()) {
+                // If more open " than close ", let the end of line serve as additional close "
+                endIndices.add(parts.length - 1);
+            }
 
-			for (int i = 0; i < startIndices.size(); i++) {
-			    int start = startIndices.get(i);
-			    int end = endIndices.get(i);
+            for (int i = 0; i < startIndices.size(); i++) {
+                int start = startIndices.get(i);
+                int end = endIndices.get(i);
                 for (int j = start + 1; j <= end; j++) {
                     parts[start] = parts[start] + " " + parts[j];
                     parts[j] = null;
                 }
             }
             ArrayList<String> newParts = new ArrayList<String>();
-	        for(int i = 0; i < parts.length; i++){
-	        	if (parts[i] != null) {
-					newParts.add(parts[i]);
-				}
-	        }
-	        combinedParts = newParts.toArray(new String[newParts.size()]);
-		}
+            for (int i = 0; i < parts.length; i++) {
+                if (parts[i] != null) {
+                    newParts.add(parts[i]);
+                }
+            }
+            combinedParts = newParts.toArray(new String[newParts.size()]);
+        }
         return combinedParts;
     }
+    
     //@@author
     private boolean stringIsAKeyword(HashSet<String> allKeywords, String string) {
         return allKeywords.contains(string.toLowerCase());

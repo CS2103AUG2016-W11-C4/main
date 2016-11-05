@@ -312,7 +312,6 @@ public class CommandHelperTest {
     public void getRecurrence_invalidRepeatCount_throwsIllegalValueException() throws IllegalValueException{
         String repeatParameter = "weekly 0";
         Recurrence recurrence = CommandHelper.getRecurrence(repeatParameter);
-
     }
 
     @Test(expected = IllegalValueException.class)

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import teamfour.tasc.commons.core.Messages;
 import teamfour.tasc.testutil.TestTask;
+import teamfour.tasc.testutil.TypicalTestTasks;
 
 import static org.junit.Assert.assertTrue;
 
@@ -12,11 +13,13 @@ public class FindCommandTest extends TaskListGuiTest {
     @Test
     public void find_nonEmptyList() {
         assertFindResult("find DSFKSDKFSDJKFDSKJFKDS"); //no results
-        assertFindResult("find Submit", td.submitPrototype, td.submitProgressReport); //multiple results
+        assertFindResult("find Submit", 
+                TypicalTestTasks.submitPrototype, 
+                TypicalTestTasks.submitProgressReport); //multiple results
 
         //find after deleting one result
         commandBox.runCommand("delete 1");
-        assertFindResult("find Submit",td.submitProgressReport);
+        assertFindResult("find Submit",TypicalTestTasks.submitProgressReport);
     }
 
     @Test
