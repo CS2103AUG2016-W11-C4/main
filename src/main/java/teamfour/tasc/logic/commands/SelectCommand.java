@@ -32,25 +32,25 @@ public class SelectCommand extends Command {
 
     @Override
     public CommandResult execute() {
-
         int lastShownListSize = model.getFilteredTaskList().size();
         if (lastShownListSize < 1) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(MESSAGE_SELECT_EMPTY_LIST);
         }
         if (targetIndex == SELECT_LAST_TARGET_INDEX) {
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(lastShownListSize - 1));
-            return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, lastShownListSize));
+            return selectTask(lastShownListSize);
         }
         if (lastShownListSize < targetIndex) {
             String validIndexRange = "Valid index range: 1 to " + lastShownListSize;
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n" + validIndexRange);
         }
+        return selectTask(targetIndex);
+    }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
-        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex));
-
+    private CommandResult selectTask(int target) {
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(target - 1));
+        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, target));
     }
 
     @Override
