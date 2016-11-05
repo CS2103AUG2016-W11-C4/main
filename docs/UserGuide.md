@@ -258,7 +258,7 @@ enter this instead:
 `show tag "CS2103"`
 
 > **Tip:**<br>
-> Because this is an extension of the `list` command, any parameters that is
+> Because this is an extension of the `list` command, any parameter that is
 > accepted by the `list` command is also accepted by the `show` command.
 <br><br>
 
@@ -491,23 +491,24 @@ In general, you may use this format to relocate your data to different location.
 <!-- @@author A0127014W -->
 ### Changing the view of the task list panel: `collapse` and `expand`
 
-You might find that each task takes up too much in the task list panel, requiring you to scroll a lot to see all the tasks you have.
-Or perhaps you prefer to see an overview of many tasks at one glance at the task list panel, compared to all the details of a just few tasks. In such cases, you can collapse the task list panel view by typing:
+When TaSc starts, your tasks are shown in the "collapsed" view. This means that TaSc will only show the index number and the name
+of each task. This allows each task to take up less space in the task list panel, and allows more tasks to be shown simultaneously. But sometimes you might want to see all the details of all your tasks shown at once. In this case, you can expand the task list panel view
+by typing:
 
-`collapse`
+`expand`
 
 This will change the view from something like this (*Figure 6a*): <br>
-<img src="images/Ui-collapse1.png" width="600"><br>
-*Figure 6a: The expanded view*
+<img src="images/Ui-collapse2.png" width="600"><br>
+*Figure 6a: The collapsed view*
 <br><br>
 
 To this (*Figure 6b*):<br>
-<img src="images/Ui-collapse2.png" width="600"><br>
-*Figure 6b: The collapsed view*
+<img src="images/Ui-collapse1.png" width="600"><br>
+*Figure 6b: The expanded view*
 
-If you want to see all the details of your tasks again, type:
+If you want to collapse the view of your tasks again, type:
 
-`expand`
+`collapse`
 
 <br>
 
