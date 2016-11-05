@@ -14,11 +14,17 @@ import teamfour.tasc.logic.keyword.SortKeyword;
 import teamfour.tasc.logic.keyword.TagKeyword;
 import teamfour.tasc.logic.keyword.ToKeyword;
 import teamfour.tasc.model.Model;
+import teamfour.tasc.model.task.qualifiers.DeadlineQualifier;
+import teamfour.tasc.model.task.qualifiers.EndTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.StartTimeQualifier;
+import teamfour.tasc.model.task.qualifiers.TagsQualifier;
+import teamfour.tasc.model.task.qualifiers.TypeQualifier;
 
 /**
  * Lists all tasks in the task list to the user with filters and sort.
  */
 public class ListCommand extends Command {
+    
     public static final String COMMAND_WORD = ListCommandKeyword.keyword;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD 
@@ -78,21 +84,20 @@ public class ListCommand extends Command {
     private void addCommandFiltersToModel() {
         assert model != null;
         
-        model.resetTaskListFilter();
         if (type != null) {
-            model.addTaskListFilterByType(type, false);
+            model.addTaskListFilter(new TypeQualifier(type), false);
         }
         if (deadline != null) {
-            model.addTaskListFilterByDeadline(deadline, false);
+            model.addTaskListFilter(new DeadlineQualifier(deadline), false);
         }
         if (startTime != null) {
-            model.addTaskListFilterByStartTime(startTime, false);
+            model.addTaskListFilter(new StartTimeQualifier(startTime), false);
         }
         if (endTime != null) {
-            model.addTaskListFilterByEndTime(endTime, false);
+            model.addTaskListFilter(new EndTimeQualifier(endTime), false);
         }
         if (!tags.isEmpty()) {
-            model.addTaskListFilterByTags(tags, false);
+            model.addTaskListFilter(new TagsQualifier(tags), false);
         }
     }
 
@@ -100,15 +105,16 @@ public class ListCommand extends Command {
     public CommandResult execute() {
         assert model != null;
 
+        model.resetTaskListFilter();
         addCommandFiltersToModel();
-        model.updateFilteredTaskListByFilter();
+        model.updateFilteredTaskListByFilters();
 
         if (sortOrder != null) {
-            model.sortFilteredTaskListByOrder(sortOrder);
+            model.sortFilteredTaskList(sortOrder);
         }
 
-        return new CommandResult(getMessageForTaskListShownSummary(
-                                    model.getFilteredTaskList().size()));
+        return new CommandResult(
+                getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
     }
 
     @Override

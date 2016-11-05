@@ -17,18 +17,9 @@ import teamfour.tasc.model.task.comparators.AToZComparator;
 import teamfour.tasc.model.task.comparators.EarliestFirstComparator;
 import teamfour.tasc.model.task.comparators.LatestFirstComparator;
 import teamfour.tasc.model.task.comparators.ZToAComparator;
-import teamfour.tasc.model.task.qualifiers.AllQualifier;
-import teamfour.tasc.model.task.qualifiers.DeadlineQualifier;
-import teamfour.tasc.model.task.qualifiers.EndTimeQualifier;
-import teamfour.tasc.model.task.qualifiers.NameQualifier;
 import teamfour.tasc.model.task.qualifiers.Qualifier;
-import teamfour.tasc.model.task.qualifiers.StartTimeQualifier;
-import teamfour.tasc.model.task.qualifiers.StartToEndTimeQualifier;
-import teamfour.tasc.model.task.qualifiers.TagQualifier;
 import teamfour.tasc.model.task.qualifiers.TypeQualifier;
 
-import java.util.Date;
-import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -58,10 +49,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         taskList = new TaskList(initialData);
         filteredTasks = new FilteredList<>(taskList.getTasks());
-        taskListFilter = new PredicateExpression(new AllQualifier());
         undoTaskListHistory = new HistoryStack<TaskList>();
         redoTaskListHistory = new HistoryStack<TaskList>();
         tasklistNames = config.getTaskListNames();
+        taskListFilter = null;
         setupDefaultFiltersAndSortOrder();
     }
 
@@ -71,9 +62,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void setupDefaultFiltersAndSortOrder() {
         resetTaskListFilter();
-        addTaskListFilterByType(Model.FILTER_TYPE_DEFAULT, false);
-        updateFilteredTaskListByFilter();
-        sortFilteredTaskListByOrder(Model.SORT_ORDER_DEFAULT);
+        addTaskListFilter(new TypeQualifier(Model.FILTER_TYPE_DEFAULT), false);
+        updateFilteredTaskListByFilters();
+        sortFilteredTaskList(Model.SORT_ORDER_DEFAULT);
     }
     
     @Override
@@ -211,61 +202,30 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(null);
     }
 
-    @Override
-    public void updateFilteredTaskList(Set<String> keywords){
-        updateFilteredTaskList(new PredicateExpression(new NameQualifier(keywords)));
-    }
-
     //@@author A0148096W
     @Override
     public void resetTaskListFilter() {
-        taskListFilter = new PredicateExpression(new AllQualifier());
+        taskListFilter = null;
+    }
+    
+    @Override
+    public void addTaskListFilter(Qualifier qualifier, boolean negated) {
+        assert qualifier != null;
+        
+        if (taskListFilter == null) {
+            taskListFilter = new PredicateExpression(qualifier, negated);
+        } else {
+            taskListFilter.addNext(new PredicateExpression(qualifier, negated));
+        }
     }
 
     @Override
-    public void addTaskListFilterByType(String type, boolean negated) {
-        assert type != null;
-        taskListFilter.addNext(new PredicateExpression(new TypeQualifier(type), negated));
-    }
-
-    @Override
-    public void addTaskListFilterByDeadline(Date deadline, boolean negated) {
-        assert deadline != null;
-        taskListFilter.addNext(new PredicateExpression(new DeadlineQualifier(deadline), negated));
-    }
-
-    @Override
-    public void addTaskListFilterByStartTime(Date startTime, boolean negated) {
-        assert startTime != null;
-        taskListFilter.addNext(new PredicateExpression(new StartTimeQualifier(startTime), negated));
-    }
-
-    @Override
-    public void addTaskListFilterByEndTime(Date endTime, boolean negated) {
-        assert endTime != null;
-        taskListFilter.addNext(new PredicateExpression(new EndTimeQualifier(endTime), negated));
-    }
-
-    @Override
-    public void addTaskListFilterByStartToEndTime(Date startTime, Date endTime, boolean negated) {
-        assert startTime != null;
-        assert endTime != null;
-        taskListFilter.addNext(new PredicateExpression(new StartToEndTimeQualifier(startTime, endTime), negated));
-    }
-
-    @Override
-    public void addTaskListFilterByTags(Set<String> tags, boolean negated) {
-        assert tags != null;
-        taskListFilter.addNext(new PredicateExpression(new TagQualifier(tags), negated));
-    }
-
-    @Override
-    public void updateFilteredTaskListByFilter() {
+    public void updateFilteredTaskListByFilters() {
         updateFilteredTaskList(taskListFilter);
     }
     
     @Override
-    public void sortFilteredTaskListByOrder(String sortOrder) {
+    public void sortFilteredTaskList(String sortOrder) {
         assert sortOrder != null;
         switch(sortOrder) {
         case Model.SORT_ORDER_BY_EARLIEST_FIRST:
@@ -305,10 +265,6 @@ public class ModelManager extends ComponentManager implements Model {
         private final Qualifier qualifier;
         private PredicateExpression next;
         private boolean isNegated;
-
-        PredicateExpression(Qualifier qualifier) {
-            this(qualifier, false);
-        }
 
         PredicateExpression(Qualifier qualifier, boolean negated) {
             this.qualifier = qualifier;
