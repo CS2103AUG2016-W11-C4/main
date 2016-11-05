@@ -1,6 +1,5 @@
-<!-- @@author A0127014W -->
 <?xml version="1.0" encoding="UTF-8"?>
-
+<!-- @@author A0127014W -->
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
