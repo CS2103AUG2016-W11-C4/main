@@ -46,7 +46,7 @@ public class AddCommand extends Command {
      *             if any of the raw values are invalid
      */
     public AddCommand(String name, String deadlineTime, String startTime,
-            String endTime, String repeat, Set<String> tags) throws IllegalValueException {
+                String endTime, String repeat, Set<String> tags) throws IllegalValueException {
         final Set<Tag> tagSet = getTagSetFromStringSet(tags);
         Deadline deadline = getDeadlineFromString(deadlineTime);
         Period period = getPeriodFromStrings(deadlineTime, startTime, endTime);
@@ -57,7 +57,7 @@ public class AddCommand extends Command {
     }
 
     private Recurrence getRecurrenceFromStrings(String startTime, String endTime,
-            String repeat, String deadlineTime) throws IllegalValueException {
+                String repeat, String deadlineTime) throws IllegalValueException {
         Recurrence taskRecurrence = new Recurrence();
         if (repeat != null && (startTime != null && endTime != null || deadlineTime != null)) {
             taskRecurrence = CommandHelper.getRecurrence(repeat);

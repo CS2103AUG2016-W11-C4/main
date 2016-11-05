@@ -12,7 +12,7 @@ import teamfour.tasc.model.task.ReadOnlyTask;
  */
 public class SelectCommand extends Command {
 
-    public final int targetIndex;
+    private static final int SELECT_LAST_TARGET_INDEX = -1;
 
     public static final String COMMAND_WORD = SelectCommandKeyword.keyword;
 
@@ -24,6 +24,8 @@ public class SelectCommand extends Command {
     public static final String MESSAGE_SELECT_TASK_SUCCESS = "Selected Task: %1$s";
     public static final String MESSAGE_SELECT_EMPTY_LIST = "Can't select from an empty list";
 
+    private final int targetIndex;
+
     public SelectCommand(int targetIndex) {
         this.targetIndex = targetIndex;
     }
@@ -31,22 +33,17 @@ public class SelectCommand extends Command {
     @Override
     public CommandResult execute() {
 
-        UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
-        if (targetIndex == -1) { // Indicates a select last command
-            if (lastShownList.size() < 1) {
-                indicateAttemptToExecuteIncorrectCommand();
-                return new CommandResult(MESSAGE_SELECT_EMPTY_LIST);
-            }
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(lastShownList.size() - 1));
-            return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, lastShownList.size()));
-        }
-        if (lastShownList.size() < 1) {
+        int lastShownListSize = model.getFilteredTaskList().size();
+        if (lastShownListSize < 1) {
             indicateAttemptToExecuteIncorrectCommand();
-            return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n" + MESSAGE_SELECT_EMPTY_LIST);
+            return new CommandResult(MESSAGE_SELECT_EMPTY_LIST);
         }
-        if (lastShownList.size() < targetIndex) {
-            String validIndexRange = "Valid index range: 1 to " + lastShownList.size();
+        if (targetIndex == SELECT_LAST_TARGET_INDEX) {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(lastShownListSize - 1));
+            return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, lastShownListSize));
+        }
+        if (lastShownListSize < targetIndex) {
+            String validIndexRange = "Valid index range: 1 to " + lastShownListSize;
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n" + validIndexRange);
         }
