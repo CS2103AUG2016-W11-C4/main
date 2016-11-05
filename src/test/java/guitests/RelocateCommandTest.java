@@ -4,7 +4,6 @@ package guitests;
 import static teamfour.tasc.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.io.File;
-import java.util.regex.Matcher;
 
 import org.junit.Test;
 
