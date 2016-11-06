@@ -380,6 +380,18 @@ Floating/No Recurrence Task | Same as original task (but marked as completed). |
 Recurring Task | First instance of the recurrence of the task. | The rest of the recurrences of the task.
 <br>
 
+The method for converting a task from uncompleted to completed is written in this class, rather than integrating it
+into either the `Model` interface or the `Task` class. This is because, for the `Model` interface, it should only concern 
+itself with the Create, Retrieve, Update and Delete management functionality of the entire task list in general, and not care
+about the details of the task (which would be a violation of Single Responsibility Principle). Adding it into the `Task` class 
+would make any callers such as the `CompleteCommand` class become too coupled with the `Task` object, since it does not need to know 
+everything about `Task`, it just needs a way to convert the task to completed (otherwise it would violate the Interface Segregation Principle).
+
+The sequence diagram below (*Figure 10*) shows how you can utilise the `TaskCompleteConverter` class to convert a non-recurring task from uncompleted to completed:
+
+<img src="images/ModelSequenceDiagram-TaskComplete.png" width="800"><br>
+*Figure 10: Sequence Diagram for using the `TaskCompleteConverter` on a non-recurring task*
+
 **`UniqueTagList` Class:**
 
 The `UniqueTagList` class stores the unique tag list for a task. It is guaranteed that there will
@@ -396,7 +408,7 @@ The `UniqueTaskList` class provides a task list with no duplicate tasks.
 ### Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
-*Figure 10: Class Diagram of Storage component*
+*Figure 11: Class Diagram of Storage component*
 
 **API** : [`Storage.java`](../src/main/java/teamfour/tasc/storage/Storage.java)
 
