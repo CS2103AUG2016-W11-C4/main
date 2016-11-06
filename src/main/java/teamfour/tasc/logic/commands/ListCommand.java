@@ -83,7 +83,6 @@ public class ListCommand extends Command {
      */
     private void addCommandFiltersToModel() {
         assert model != null;
-        
         if (type != null) {
             model.addTaskListFilter(new TypeQualifier(type), false);
         }
@@ -100,18 +99,33 @@ public class ListCommand extends Command {
             model.addTaskListFilter(new TagsQualifier(tags), false);
         }
     }
+    
+    /**
+     * Precondition: model is not null.
+     */
+    private void filterTaskList() {
+        assert model != null;
+        model.resetTaskListFilter();
+        addCommandFiltersToModel();
+        model.updateFilteredTaskListByFilters();
+    }
 
+    /**
+     * Precondition: model is not null.
+     */
+    private void sortTaskList() {
+        assert model != null;
+        if (sortOrder != null) {
+            model.sortFilteredTaskList(sortOrder);
+        }
+    }
+    
     @Override
     public CommandResult execute() {
         assert model != null;
 
-        model.resetTaskListFilter();
-        addCommandFiltersToModel();
-        model.updateFilteredTaskListByFilters();
-
-        if (sortOrder != null) {
-            model.sortFilteredTaskList(sortOrder);
-        }
+        filterTaskList();
+        sortTaskList();
 
         return new CommandResult(
                 getMessageForTaskListShownSummary(model.getFilteredTaskList().size()));
