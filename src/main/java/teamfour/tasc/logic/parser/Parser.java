@@ -49,11 +49,11 @@ public class Parser {
 
     private static final Pattern RELATIVE_PATH_FORMAT =
             Pattern.compile("^((?!-)[a-zA-Z0-9-]+(?<!-)|(..))(/((?!-)[a-zA-Z0-9-]+(?<!-)|(..)))*$");
-    
-    private static final Pattern WIN_FULL_PATH_FORMAT = 
+
+    private static final Pattern WIN_FULL_PATH_FORMAT =
             Pattern.compile("([a-zA-Z]:)?(\\\\[a-zA-Z0-9 _.-]+)+\\\\?");
-    
-    private static final Pattern MAC_FULL_PATH_FORMAT = 
+
+    private static final Pattern MAC_FULL_PATH_FORMAT =
             Pattern.compile("^(/Users/)((?!-)[a-zA-Z0-9-]+(?<!-))(/((?!-)[a-zA-Z0-9-]+(?<!-)))*$");
 
     private static final Pattern FILE_NAME_ONLY_FORMAT = Pattern.compile("^[\\w,\\s-]+$");
@@ -69,8 +69,7 @@ public class Parser {
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
         final String commandWord = matcher.group("commandWord");
@@ -78,7 +77,7 @@ public class Parser {
         switch (commandWord.toLowerCase()) {
 
         case AddCommand.COMMAND_WORD:
-            return prepareAdd(commandWord + arguments); // for adding floating tasks
+            return prepareAdd(commandWord + arguments);
 
         case SelectCommand.COMMAND_WORD:
             return prepareSelect(arguments);
@@ -150,6 +149,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args) {
+        assert args != null;
         final KeywordParser parser = new KeywordParser("add", "by", "from", "to", "repeat", "tag");
         HashMap<String, String> parsed = parser.parseKeywordsWithoutFixedOrder(args);
         String name = parsed.get("add");
@@ -160,8 +160,7 @@ public class Parser {
         String tags = parsed.get("tag");
 
         if (name == null || name.equals("")) {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
         if (tags == null) {
             tags = "";
@@ -183,8 +182,8 @@ public class Parser {
     public Command prepareSwitchlist(String args) {
         final Matcher matcher = FILE_NAME_ONLY_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwitchlistCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    SwitchlistCommand.MESSAGE_USAGE));
         }
         return new SwitchlistCommand(args.trim());
     }
@@ -223,7 +222,7 @@ public class Parser {
      */
     private String formatTagString(String tags) {
         String tagStringResult;
-        
+
         if (tags == null) {
             tagStringResult = "";
         } else {
@@ -231,7 +230,7 @@ public class Parser {
         }
         return tagStringResult;
     }
-    
+
     /**
      * Precondition: argument is not null.
      * Takes in a string and remove all occurrences of full stops and commas.
@@ -313,7 +312,7 @@ public class Parser {
         String startTime = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_PERIOD_START_TIME));
         String endTime = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_PERIOD_END_TIME));
         String tags = setToNullIfIsEmptyString(parsed.get(ShowCommand.KEYWORD_TAG));
-        
+
         tags = formatTagString(tags);
 
         try {
@@ -353,7 +352,7 @@ public class Parser {
         String startTime = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_PERIOD_START_TIME));
         String endTime = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_PERIOD_END_TIME));
         String tags = setToNullIfIsEmptyString(parsed.get(HideCommand.KEYWORD_TAG));
-        
+
         tags = formatTagString(tags);
 
         try {
@@ -395,8 +394,8 @@ public class Parser {
             if (fullPathMatcher.matches()) {
                 return new RelocateCommand(args.trim(), true);
             }
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RelocateCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    RelocateCommand.MESSAGE_USAGE));
         }
     }
 
@@ -451,7 +450,7 @@ public class Parser {
 
         return new DeleteCommand(index.get());
     }
-
+    //@@author A0127014W
     /**
      * Parses arguments in the context of the select task command.
      * Special case: if arg provided is "last", index is set to -1
@@ -467,7 +466,6 @@ public class Parser {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
         }
-
         return new SelectCommand(index.get());
     }
 
@@ -479,9 +477,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareUndo(String args) {
-        String argument = args.trim();
-        
-        if (argument.isEmpty()) {
+        if (args.trim().isEmpty()) {
             try {
                 return new UndoCommand();
             } catch (IllegalValueException ive) {
@@ -490,12 +486,15 @@ public class Parser {
             }
         }
 
-        try {
-            return new UndoCommand(Integer.parseInt(argument));
-        } catch (IllegalValueException ive) {
+        Optional<Integer> index = parseIndex(args);
+        if (!index.isPresent()) {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
-        } catch (NumberFormatException nfe) {
+        }
+
+        try {
+            return new UndoCommand(index.get());
+        } catch (IllegalValueException ive) {
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
         }
@@ -509,7 +508,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareRedo(String args) {
-        if (args.isEmpty()) {
+        if (args.equals("")) {
             return new RedoCommand(1);
         }
         Optional<Integer> index = parseIndex(args);
@@ -531,7 +530,7 @@ public class Parser {
     private Command prepareComplete(String args) {
 
         Optional<Integer> index = parseIndex(args);
-        if (!index.isPresent()) {
+        if(!index.isPresent()){
             return new IncorrectCommand(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteCommand.MESSAGE_USAGE));
         }
@@ -623,8 +622,8 @@ public class Parser {
     private Command prepareFind(String args) {
         final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindCommand.MESSAGE_USAGE));
         }
 
         // keywords delimited by whitespace

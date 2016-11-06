@@ -1,51 +1,153 @@
 package teamfour.tasc.logic.parser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
+//@@author A0127014W
 public class KeywordParser {
-    
-    //@@author A0127014W
-    private ArrayList<String> keywords;
+
+    private final HashSet<String> keywords;
 
     /**
      * Constructor
-     * @param keywords used to pass strings
+     * @param keywords used to parse strings
      */
     public KeywordParser(String... inputKeywords) {
-        this.keywords = new ArrayList<String>();
+        this.keywords = new HashSet<String>();
         for (String key : inputKeywords) {
             this.keywords.add(key);
         }
     }
 
     /**
-     * Parses input string arguments using keywords provided at construction
-     * Substring associated with keyword starts after keyword, and ends before the next keyword or end of line
-     * Keyword and associated substring put in a HashMap, with key = keyword and value = associated substring
-     * If no match found then empty HashMap returned
-     * @param string to be parsed
-     * @return HashMap containing the keyword - associated substring pairs
+     * Parses input string arguments using keywords provided at construction.
+     * Substring associated with keyword starts after keyword,
+     * and ends before the next keyword or end of line.
+     * Keyword and associated substring put in a HashMap, with key = keyword and value = associated substring.
+     * If no match found then empty HashMap returned.
+     *
+     * @param inputString   String to be parsed
+     * @return entryPairs   HashMap containing the keyword - associated substring pairs
      */
     public HashMap<String, String> parseKeywordsWithoutFixedOrder(String inputString) {
-        HashSet<String> keywordsInHashSet = new HashSet<String>();
-        for (String kw : keywords) {
-            keywordsInHashSet.add(kw);
-        }
+        assert inputString != null;
+        String[] parts = combinePartsBetweenQuotes(inputString.split(" "));
+        HashMap<String, String> entryPairs = extractEntryPairsFromParts(parts);
+        return entryPairs;
+    }
 
+    /**
+     * Combine the String elements between open " and close " into one
+     * If less close " than open " found, rest of the string after the open " will be combined.
+     * If more close " than open " found, rest of the close " will be ignored
+     *
+     * @param parts             Array of Strings
+     * @return combinedParts    Array of Strings with elements between open and close "" combined into one
+     */
+    private String[] combinePartsBetweenQuotes(String[] parts) {
+        ArrayList<Integer> openQuoteStartIndices = new ArrayList<Integer>();
+        ArrayList<Integer> closeQuoteEndIndices = new ArrayList<Integer>();
+        String[] combinedParts = parts;
+
+        getOpenQuoteStartIndices(combinedParts, openQuoteStartIndices);
+        if (!openQuoteStartIndices.isEmpty()) {
+            getCloseQuoteEndIndices(combinedParts, openQuoteStartIndices, closeQuoteEndIndices);
+            movePartsBetweenQuotesIntoFirstElement(combinedParts, openQuoteStartIndices, closeQuoteEndIndices);
+            combinedParts = getNewArrayWithoutNullElements(combinedParts);
+        }
+        return combinedParts;
+    }
+
+    /**
+     * For each group of strings between a pair of open and close ",
+     * remove every string after the start index and append them to the
+     * element at the start index.
+     *
+     * @param parts                     Array of Strings
+     * @param openQuoteStartIndices     Array containing start indices of groups of parts between quotes
+     * @param closeQuoteEndIndices      Array containing end indices of groups of parts between quotes
+     */
+    private void movePartsBetweenQuotesIntoFirstElement(String[] parts, ArrayList<Integer> openQuoteStartIndices,
+            ArrayList<Integer> closeQuoteEndIndices) {
+        for (int i = 0; i < openQuoteStartIndices.size(); i++) {
+            int startOfGroup = openQuoteStartIndices.get(i);
+            int endOfGroup = closeQuoteEndIndices.get(i);
+            for (int j = startOfGroup + 1; j <= endOfGroup; j++) {
+                parts[startOfGroup] = parts[startOfGroup] + " " + parts[j];
+                parts[j] = null;
+            }
+        }
+    }
+
+    /**
+     * Gets a new String array from input array but without null elements
+     *
+     * @param parts     Array of Strings
+     * @return          Array of String without null elements
+     */
+    private String[] getNewArrayWithoutNullElements(String[] parts) {
+        ArrayList<String> newParts = new ArrayList<String>();
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i] != null) {
+                newParts.add(parts[i]);
+            }
+        }
+        return newParts.toArray(new String[newParts.size()]);
+    }
+
+    /**
+     * Gets the indices of strings which start with an open quote ".
+     * These strings form the start of a group of strings between open and close quotes.
+     *
+     * @param parts                     Array of Strings
+     * @param openQuoteStartIndices     Array containing start indices of groups of parts between quotes
+     */
+    private void getOpenQuoteStartIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices) {
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].startsWith("\"")) {
+                openQuoteStartIndices.add(i);
+            }
+        }
+    }
+
+    /**
+     * Gets the indices of strings which end with a close quote ".
+     * These strings form the end of a group of strings between open and close quotes.
+     *
+     * @param parts                     Array of Strings
+     * @param openQuoteStartIndices     Array containing end indices of groups of parts between quotes
+     */
+    private void getCloseQuoteEndIndices(String[] parts, ArrayList<Integer> openQuoteStartIndices,
+            ArrayList<Integer> closeQuoteEndIndices) {
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].endsWith("\"")) {
+                closeQuoteEndIndices.add(i);
+            }
+        }
+        while (openQuoteStartIndices.size() > closeQuoteEndIndices.size()) {
+            // If more open " than close ", let the end of line serve as
+            // additional close "
+            closeQuoteEndIndices.add(parts.length - 1);
+        }
+    }
+
+    /**
+     * Finds the keywords and their associated substrings in the parts array,
+     * and puts them in a HashMap, with key = keyword and value = substring associated with keyword.
+     *
+     * @param parts         String array of parts extracted from the input String
+     * @return entryPairs   Keyword-substring pairs extracted from the String array
+     */
+    private HashMap<String, String> extractEntryPairsFromParts(String[] parts) {
         HashMap<String, String> entryPairs = new HashMap<String, String>();
-        String[] parts = inputString.split(" ");
-        parts = combinePartsBetweenQuotes(parts);
 
         for (int i = 0; i < parts.length; i++) {
-            if (stringIsAKeyword(keywordsInHashSet, parts[i])) {
-
+            if (isStringAKeyword(parts[i])) {
                 String currentKeyword = parts[i];
                 StringBuilder stringBuilder = new StringBuilder();
 
                 int nextPartToCheck = i + 1;
-                while(nextPartToCheck < parts.length 
-                        && !stringIsAKeyword(keywordsInHashSet, parts[nextPartToCheck])) {
+                while (nextPartToCheck < parts.length && !isStringAKeyword(parts[nextPartToCheck])) {
                     stringBuilder.append(parts[nextPartToCheck] + " ");
                     nextPartToCheck++;
                 }
@@ -59,58 +161,11 @@ public class KeywordParser {
         }
         return entryPairs;
     }
-    
-    /**
-     * Combine the parts between open " and close " into one part.
-     * If no close " found, rest of the string after the open " will be combined
-     * @param parts Array of Strings
-     * @return combinedParts    Array of Strings with elements between open and close "" combined into one
-     */
-    private String[] combinePartsBetweenQuotes(String[] parts) {
-        ArrayList<Integer> startIndices = new ArrayList<Integer>();
-        ArrayList<Integer> endIndices = new ArrayList<Integer>();
-        String[] combinedParts = parts;
-        for (int i = 1; i < parts.length; i++) {
-            if (parts[i].startsWith("\"")) {
-                startIndices.add(i);
-            }
-        }
-        if (!startIndices.isEmpty()) {
-            for (int i = 1; i < parts.length; i++) {
-                if (parts[i].endsWith("\"")) {
-                    endIndices.add(i);
-                }
-            }
 
-            while(startIndices.size() > endIndices.size()) {
-                // If more open " than close ", let the end of line serve as additional close "
-                endIndices.add(parts.length - 1);
-            }
-
-            for (int i = 0; i < startIndices.size(); i++) {
-                int start = startIndices.get(i);
-                int end = endIndices.get(i);
-                for (int j = start + 1; j <= end; j++) {
-                    parts[start] = parts[start] + " " + parts[j];
-                    parts[j] = null;
-                }
-            }
-            ArrayList<String> newParts = new ArrayList<String>();
-            for (int i = 0; i < parts.length; i++) {
-                if (parts[i] != null) {
-                    newParts.add(parts[i]);
-                }
-            }
-            combinedParts = newParts.toArray(new String[newParts.size()]);
-        }
-        return combinedParts;
+    private boolean isStringAKeyword(String string) {
+        return keywords.contains(string.toLowerCase());
     }
-    
     //@@author
-    private boolean stringIsAKeyword(HashSet<String> allKeywords, String string) {
-        return allKeywords.contains(string.toLowerCase());
-    }
-
     private String stripOpenAndCloseQuotationMarks(String input) {
         if (input.startsWith("\"")) {
             input = input.substring(1);
