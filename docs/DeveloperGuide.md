@@ -387,7 +387,7 @@ about the details of the task (which would be a violation of Single Responsibili
 would make any callers such as the `CompleteCommand` class become too coupled with the `Task` object, since it does not need to know 
 everything about `Task`, it just needs a way to convert the task to completed (otherwise it would violate the Interface Segregation Principle).
 
-The sequence diagram below shows how you can utilise the `TaskCompleteConverter` class to convert a non-recurring task from uncompleted to completed:
+The sequence diagram below (*Figure 10*) shows how you can utilise the `TaskCompleteConverter` class to convert a non-recurring task from uncompleted to completed:
 
 <img src="images/ModelSequenceDiagram-TaskComplete.png" width="800"><br>
 *Figure 10: Sequence Diagram for using the `TaskCompleteConverter` on a non-recurring task*
