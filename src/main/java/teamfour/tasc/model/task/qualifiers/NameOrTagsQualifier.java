@@ -12,33 +12,37 @@ import teamfour.tasc.model.task.ReadOnlyTask;
  * which matches the specified keywords to pass.
  */
 public class NameOrTagsQualifier implements Qualifier {
-    private Set<String> keyWords;
+    private Set<String> nameKeyWords;
 
-    public NameOrTagsQualifier(Set<String> keyWords) {
-        assert keyWords != null;
-        this.keyWords = keyWords;
+    public NameOrTagsQualifier(Set<String> nameKeyWords) {
+        this.nameKeyWords = nameKeyWords;
     }
-    
+
     @Override
     public boolean run(ReadOnlyTask task) {
-        assert task != null;
-        boolean tagFound = false;
-        for (String keyword : keyWords) {
-            tagFound = task.getTags().getInternalList().stream()
-                    .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny()
-                    .isPresent();
-            if (tagFound) {
+        return isNameFound(task) || isTagFound(task);
+    }
+
+    private boolean isNameFound(ReadOnlyTask task) {
+        return nameKeyWords.stream()
+                .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword)).findAny()
+                .isPresent();
+    }
+
+    private boolean isTagFound(ReadOnlyTask task) {
+        boolean isFound = false;
+        for (String keyword : nameKeyWords) {
+            isFound = task.getTags().getInternalList().stream()
+                    .filter(tag -> StringUtil.containsIgnoreCasePartial(tag.toString(), keyword)).findAny().isPresent();
+            if (isFound) {
                 return true;
             }
         }
-        
-        return keyWords.stream()
-                .filter(keyword -> StringUtil.containsIgnoreCasePartial(task.getName().getName(), keyword))
-                .findAny().isPresent();
+        return isFound;
     }
-    
+
     @Override
     public String toString() {
-        return "name or tags=" + String.join(", ", keyWords);
+        return "name=" + String.join(", ", nameKeyWords);
     }
 }

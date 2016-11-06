@@ -44,9 +44,16 @@
 
 ## Introduction
 <!-- @@author A0148096W -->
-TaSc is a task manager for users to manage their schedules using only keyboard commands. Users can add and manipulate tasks and events. Users can schedule their tasks with deadlines and periods, and use tags to categorize them. TaSc is a desktop application written in Java, and its GUI is built using JavaFx.
+TaSc is a task manager for users to manage their schedules using only keyboard commands. 
+Users can add and manipulate tasks and events. Users can schedule their tasks with deadlines 
+and periods, and use tags to categorize them. TaSc is a desktop application written in Java, 
+and its GUI is built using JavaFx.
 
-This guide contains all necessary information for both new and experienced contributors to continue the development of TaSc. Each section provides an overview on a topic, which will then be explained in greater detail in the subsections. Each subsection is mostly self contained for ease of reference. Throughout your development of TaSc you may freely revisit the topics as and when you need to.
+This guide contains all necessary information for both new and experienced contributors to 
+continue the development of TaSc. Each section provides an overview on a topic, which will then 
+be explained in greater detail in the subsections. Each subsection is mostly self contained for 
+ease of reference. Throughout your development of TaSc you may freely revisit the topics as 
+and when you need to.
 <br><br>
 <!-- @@author -->
 
@@ -78,7 +85,8 @@ d. **Buildship Gradle Integration** plugin from the Eclipse Marketplace
 
 > **Note:**
 > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
-> * Depending on your connection speed and server load, it can take up to 30 minutes for the set up to finish (This is because Gradle downloads library files from servers during the project set up process)
+> * Depending on your connection speed and server load, it can take up to 30 minutes for the set up to finish 
+(This is because Gradle downloads library files from servers during the project set up process)
 > * If Eclipse auto-changed any settings files during the import process, you can discard those changes.
 
 <br>
@@ -168,9 +176,9 @@ The next sections give more details of each component.
 
 **API** : [`Ui.java`](../src/main/java/teamfour/tasc/ui/Ui.java)
 
-*Figure 5* above shows the overview of the UI component. It consists of a `MainWindow` that is made up of parts, which includes `CommandBox`, `TaskListPanel`,
-`CalendarPanel`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class
-which can be loaded using the `UiPartLoader`.
+*Figure 5* above shows the overview of the UI component. It consists of a `MainWindow` that is made up of parts, 
+which includes `CommandBox`, `TaskListPanel`, `CalendarPanel`, etc. All these, including the `MainWindow`, 
+inherit from the abstract `UiPart` class which can be loaded using the `UiPartLoader`.
 
 The **`UI`** component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
  which are in the `src/main/resources/view` folder.
@@ -191,8 +199,9 @@ The **`UI`** component
 
 **`TaskListPanel` Class:**
 
-The `TaskListPanel` shows a list of `TaskCard` object, where each `TaskCard` contains the details of a task shown to the user.
-The `TaskCard` is also assigned a unique index in increasing order, which is used in other commands to identify a task, e.g. `delete 3` deletes the third item in the list.
+The `TaskListPanel` shows a list of `TaskCard` object, where each `TaskCard` contains the details of a task 
+shown to the user. The `TaskCard` is also assigned a unique index in increasing order, which is used in other 
+commands to identify a task, e.g. `delete 3` deletes the third item in the list.
 
 >Note that `TaskCardCollapsed` may be used in place of `TaskCard` when the user is in collapsed task list view.
 
@@ -201,7 +210,8 @@ The `TaskCard` is also assigned a unique index in increasing order, which is use
 **`CalendarPanel` Class:**
 
 The `CalendarPanel` encapsulates the `Agenda` control from [`JFXtras`](http://jfxtras.org/doc/8.0/jfxtras-agenda/) library.
-The `CalendarPanel` handles the display and selection of tasks on the calendar, and also handles the switching between *Day* and *Week* view of the calendar.
+The `CalendarPanel` handles the display and selection of tasks on the calendar, 
+and also handles the switching between *Day* and *Week* view of the calendar.
 
 <br>
 
@@ -732,23 +742,6 @@ Use case ends
 1a. The list is empty
 > 1a1. Program shows a notice message<br>
   Use case ends
-
-<br>
-
-#### Use case: Delete all data
-
-**MSS:**
-
-1. User requests to delete all data
-2. Program ask for user's confirmation
-3. User confirms the deletion
-4. Program deletes all data<br>
-Use case ends
-
-**Extensions:**
-
-3a. User declines the confirmation
-> Use case ends
 
 <br>
 

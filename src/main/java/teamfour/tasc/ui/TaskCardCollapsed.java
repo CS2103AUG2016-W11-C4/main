@@ -25,8 +25,6 @@ public class TaskCardCollapsed extends UiPart{
     private ReadOnlyTask task;
     private int displayedIndex;
 
-    public TaskCardCollapsed() {}
-
     public static TaskCardCollapsed load(ReadOnlyTask task, int displayedIndex){
         TaskCardCollapsed card = new TaskCardCollapsed();
         card.task = task;
@@ -39,7 +37,7 @@ public class TaskCardCollapsed extends UiPart{
         name.setText(displayedIndex + ". " + task.getName().getName());
         String completeString = task.getCompleteString();
         cardPane.setStyle(
-                completeString == Complete.TO_STRING_COMPLETED ? "-fx-background-color: #448644;" : 
+                completeString == Complete.TO_STRING_COMPLETED ? "-fx-background-color: #448644;" :
                 completeString == Complete.TO_STRING_OVERDUE ? "-fx-background-color: #ff8888;" :
                 "-fx-background-color: #ffffff;");
     }

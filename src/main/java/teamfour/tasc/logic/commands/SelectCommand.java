@@ -2,17 +2,16 @@ package teamfour.tasc.logic.commands;
 
 import teamfour.tasc.commons.core.EventsCenter;
 import teamfour.tasc.commons.core.Messages;
-import teamfour.tasc.commons.core.UnmodifiableObservableList;
 import teamfour.tasc.commons.events.ui.JumpToListRequestEvent;
 import teamfour.tasc.logic.keyword.SelectCommandKeyword;
-import teamfour.tasc.model.task.ReadOnlyTask;
 
 /**
  * Selects a task identified using it's last displayed index
  */
+//@@author A0127014W
 public class SelectCommand extends Command {
 
-    public final int targetIndex;
+    private static final int SELECT_LAST_TARGET_INDEX = -1;
 
     public static final String COMMAND_WORD = SelectCommandKeyword.keyword;
 
@@ -23,6 +22,9 @@ public class SelectCommand extends Command {
 
     public static final String MESSAGE_SELECT_TASK_SUCCESS = "Selected Task: %1$s";
     public static final String MESSAGE_SELECT_EMPTY_LIST = "Can't select from an empty list";
+    private static final String VALID_INDEX_RANGE_START = "Valid index range: 1 to ";
+
+    private final int targetIndex;
 
     public SelectCommand(int targetIndex) {
         this.targetIndex = targetIndex;
@@ -30,34 +32,39 @@ public class SelectCommand extends Command {
 
     @Override
     public CommandResult execute() {
-
-        UnmodifiableObservableList<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-
-        if(targetIndex == -1){ //Indicates a select last command
-            int listSize = model.getFilteredTaskList().size();
-            if(listSize < 1){
-                indicateAttemptToExecuteIncorrectCommand();
-                return new CommandResult(MESSAGE_SELECT_EMPTY_LIST);
-            }
-            EventsCenter.getInstance().post(new JumpToListRequestEvent(listSize - 1));
-            return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, listSize));
+        int lastShownListSize = model.getFilteredTaskList().size();
+        if (lastShownListSize < 1) {
+            return selectTaskFromEmptyList();
         }
-
-        if (lastShownList.size() < targetIndex) {
-            if(lastShownList.size() < 1){
-                indicateAttemptToExecuteIncorrectCommand();
-                return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n" + MESSAGE_SELECT_EMPTY_LIST);
-            }
-            else{
-                String validIndexRange = "Valid index range: 1 to " + lastShownList.size();
-                indicateAttemptToExecuteIncorrectCommand();
-                return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n" + validIndexRange);
-            }
+        if (targetIndex == SELECT_LAST_TARGET_INDEX) {
+            return selectTaskSuccess(lastShownListSize);
         }
+        if (lastShownListSize < targetIndex) {
+            return selectTaskWithInvalidIndex(lastShownListSize);
+        }
+        return selectTaskSuccess(targetIndex);
+    }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex - 1));
-        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, targetIndex));
+    private CommandResult selectTaskFromEmptyList() {
+        indicateAttemptToExecuteIncorrectCommand();
+        return new CommandResult(MESSAGE_SELECT_EMPTY_LIST);
+    }
 
+    private CommandResult selectTaskWithInvalidIndex(int lastShownListSize) {
+        indicateAttemptToExecuteIncorrectCommand();
+        return new CommandResult(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX + "\n"
+                    + (VALID_INDEX_RANGE_START + lastShownListSize));
+    }
+
+    /**
+     * Posts an event to select the task specified by target
+     *
+     * @param target    Index of task to select
+     * @return          CommandResult for successful execution of SelectCommand
+     */
+    private CommandResult selectTaskSuccess(int target) {
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(target - 1));
+        return new CommandResult(String.format(MESSAGE_SELECT_TASK_SUCCESS, target));
     }
 
     @Override
