@@ -67,7 +67,7 @@ Just type in your command, and hit <kbd>Enter</kbd>. Let us handle the rest - yo
 
 ### Launching
 
-Double-click on `TaSc.jar` to start the application. The application window (shown in *Figure 2*) should appear within a few seconds.
+Double-click on `TaSc.jar` to start the application. The application window (as shown in *Figure 2*) should appear within a few seconds.
 
 <img src="images/Ui-MainWindow.png" width="600"><br>
 *Figure 2: TaSc application window*
@@ -561,7 +561,7 @@ Don't worry about losing your data.
 
 ### Moving to Another Computer
 If you want to move your task lists to a new computer, backup the contents of your current TaSc
-folder. Install land run `TaSc.jar` on the other computer, and a new daa file will be created.
+folder. Install and run `TaSc.jar` on the other computer, and a new data file will be created.
 Overwrite the new data file with the backup you made.
 
 <br>
