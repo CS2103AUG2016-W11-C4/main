@@ -56,35 +56,49 @@ public class TaskCompleteConverter {
                 new Recurrence(),
                 uncompletedTask.getTags());
         
+        this.uncompletedRemainingRecurringTask = generateRemainingUncompletedRecurringTask(uncompletedTask);
+        
+    }
+    
+    /**
+     * If it is a recurring task, generate the remaining instances of the task that
+     * are uncompleted (after the first one is marked as completed). If it is not
+     * a recurring task, nothing will be generated.
+     * 
+     * Pre-condition: uncompletedTask must not be completed already.
+     * 
+     * @param uncompletedTask to generate the remaining recurring tasks from.
+     * @throws IllegalValueException if the recurrences or periods are not valid.
+     */
+    private static Task generateRemainingUncompletedRecurringTask(ReadOnlyTask uncompletedTask) 
+            throws IllegalValueException {
+        assert !uncompletedTask.getComplete().isCompleted();
+        
         Recurrence oldRecurrence = uncompletedTask.getRecurrence();
         Recurrence newRecurrence = oldRecurrence.getRecurrenceWithOneFrequencyLess();
         
         if (newRecurrence == null) {
-            this.uncompletedRemainingRecurringTask = null;
-        } else {
-            Deadline newDeadline = uncompletedTask.getDeadline();
-            Period newPeriod = uncompletedTask.getPeriod();
-            
-            if (newDeadline.hasDeadline()) {
-                newDeadline = new Deadline(
-                        oldRecurrence.getNextDateAfterRecurrence(newDeadline.getDeadline()));
-            }
-            
-            if (newPeriod.hasPeriod()) {
-                newPeriod = new Period(
-                        oldRecurrence.getNextDateAfterRecurrence(newPeriod.getStartTime()),
-                        oldRecurrence.getNextDateAfterRecurrence(newPeriod.getEndTime()));
-            }
-            
-            this.uncompletedRemainingRecurringTask = new Task(uncompletedTask.getName(),
-                new Complete(false),
-                newDeadline,
-                newPeriod,
-                newRecurrence,
-                uncompletedTask.getTags());
+            return null;
         }
+
+        Deadline newDeadline = uncompletedTask.getDeadline();
+        Period newPeriod = uncompletedTask.getPeriod();
+
+        if (newDeadline.hasDeadline()) {
+            newDeadline = new Deadline(
+                    oldRecurrence.getNextDateAfterRecurrence(newDeadline.getDeadline()));
+        }
+
+        if (newPeriod.hasPeriod()) {
+            newPeriod = new Period(
+                    oldRecurrence.getNextDateAfterRecurrence(newPeriod.getStartTime()),
+                    oldRecurrence.getNextDateAfterRecurrence(newPeriod.getEndTime()));
+        }
+
+        return new Task(uncompletedTask.getName(), new Complete(false), newDeadline, newPeriod,
+                newRecurrence, uncompletedTask.getTags());        
     }
-    
+
     public Task getCompletedTask() {
         return completedTask;
     }
