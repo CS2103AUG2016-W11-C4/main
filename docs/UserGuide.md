@@ -67,7 +67,7 @@ Just type in your command, and hit <kbd>Enter</kbd>. Let us handle the rest - yo
 
 ### Launching
 
-Double-click on `TaSc.jar` to start the application. The application window *(Figure 2)* should appear within a few seconds.
+Double-click on `TaSc.jar` to start the application. The application window (shown in *Figure 2*) should appear within a few seconds.
 
 <img src="images/Ui-MainWindow.png" width="600"><br>
 *Figure 2: TaSc application window*
@@ -335,7 +335,7 @@ In general, you may use this format to update your tasks' various parameters.<br
 
 ### Marking a task as complete: `complete`
 
-Once you have completed a task, you can mark it as complete (*Figure 5*).
+Once you have completed a task, you can mark it as complete (see *Figure 5*).
 
 `complete 1`
 
@@ -559,13 +559,10 @@ and the <kbd>tab</kbd> key to autocomplete with the highlighted keyword (*see Fi
 TaSc saves your data automatically after every command that changes the data.
 Don't worry about losing your data.
 
-<br>
-
-## FAQ
-
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Backup the contents of your current TaSc folder. Install and run `TaSc.jar` on the other computer,
-and a new data file will be created. Overwrite the new data file with the backup you made.
+### Moving to Another Computer
+If you want to move your task lists to a new computer, backup the contents of your current TaSc
+folder. Install land run `TaSc.jar` on the other computer, and a new daa file will be created.
+Overwrite the new data file with the backup you made.
 
 <br>
 
