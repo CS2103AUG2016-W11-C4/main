@@ -45,9 +45,9 @@ public class UndoCommand extends Command {
     private String createUndoResultMessage(int numUndone) {
         String resultMessage = MESSAGE_NO_PAST_COMMAND_TO_UNDO;
         if (numUndone == 1) {
-            resultMessage = String.format(MESSAGE_SUCCESS, numUndone + "command");
+            resultMessage = String.format(MESSAGE_SUCCESS, "command");
         } else if (numUndone > 1) {
-            resultMessage = String.format(MESSAGE_SUCCESS, numUndone + "commands");
+            resultMessage = String.format(MESSAGE_SUCCESS, numUndone + " commands");
         }
         return resultMessage;
     }
