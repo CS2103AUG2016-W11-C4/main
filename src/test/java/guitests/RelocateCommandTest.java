@@ -37,19 +37,6 @@ public class RelocateCommandTest extends TaskListGuiTest {
     }
     
     @Test
-    public void relocate_absolutePath_successMessage() {
-        String newDestination = "/Users/my_username/tasc/test";
-        
-        String os = System.getProperty("os.name");
-        if (os.startsWith("Windows")) {
-            newDestination = "C:\\tasc\\test";
-        }
-        
-        commandBox.runCommand("relocate " + newDestination);
-        assertResultMessage(String.format(RelocateCommand.MESSAGE_SUCCESS, newDestination));
-    }
-    
-    @Test
     public void relocate_emptyInputDefault_successMessage() {
         commandBox.runCommand("relocate");
         assertResultMessage(String.format(RelocateCommand.MESSAGE_SUCCESS, "data"));
