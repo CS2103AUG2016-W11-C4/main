@@ -31,7 +31,7 @@ public class QualifierTest {
         assertEquals("type=" + string, new TypeQualifier(string).toString());
         assertEquals("tags=" + String.join(", ", stringSet), 
                 new TagsQualifier(stringSet).toString());
-        assertEquals("name or tags=" + String.join(", ", stringSet), 
+        assertEquals("name=" + String.join(", ", stringSet), 
                 new NameOrTagsQualifier(stringSet).toString());
     }
 
