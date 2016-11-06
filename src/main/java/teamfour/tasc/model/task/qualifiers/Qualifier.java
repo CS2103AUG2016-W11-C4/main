@@ -9,6 +9,7 @@ import teamfour.tasc.model.task.ReadOnlyTask;
 public interface Qualifier {
     
     /**
+     * Precondition: argument is not null.
      * Returns true if this task passes through the filter,
      * or false otherwise.
      */

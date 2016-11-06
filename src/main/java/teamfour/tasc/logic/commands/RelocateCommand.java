@@ -40,7 +40,7 @@ public class RelocateCommand extends Command {
         if (isFullPath) {
             this.destination = destination;
         } else {
-            this.destination = "data"  + File.separator + destination;            
+            this.destination = "data" + File.separator + destination;            
         }
     }
     

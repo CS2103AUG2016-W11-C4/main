@@ -15,11 +15,13 @@ public class TagsQualifier implements Qualifier {
     private Set<String> tagNames;
 
     public TagsQualifier(Set<String> tagNames) {
+        assert tagNames != null;
         this.tagNames = tagNames;
     }
 
     @Override
     public boolean run(ReadOnlyTask task) {
+        assert task != null;
         String taskTagsString = task.tagsString();
         taskTagsString = taskTagsString.replace("[", "");
         taskTagsString = taskTagsString.replace("]", "");

@@ -14,11 +14,13 @@ public class StartTimeQualifier implements Qualifier {
     private Date startTime;
 
     public StartTimeQualifier(Date startTime) {
+        assert startTime != null;
         this.startTime = startTime;
     }
 
     @Override
     public boolean run(ReadOnlyTask task) {
+        assert task != null;
         if (task.getPeriod().hasPeriod()) {
             return startTime.before(task.getPeriod().getEndTime());
         } else if (task.getDeadline().hasDeadline()) {

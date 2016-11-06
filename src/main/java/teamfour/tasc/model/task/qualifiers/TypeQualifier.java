@@ -12,11 +12,13 @@ public class TypeQualifier implements Qualifier {
     private String type;
 
     public TypeQualifier(String type) {
+        assert type != null;
         this.type = type;
     }
 
     @Override
     public boolean run(ReadOnlyTask task) {
+        assert task != null;
         String[] typeWords = type.toLowerCase().split(" ");
         String taskType = (" " + task.getAsTypeKeywords()).toLowerCase();
 

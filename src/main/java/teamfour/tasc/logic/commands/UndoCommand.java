@@ -41,18 +41,24 @@ public class UndoCommand extends Command {
         }
         this.numCommandsToBeUndone = numCommandsToBeUndone;
     }
+    
+    private String createUndoResultMessage(int numUndone) {
+        String resultMessage = MESSAGE_NO_PAST_COMMAND_TO_UNDO;
+        if (numUndone == 1) {
+            resultMessage = String.format(MESSAGE_SUCCESS, "command");
+        } else if (numUndone > 1) {
+            resultMessage = String.format(MESSAGE_SUCCESS, numUndone + " commands");
+        }
+        return resultMessage;
+    }
 
     @Override
     public CommandResult execute() {
         assert model != null;
         
         int numUndone = model.undoTaskListHistory(numCommandsToBeUndone);
-        
-        if (numUndone == 0) {
-            return new CommandResult(MESSAGE_NO_PAST_COMMAND_TO_UNDO);
-        }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, 
-                numUndone == 1 ? "command" : numUndone + " commands"));
+        String resultMessage = createUndoResultMessage(numUndone);
+        return new CommandResult(resultMessage);
     }
 
     @Override
